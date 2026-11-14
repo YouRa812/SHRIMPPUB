@@ -21,8 +21,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-BwmbTTHP.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-B3XRdrPu.css">
+    <script type="module" crossorigin src="./index-CXv0a9eS.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-BPRU4YdT.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -47,6 +47,9 @@
           <img 
             src="./logo-Ce5GVdeg.png" 
             alt="ShrimpPub Saint-P" 
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
             class="h-7 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,30,39,0.35)] group-hover:scale-105 transition-transform duration-300" 
           />
           <span class="text-xs sm:text-sm font-black tracking-tight uppercase text-white font-unbounded leading-none flex items-center">
@@ -55,14 +58,20 @@
         </a>
 
         <!-- Center: Navigation (Desktop) -->
-        <nav class="hidden lg:flex items-center gap-5 text-[11px] font-mono-tech tracking-wider uppercase text-neutral-400">
-          <a href="#menu-deck" data-tab-trigger="draft" class="nav-link">Пивная карта</a>
-          <a href="#story-deck" class="nav-link">История</a>
-          <a href="#events-deck" class="nav-link">Вечера</a>
-          <a href="#reviews-deck" class="nav-link flex items-center gap-1.5">
+        <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-[10px] xl:text-[11px] font-mono-tech tracking-wider uppercase text-neutral-400">
+          <a href="#menu-deck" data-tab-trigger="draft" class="nav-link whitespace-nowrap">Пивная карта</a>
+          <a href="#story-deck" class="nav-link whitespace-nowrap">Книга истории</a>
+          <a href="#events-deck" class="nav-link whitespace-nowrap">Мероприятия</a>
+          <a href="#reviews-deck" class="nav-link whitespace-nowrap flex items-center gap-1.5">
             <span>Отзывы</span>
             <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[9px] font-bold leading-none">4.9★</span>
           </a>
+          <a href="#morecambe-deck" class="nav-link whitespace-nowrap">Болеем за наших</a>
+          <a href="#atmosphere-deck" class="nav-link whitespace-nowrap">Атмосфера</a>
+          <button id="btn-nav-trailer" type="button" class="nav-link whitespace-nowrap text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer transition-colors" title="Смотреть видео-трейлер паба">
+            <span>🎬</span>
+            <span>Трейлер</span>
+          </button>
         </nav>
 
         <!-- Right: Actions (Delivery & Pickup buttons on Mobile & Desktop, sound/game hidden on mobile) -->
@@ -146,7 +155,8 @@
     <!-- ==================== MOBILE NAVIGATION DRAWER (FULL SCREEN GLASS) ==================== -->
     <div 
       id="mobile-nav-drawer" 
-      class="fixed inset-0 z-50 bg-[#070104]/96 backdrop-blur-2xl transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-5 sm:p-8"
+      data-lenis-prevent
+      class="fixed inset-0 z-50 bg-[#070104]/96 backdrop-blur-2xl transition-all duration-300 opacity-0 pointer-events-none flex flex-col justify-between p-5 sm:p-8 overflow-y-auto"
       aria-hidden="true"
     >
       <!-- Drawer Top Bar -->
@@ -165,12 +175,12 @@
       </div>
 
       <!-- Drawer Nav Links -->
-      <nav class="flex flex-col gap-2.5 py-4 font-mono-tech tracking-wider uppercase text-sm">
+      <nav class="flex flex-col gap-2 py-4 font-mono-tech tracking-wider uppercase text-sm">
         <a 
           href="#menu-deck" 
           data-mobile-nav 
           data-tab-trigger="draft" 
-          class="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
         >
           <span class="flex items-center gap-3">
             <span class="text-lg">🍺</span>
@@ -182,31 +192,31 @@
         <a 
           href="#story-deck" 
           data-mobile-nav 
-          class="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
         >
           <span class="flex items-center gap-3">
-            <span class="text-lg">📜</span>
-            <span class="font-bold">История штаба</span>
+            <span class="text-lg">📖</span>
+            <span class="font-bold">Книга истории</span>
           </span>
-          <span class="text-[10px] text-neutral-400 font-mono-tech">EST. 2020</span>
+          <span class="text-[10px] text-neutral-400 font-mono-tech">4 главы</span>
         </a>
 
         <a 
           href="#events-deck" 
           data-mobile-nav 
-          class="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
         >
           <span class="flex items-center gap-3">
-            <span class="text-lg">💿</span>
-            <span class="font-bold">Вечера & События</span>
+            <span class="text-lg">🎟</span>
+            <span class="font-bold">Мероприятия</span>
           </span>
-          <span class="text-[10px] text-amber-400 font-mono-tech">Винил / Квиз</span>
+          <span class="text-[10px] text-amber-400 font-mono-tech">Постеры 9:16</span>
         </a>
 
         <a 
           href="#reviews-deck" 
           data-mobile-nav 
-          class="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
         >
           <span class="flex items-center gap-3">
             <span class="text-lg">⭐️</span>
@@ -216,9 +226,45 @@
         </a>
 
         <a 
+          href="#morecambe-deck" 
+          data-mobile-nav 
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+        >
+          <span class="flex items-center gap-3">
+            <span class="text-lg">⚽</span>
+            <span class="font-bold">Болеем за наших</span>
+          </span>
+          <span class="px-2 py-0.5 rounded bg-red-600/30 border border-red-500/40 text-red-300 text-[10px] font-bold">Morecambe</span>
+        </a>
+
+        <a 
+          href="#atmosphere-deck" 
+          data-mobile-nav 
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/8 transition-colors"
+        >
+          <span class="flex items-center gap-3">
+            <span class="text-lg">📸</span>
+            <span class="font-bold">Атмосфера</span>
+          </span>
+          <span class="text-[10px] text-red-400 font-mono-tech font-bold">Галерея</span>
+        </a>
+
+        <button 
+          id="btn-drawer-trailer" 
+          type="button"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-red-950/40 hover:bg-red-900/50 text-white border border-red-500/30 transition-colors w-full cursor-pointer text-left"
+        >
+          <span class="flex items-center gap-3">
+            <span class="text-lg">🎬</span>
+            <span class="font-bold text-red-200">Трейлер паба</span>
+          </span>
+          <span class="px-2 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-bold">Смотреть</span>
+        </button>
+
+        <a 
           href="#booking-deck" 
           data-mobile-nav 
-          class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-unbounded font-black text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(255,30,39,0.5)] mt-1"
+          class="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-unbounded font-black text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(255,30,39,0.5)] mt-1"
         >
           <span class="flex items-center gap-2">
             <span>📍</span>
@@ -312,14 +358,16 @@
               </h1>
             </div>
 
-            <!-- Massive Mascot Shrimp (креветка.png) with 3D Parallax Tilt -->
-            <div id="hero-shrimp-container" class="relative -mt-16 sm:-mt-28 md:-mt-44 lg:-mt-56 xl:-mt-64 z-20 flex justify-center items-center pointer-events-none perspective-[1000px]">
+            <!-- Massive Mascot Shrimp (креветка.png) with 3D Parallax Tilt, positioned neatly below headline -->
+            <div id="hero-shrimp-container" class="relative -mt-4 sm:-mt-6 md:-mt-2 lg:mt-2 xl:mt-4 z-20 flex justify-center items-center pointer-events-none perspective-[1000px]">
               <img 
                 id="hero-shrimp-img"
-                src="./krevetka.png" 
+                src="./krevetka-Bg1OkWaT.png" 
                 alt="Shrimp Mascot" 
-                title="Нажми на меня, чтобы услышать мудрость Креветки!"
-                class="w-[340px] sm:w-[500px] md:w-[640px] lg:w-[760px] xl:w-[860px] object-contain filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.98)] will-change-transform pointer-events-auto cursor-pointer select-none"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="w-[310px] sm:w-[440px] md:w-[520px] lg:w-[620px] xl:w-[680px] object-contain filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.98)] will-change-transform pointer-events-auto select-none"
               />
             </div>
 
@@ -370,6 +418,8 @@
             <img 
               src="./vkusnomob-tPNspmhW.png" 
               alt="Это реально вкусно!" 
+              loading="lazy"
+              decoding="async"
               class="mobile-top-shrimp-img w-full h-auto object-contain will-change-transform"
             />
           </div>
@@ -379,85 +429,111 @@
             <img 
               src="./vkusno-BRs4oRav.png" 
               alt="Это реально вкусно!" 
+              loading="lazy"
+              decoding="async"
               class="peeking-shrimp-img w-full h-auto object-contain will-change-transform"
             />
           </div>
 
-          <!-- Editorial Header -->
-          <div class="mb-3.5 sm:mb-7 relative">
-            <div class="flex items-center gap-1.5 sm:gap-2.5 mb-1.5 sm:mb-2.5">
-              <span class="badge-asterisk">*</span>
-              <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-600">АКТУАЛЬНАЯ ПИВНАЯ ЛИНЕЙКА</span>
+          <!-- Editorial Header: UNIFIED SWIPER MENU -->
+          <div class="mb-4 sm:mb-8 relative">
+            <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="badge-asterisk">*</span>
+                <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-600">ГАСТРОНОМИЧЕСКАЯ И БАРНАЯ КАРТА</span>
+              </div>
+              <!-- Category Counter & Quick Arrows -->
+              <div class="flex items-center gap-2 font-mono-tech">
+                <button id="menu-btn-prev" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all text-sm font-bold shadow-sm" aria-label="Предыдущий раздел">←</button>
+                <span id="menu-counter-indicator" class="px-3 py-1 rounded-full bg-black text-white text-[11px] sm:text-xs font-bold tracking-wider">01 / 13</span>
+                <button id="menu-btn-next" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all text-sm font-bold shadow-sm" aria-label="Следующий раздел">→</button>
+              </div>
             </div>
 
-            <h2 class="text-sm xs:text-base sm:text-2xl lg:text-4xl font-black text-black uppercase tracking-tight font-unbounded leading-snug">
-              ПИВНАЯ ЛИНЕЙКА <span class="headline-capsule">20 КРАНОВ</span> И БАРНАЯ КАРТА
+            <!-- Main Title: МЕНЮ -->
+            <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-black uppercase tracking-tight font-unbounded leading-none">
+              МЕНЮ
             </h2>
-            <p class="text-[11px] sm:text-xs text-neutral-600 font-mono-tech mt-1 sm:mt-2 max-w-xl leading-relaxed">
+
+            <!-- Dynamic Category Subheader: ПИВО (or active category) -->
+            <div class="flex items-baseline gap-2.5 sm:gap-3 mt-2 sm:mt-3 flex-wrap">
+              <span id="menu-category-num" class="text-xs sm:text-sm font-mono-tech font-bold text-red-600 tracking-widest">РАЗДЕЛ 01</span>
+              <h3 id="menu-category-title" class="text-xl sm:text-3xl lg:text-4xl font-black text-red-600 uppercase tracking-tight font-unbounded">
+                ПИВО
+              </h3>
+              <span id="menu-category-badge" class="px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] sm:text-xs font-mono-tech font-bold uppercase">
+                20 кранов
+              </span>
+            </div>
+
+            <p id="menu-category-desc" class="text-[11px] sm:text-xs text-neutral-600 font-mono-tech mt-1 sm:mt-2 max-w-2xl leading-relaxed">
               Свежий розлив с правильной карбонизацией, мягкий азотный стаут, баварская пшеничная классика и бельгийские кислые эли.
             </p>
-          </div>
 
-          <!-- Category Selector Tabs -->
-          <div class="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto pb-2 sm:pb-3 no-scrollbar border-b border-black/10 mb-3 sm:mb-6">
-            <button data-menu-category="draft" class="menu-pill active px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-black/10 bg-black text-white flex items-center gap-1.5 shadow-sm">
-              <span>🍺</span>
-              <span>Разливное пиво</span>
-              <span class="px-1.5 py-0.5 rounded-full bg-white/20 text-[9px] text-white">20</span>
-            </button>
+            <!-- Explicit Swipe Cue Pill: ONLY 'СВАЙПАЙТЕ ВЛЕВО ➔' as requested -->
+            <div id="menu-swipe-hint" class="mt-4 flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-red-500/10 via-amber-500/10 to-transparent border border-red-500/30 select-none cursor-pointer hover:border-red-500 transition-colors">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                <span class="text-xs sm:text-sm font-black uppercase font-unbounded text-red-700">
+                  СВАЙПАЙТЕ ВЛЕВО ➔
+                </span>
+                <span class="hidden sm:inline text-xs font-mono-tech text-neutral-500">
+                  (листайте пальцем или стрелками)
+                </span>
+              </div>
+              <div class="text-red-600 text-sm font-bold animate-swipe-bounce">
+                ➔
+              </div>
+            </div>
 
-            <!-- Food categories -->
-            <button data-food-category="shrimps" class="menu-pill px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-dashed border-red-500/60 bg-red-50 text-red-700 hover:bg-red-100 flex items-center gap-1.5">
-              <span>🦐</span>
-              <span>Шримпы (Скоро)</span>
-              <span class="text-[9px] text-amber-600">🔒</span>
-            </button>
-            <button data-food-category="hot" class="menu-pill px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-dashed border-neutral-300 bg-neutral-50 text-neutral-500 hover:bg-neutral-100 flex items-center gap-1.5">
-              <span>🍔</span>
-              <span>Горячее меню</span>
-              <span class="text-[9px]">🔒</span>
-            </button>
-            <button data-food-category="snacks" class="menu-pill px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-dashed border-neutral-300 bg-neutral-50 text-neutral-500 hover:bg-neutral-100 flex items-center gap-1.5">
-              <span>🥨</span>
-              <span>Снеки & Закуски</span>
-              <span class="text-[9px]">🔒</span>
-            </button>
-          </div>
-
-          <!-- Subfilters & Search Bar -->
-          <div id="draft-subfilters" class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-6">
-            <div class="flex flex-wrap items-center gap-1.5 font-mono-tech">
-              <button data-filter-style="all" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black text-white text-[10px] sm:text-xs font-bold">Все сорта (20)</button>
-              <button data-filter-style="lager" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Лагеры</button>
-              <button data-filter-style="wheat" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Пшеничное</button>
-              <button data-filter-style="ipa" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Эли & ИПА</button>
-              <button data-filter-style="stout" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Стаут & Азот</button>
-              <button data-filter-style="fruit" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Фруктовое & Сидр</button>
-              <button data-filter-style="rotation" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-red-100 border border-red-500/40 text-red-700 text-[10px] sm:text-xs font-bold flex items-center gap-1">
-                <span>🔥 Ротация</span>
-              </button>
-              <!-- Beer Roulette Easter Egg -->
-              <button id="btn-beer-roulette" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-gradient-to-r from-red-600/20 to-amber-500/20 hover:from-red-600 hover:to-amber-500 text-red-700 hover:text-white border border-red-500/40 text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all" title="Бармен выберет сорт за вас">
-                <span>🎲 Пивная рулетка</span>
-              </button>
+            <!-- Category Quick-Jump Chips (On mobile shows ONLY selected section; on desktop shows full row) -->
+            <div id="menu-quick-chips" class="w-full flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 overflow-hidden sm:overflow-x-auto py-2.5 mt-3 no-scrollbar border-b border-black/10 select-none">
+              <!-- Rendered via JS -->
             </div>
           </div>
 
-          <!-- Product Grid: 20 Craft beers with PURE BLACK names -->
-          <div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
-            <!-- Injected dynamically via JS with pure black titles -->
+          <!-- Swiper Container & Content Viewport -->
+          <div id="menu-swiper-viewport" class="relative w-full overflow-hidden select-none min-h-[480px]">
+            <div id="menu-swiper-track" class="w-full transition-transform duration-500 ease-out">
+              
+              <!-- Category Slide Content (Draft Beers or Food/Spirits Tiles) -->
+              <div id="menu-active-content" class="w-full">
+                <!-- Injected dynamically via JS: either beer cards or food/spirits tiles -->
+              </div>
+
+            </div>
           </div>
 
-          <!-- Expand / Collapse All Beers Button (Prompt requirement #3) -->
-          <div id="menu-expand-container" class="mt-6 sm:mt-8 flex justify-center">
-            <button 
-              id="btn-toggle-all-beers" 
-              class="btn-magnetic group relative inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-black hover:bg-red-600 text-white font-black font-unbounded text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_15px_35px_rgba(255,30,39,0.4)]"
-            >
-              <span id="btn-toggle-icon" class="text-sm sm:text-base transition-transform duration-300 group-hover:translate-y-0.5">🍺</span>
-              <span id="btn-toggle-text">ПОКАЗАТЬ ВСЕ 20 СОРТОВ КРАНА</span>
-              <span id="btn-toggle-badge" class="px-2 py-0.5 rounded-full bg-red-600 group-hover:bg-white text-white group-hover:text-black text-[10px] font-mono-tech font-bold transition-colors">20</span>
-            </button>
+          <!-- Beer Subfilters & Controls (Only visible when on Beer slide) -->
+          <div id="draft-beer-controls" class="mt-6 pt-4 border-t border-black/10">
+            <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-4">
+              <div class="flex flex-wrap items-center gap-1.5 font-mono-tech">
+                <button data-filter-style="all" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black text-white text-[10px] sm:text-xs font-bold">Все сорта (20)</button>
+                <button data-filter-style="lager" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Лагеры</button>
+                <button data-filter-style="wheat" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Пшеничное</button>
+                <button data-filter-style="ipa" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Эли & ИПА</button>
+                <button data-filter-style="stout" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Стаут & Азот</button>
+                <button data-filter-style="fruit" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Фруктовое & Сидр</button>
+                <button data-filter-style="rotation" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-red-100 border border-red-500/40 text-red-700 text-[10px] sm:text-xs font-bold flex items-center gap-1">
+                  <span>🔥 Ротация</span>
+                </button>
+                <button id="btn-beer-roulette" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-gradient-to-r from-red-600/20 to-amber-500/20 hover:from-red-600 hover:to-amber-500 text-red-700 hover:text-white border border-red-500/40 text-[10px] sm:text-xs font-bold flex items-center gap-1 transition-all" title="Бармен выберет сорт за вас">
+                  <span>🎲 Пивная рулетка</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Expand / Collapse All Beers Button -->
+            <div id="menu-expand-container" class="my-4 flex justify-center">
+              <button 
+                id="btn-toggle-all-beers" 
+                class="btn-magnetic group relative inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-black hover:bg-red-600 text-white font-black font-unbounded text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_15px_35px_rgba(255,30,39,0.4)]"
+              >
+                <span id="btn-toggle-icon" class="text-sm sm:text-base transition-transform duration-300 group-hover:translate-y-0.5">🍺</span>
+                <span id="btn-toggle-text">ПОКАЗАТЬ ВСЕ 20 СОРТОВ КРАНА</span>
+                <span id="btn-toggle-badge" class="px-2 py-0.5 rounded-full bg-red-600 group-hover:bg-white text-white group-hover:text-black text-[10px] font-mono-tech font-bold transition-colors">20</span>
+              </button>
+            </div>
           </div>
 
           <!-- Guest Tap Banner -->
@@ -474,150 +550,35 @@
             </div>
           </div>
 
+          <!-- ================= НОВЫЙ БЛОК: БЕГУЩАЯ СТРОКА БЛЮД ================= -->
+          <div id="menu-food-marquee" class="mt-8 sm:mt-12 w-full"></div>
+
         </section>
 
-        <!-- ================= CARD 3: WHITE PRESENTATION SLIDE — ИСТОРИЯ (Slides over Menu) ================= -->
+        <!-- ================= CARD 3: WHITE PRESENTATION SLIDE — КНИГА ИСТОРИИ ПАБА ================= -->
         <section id="story-deck" class="deck-card canvas-white p-3.5 sm:p-8 lg:p-14 z-20">
           
-          <div class="mb-3.5 sm:mb-8">
-            <div class="flex items-center gap-1.5 sm:gap-2.5 mb-1.5 sm:mb-2.5">
+          <div class="mb-4 sm:mb-6">
+            <div class="flex items-center gap-1.5 sm:gap-2.5 mb-2">
               <span class="badge-asterisk">*</span>
-              <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-600">ИСТОРИЯ ШТАБА</span>
+              <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-600">ЛЕТОПИСЬ ШТАБА</span>
             </div>
 
             <h2 class="text-sm xs:text-base sm:text-2xl lg:text-4xl font-black text-black uppercase tracking-tight font-unbounded leading-snug">
-              МЫ ПРЕВРАЩАЕМ ХМЕЛЬ <span class="headline-capsule">CRAFT</span> В КУЛЬТУРНЫЙ МАНИФЕСТ
+              КНИГА ИСТОРИИ <span class="headline-capsule">CHRONICLE</span> ПАБА
             </h2>
             <p class="text-[11px] sm:text-xs text-neutral-600 font-mono-tech mt-1 sm:mt-2 max-w-xl leading-relaxed">
-              История заведения и ключевые этапы развития Shrimp Pub.
+              Нажмите на обложку книги, чтобы открыть разворот. Каждое последующее нажатие или свайп перелистывает страницы хроники.
             </p>
           </div>
 
-          <!-- 3 Milestone Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
-            
-            <div class="group relative rounded-xl sm:rounded-2xl bg-neutral-900 text-white p-4 sm:p-6 flex flex-col justify-between hover:bg-black transition-all duration-300 hover:-translate-y-1 shadow-xl">
-              <div>
-                <div class="flex items-center justify-between mb-3 sm:mb-5">
-                  <span class="text-[10px] sm:text-xs font-mono-tech text-red-400 font-bold uppercase tracking-wider">ПУНКТ 01</span>
-                  <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-red-600/30 text-red-400 font-mono-tech flex items-center justify-center text-[10px] sm:text-xs font-bold">01</span>
-                </div>
-                <h3 class="text-sm sm:text-base font-black uppercase text-white font-unbounded mb-1.5 sm:mb-2">ПУНКТ 1</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">
-                  Информация по пункту 1 будет добавлена в ближайшее время.
-                </p>
-              </div>
-              <div class="mt-4 sm:mt-6 pt-2.5 sm:pt-3 border-t border-white/10 text-[10px] text-neutral-500 font-mono-tech">
-                Пункт 1
-              </div>
-            </div>
-
-            <div class="group relative rounded-xl sm:rounded-2xl bg-neutral-900 text-white p-4 sm:p-6 flex flex-col justify-between hover:bg-black transition-all duration-300 hover:-translate-y-1 shadow-xl">
-              <div>
-                <div class="flex items-center justify-between mb-3 sm:mb-5">
-                  <span class="text-[10px] sm:text-xs font-mono-tech text-red-400 font-bold uppercase tracking-wider">ПУНКТ 02</span>
-                  <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-red-600/30 text-red-400 font-mono-tech flex items-center justify-center text-[10px] sm:text-xs font-bold">02</span>
-                </div>
-                <h3 class="text-sm sm:text-base font-black uppercase text-white font-unbounded mb-1.5 sm:mb-2">ПУНКТ 2</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">
-                  Информация по пункту 2 будет добавлена в ближайшее время.
-                </p>
-              </div>
-              <div class="mt-4 sm:mt-6 pt-2.5 sm:pt-3 border-t border-white/10 text-[10px] text-neutral-500 font-mono-tech">
-                Пункт 2
-              </div>
-            </div>
-
-            <div class="group relative rounded-xl sm:rounded-2xl bg-neutral-900 text-white p-4 sm:p-6 flex flex-col justify-between hover:bg-black transition-all duration-300 hover:-translate-y-1 shadow-xl">
-              <div>
-                <div class="flex items-center justify-between mb-3 sm:mb-5">
-                  <span class="text-[10px] sm:text-xs font-mono-tech text-red-400 font-bold uppercase tracking-wider">ПУНКТ 03</span>
-                  <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-red-600/30 text-red-400 font-mono-tech flex items-center justify-center text-[10px] sm:text-xs font-bold">03</span>
-                </div>
-                <h3 class="text-sm sm:text-base font-black uppercase text-white font-unbounded mb-1.5 sm:mb-2">ПУНКТ 3</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">
-                  Информация по пункту 3 будет добавлена в ближайшее время.
-                </p>
-              </div>
-              <div class="mt-4 sm:mt-6 pt-2.5 sm:pt-3 border-t border-white/10 text-[10px] text-neutral-500 font-mono-tech">
-                Пункт 3
-              </div>
-            </div>
-
-          </div>
+          <div id="pub-history-book-mount" class="w-full"></div>
 
         </section>
 
-        <!-- ================= CARD 4: WHITE PRESENTATION SLIDE — ВЕЧЕРА & АКЦИИ (Slides over Story) ================= -->
+        <!-- ================= CARD 4: WHITE PRESENTATION SLIDE — НАШИ МЕРОПРИЯТИЯ (9:16 STORIES) ================= -->
         <section id="events-deck" class="deck-card canvas-white p-3.5 sm:p-8 lg:p-14 z-30">
-          
-          <div class="mb-3.5 sm:mb-8">
-            <div class="flex items-center gap-1.5 sm:gap-2.5 mb-1.5 sm:mb-2.5">
-              <span class="badge-asterisk">*</span>
-              <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-600">АТМОСФЕРА & СОБЫТИЯ</span>
-            </div>
-
-            <h2 class="text-sm xs:text-base sm:text-2xl lg:text-4xl font-black text-black uppercase tracking-tight font-unbounded leading-snug">
-              АТМОСФЕРНЫЕ ВЕЧЕРА <span class="headline-capsule">EVENTS</span> И АКЦИИ
-            </h2>
-            <p class="text-[11px] sm:text-xs text-neutral-600 font-mono-tech mt-1 sm:mt-2 max-w-xl leading-relaxed">
-              Каждую неделю у нас живые поводы собраться с друзьями за бокалом холодного крафта.
-            </p>
-          </div>
-
-          <!-- 4 Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-            
-            <div class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-lg">
-              <div>
-                <div class="px-2 py-0.5 rounded bg-red-600/30 text-red-400 text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase inline-block mb-2 sm:mb-3">АКЦИЯ 01</div>
-                <h3 class="text-sm sm:text-base font-bold text-white font-unbounded mb-1 sm:mb-1.5">АКЦИЯ 1</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">Подробности акции 1 будут опубликованы позже.</p>
-              </div>
-              <div class="mt-3.5 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[11px] sm:text-xs font-mono-tech text-red-400 font-bold">
-                <span>Акция 1</span>
-                <span>↗</span>
-              </div>
-            </div>
-
-            <div class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-lg">
-              <div>
-                <div class="px-2 py-0.5 rounded bg-amber-600/30 text-amber-400 text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase inline-block mb-2 sm:mb-3">АКЦИЯ 02</div>
-                <h3 class="text-sm sm:text-base font-bold text-white font-unbounded mb-1 sm:mb-1.5">АКЦИЯ 2</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">Подробности акции 2 будут опубликованы позже.</p>
-              </div>
-              <div class="mt-3.5 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[11px] sm:text-xs font-mono-tech text-amber-400 font-bold">
-                <span>Акция 2</span>
-                <span>↗</span>
-              </div>
-            </div>
-
-            <div class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-lg">
-              <div>
-                <div class="px-2 py-0.5 rounded bg-rose-600/30 text-rose-400 text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase inline-block mb-2 sm:mb-3">АКЦИЯ 03</div>
-                <h3 class="text-sm sm:text-base font-bold text-white font-unbounded mb-1 sm:mb-1.5">АКЦИЯ 3</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">Подробности акции 3 будут опубликованы позже.</p>
-              </div>
-              <div class="mt-3.5 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[11px] sm:text-xs font-mono-tech text-rose-400 font-bold">
-                <span>Акция 3</span>
-                <span>↗</span>
-              </div>
-            </div>
-
-            <div class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-lg">
-              <div>
-                <div class="px-2 py-0.5 rounded bg-emerald-600/30 text-emerald-400 text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase inline-block mb-2 sm:mb-3">АКЦИЯ 04</div>
-                <h3 class="text-sm sm:text-base font-bold text-white font-unbounded mb-1 sm:mb-1.5">АКЦИЯ 4</h3>
-                <p class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech leading-relaxed">Подробности акции 4 будут опубликованы позже.</p>
-              </div>
-              <div class="mt-3.5 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[11px] sm:text-xs font-mono-tech text-emerald-400 font-bold">
-                <span>Акция 4</span>
-                <span>↗</span>
-              </div>
-            </div>
-
-          </div>
-
+          <div id="events-posters-mount" class="w-full"></div>
         </section>
 
         <!-- ================= CARD 5: WHITE PRESENTATION SLIDE — ОТЗЫВЫ ИЗ ЯНДЕКС КАРТ ================= -->
@@ -727,7 +688,17 @@
 
         </section>
 
-        <!-- ================= CARD 6: DARK LUXURY CARD — БРОНЬ СТОЛИКА & КОНТАКТЫ (Slides over Reviews) ================= -->
+        <!-- ================= CARD 5b: DARK LUXURY CARD — БОЛЕЕМ ЗА НАШИХ (MORECAMBE F.C.) ================= -->
+        <section id="morecambe-deck" class="deck-card canvas-dark p-3.5 sm:p-8 lg:p-14 z-42">
+          <div id="morecambe-mount"></div>
+        </section>
+
+        <!-- ================= CARD 6: WHITE PRESENTATION SLIDE — АТМОСФЕРА ПАБА & ФОТОГАЛЕРЕЯ ================= -->
+        <section id="atmosphere-deck" class="deck-card canvas-white p-3.5 sm:p-8 lg:p-14 z-45">
+          <div id="atmosphere-deck-mount"></div>
+        </section>
+
+        <!-- ================= CARD 7: DARK LUXURY CARD — БРОНЬ СТОЛИКА & КОНТАКТЫ ================= -->
         <section id="booking-deck" class="deck-card canvas-dark p-3.5 sm:p-8 lg:p-14 z-50 mb-16 sm:mb-28">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center my-auto">
             
@@ -794,16 +765,22 @@
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Дата</label>
+                      <label for="booking-date" class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Дата</label>
                       <input 
+                        id="booking-date"
+                        name="booking_date"
                         type="date" 
                         required 
                         class="w-full px-4 py-3.5 rounded-xl bg-neutral-950 border border-red-500/20 text-xs text-white font-mono-tech focus:outline-none focus:border-red-500 transition-colors"
                       />
                     </div>
                     <div>
-                      <label class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Время</label>
-                      <select class="w-full px-4 py-3.5 rounded-xl bg-neutral-950 border border-red-500/20 text-xs text-white font-mono-tech focus:outline-none focus:border-red-500 transition-colors">
+                      <label for="booking-time" class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Время</label>
+                      <select 
+                        id="booking-time"
+                        name="booking_time"
+                        class="w-full px-4 py-3.5 rounded-xl bg-neutral-950 border border-red-500/20 text-xs text-white font-mono-tech focus:outline-none focus:border-red-500 transition-colors"
+                      >
                         <option>15:00</option>
                         <option>15:30</option>
                         <option>16:00</option>
@@ -896,6 +873,37 @@
         </div>
       </div>
     </div>
+
+    <!-- Rich Dish Detail Modal (Opened from FoodTicker & Menu Dish Cards) -->
+    <div
+      id="dish-detail-modal"
+      data-lenis-prevent
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dish-modal-title"
+      class="fixed inset-0 z-[85] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto"
+    >
+      <div
+        id="dish-modal-dialog"
+        class="relative bg-neutral-950 text-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-[0_0_80px_rgba(255,30,39,0.45)] border border-red-500/40 overflow-hidden my-auto transform transition-transform duration-300 scale-95"
+      >
+        <button
+          id="dish-modal-close"
+          type="button"
+          aria-label="Закрыть карточку блюда"
+          class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/75 hover:bg-red-600 text-white border border-white/20 flex items-center justify-center text-base font-bold transition-colors cursor-pointer backdrop-blur-md"
+        >
+          ✕
+        </button>
+
+        <div id="dish-modal-content">
+          <!-- Populated dynamically by openDishModal() -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Atmosphere Gallery Modal Root -->
+    <div id="atmosphere-gallery-modal-root"></div>
 
     <!-- Main Module Script -->
   </body>
