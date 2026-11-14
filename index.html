@@ -21,8 +21,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-CXv0a9eS.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-BPRU4YdT.css">
+    <script type="module" crossorigin src="./index-1Ry-4Yzb.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-C8n3xyMc.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -43,18 +43,23 @@
       <div class="max-w-[1320px] mx-auto flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-2xl header-glass">
         
         <!-- Left: Official Shield Logo + Brand Name (Always Visible) -->
-        <a href="#hero" class="flex items-center gap-2 sm:gap-3 group shrink-0">
+        <a href="#hero" class="flex items-center gap-2 sm:gap-2.5 group shrink-0" aria-label="Shrimp Pub - Главная">
           <img 
             src="./logo-Ce5GVdeg.png" 
             alt="ShrimpPub Saint-P" 
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="h-7 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,30,39,0.35)] group-hover:scale-105 transition-transform duration-300" 
+            class="h-7 sm:h-9 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,30,39,0.35)] group-hover:scale-105 transition-transform duration-300" 
           />
-          <span class="text-xs sm:text-sm font-black tracking-tight uppercase text-white font-unbounded leading-none flex items-center">
-            SHRIMP<span class="text-red-500">PUB</span>
-          </span>
+          <div class="flex items-center gap-1.5 leading-none select-none">
+            <span class="text-xs sm:text-sm font-black tracking-wider uppercase text-white font-unbounded">
+              SHRIMP
+            </span>
+            <span class="px-1.5 sm:px-2 py-0.5 rounded-md bg-gradient-to-r from-red-600 to-red-700 text-white font-black text-[10px] sm:text-xs font-unbounded tracking-wider shadow-[0_0_12px_rgba(255,30,39,0.55)] border border-red-400/40 group-hover:shadow-[0_0_18px_rgba(255,30,39,0.8)] transition-shadow duration-300">
+              PUB
+            </span>
+          </div>
         </a>
 
         <!-- Center: Navigation (Desktop) -->
@@ -161,9 +166,16 @@
     >
       <!-- Drawer Top Bar -->
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
-        <a href="#hero" data-mobile-nav class="flex items-center gap-3">
-          <img src="./logo-Ce5GVdeg.png" alt="ShrimpPub" class="h-9 w-auto" />
-          <span class="text-sm font-black text-white font-unbounded">SHRIMP<span class="text-red-500">PUB</span></span>
+        <a href="#hero" data-mobile-nav class="flex items-center gap-2.5">
+          <img src="./logo-Ce5GVdeg.png" alt="ShrimpPub" class="h-8 w-auto" />
+          <div class="flex items-center gap-1.5 leading-none select-none">
+            <span class="text-sm font-black tracking-wider uppercase text-white font-unbounded">
+              SHRIMP
+            </span>
+            <span class="px-2 py-0.5 rounded-md bg-gradient-to-r from-red-600 to-red-700 text-white font-black text-xs font-unbounded tracking-wider shadow-[0_0_12px_rgba(255,30,39,0.55)] border border-red-400/40">
+              PUB
+            </span>
+          </div>
         </a>
         <button 
           id="btn-close-mobile-menu" 
