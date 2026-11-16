@@ -21,8 +21,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-DJaR_pDJ.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-BhXArE6G.css">
+    <script type="module" crossorigin src="./index-Dd-rUJ_-.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-CFH5CL0j.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -39,24 +39,24 @@
     <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- ==================== REDESIGNED HEADER ==================== -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 py-3">
-      <div class="max-w-[1320px] mx-auto flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-2xl header-glass">
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 px-2 sm:px-6 py-2 sm:py-3">
+      <div class="max-w-[1320px] mx-auto flex items-center justify-between px-3 sm:px-6 py-2 sm:py-2.5 rounded-2xl header-glass">
         
-        <!-- Left: Official Shield Logo + Brand Name (Always Visible) -->
-        <a href="#hero" class="flex items-center gap-2 sm:gap-2.5 group shrink-0" aria-label="Shrimp Pub - Главная">
+        <!-- Left: Official Shield Logo + Brand Name (Always Visible & Responsive) -->
+        <a href="#hero" class="flex items-center gap-1.5 sm:gap-2.5 group shrink-0" aria-label="Shrimp Pub - Главная">
           <img 
             src="./logo-Ce5GVdeg.png" 
             alt="ShrimpPub Saint-P" 
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="h-7 sm:h-9 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,30,39,0.35)] group-hover:scale-105 transition-transform duration-300" 
+            class="h-6 sm:h-9 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,30,39,0.35)] group-hover:scale-105 transition-transform duration-300" 
           />
-          <div class="flex items-center gap-1.5 leading-none select-none">
-            <span class="text-xs sm:text-sm font-black tracking-wider uppercase text-white font-unbounded">
+          <div class="flex items-center gap-1 sm:gap-1.5 leading-none select-none">
+            <span class="text-[11px] sm:text-sm font-black tracking-wider uppercase text-white font-unbounded">
               SHRIMP
             </span>
-            <span class="px-1.5 sm:px-2 py-0.5 rounded-md bg-gradient-to-r from-red-600 to-red-700 text-white font-black text-[10px] sm:text-xs font-unbounded tracking-wider shadow-[0_0_12px_rgba(255,30,39,0.55)] border border-red-400/40 group-hover:shadow-[0_0_18px_rgba(255,30,39,0.8)] transition-shadow duration-300">
+            <span class="px-1.5 sm:px-2 py-0.5 rounded-md bg-gradient-to-r from-red-600 to-red-700 text-white font-black text-[9px] sm:text-xs font-unbounded tracking-wider shadow-[0_0_12px_rgba(255,30,39,0.55)] border border-red-400/40 group-hover:shadow-[0_0_18px_rgba(255,30,39,0.8)] transition-shadow duration-300">
               PUB
             </span>
           </div>
@@ -79,12 +79,12 @@
           </button>
         </nav>
 
-        <!-- Right: Actions (Delivery & Pickup buttons on Mobile & Desktop, sound/game hidden on mobile) -->
-        <div class="flex items-center gap-1 sm:gap-2">
-          <!-- Delivery Lock (Bright grey lock directly on inscription) -->
+        <!-- Right: Actions (Adaptive: clean & unclipped on mobile, full on tablet/desktop) -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <!-- Delivery Lock (Tablet & Desktop: hidden on narrow mobile to prevent header overflow) -->
           <button 
             id="btn-delivery-lock" 
-            class="relative group px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer flex items-center justify-center select-none"
+            class="relative group hidden md:inline-flex px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer items-center justify-center select-none"
             title="Доставка пока недоступна"
           >
             <span class="relative inline-flex items-center justify-center">
@@ -103,10 +103,10 @@
             </span>
           </button>
 
-          <!-- Pickup Half-Lock (Bright grey half-open lock directly on inscription) -->
+          <!-- Pickup Half-Lock (Tablet & Desktop: hidden on narrow mobile to prevent header overflow) -->
           <button 
             id="btn-pickup-halflock" 
-            class="relative group px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer flex items-center justify-center select-none"
+            class="relative group hidden md:inline-flex px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer items-center justify-center select-none"
             title="Самовывоз скоро"
           >
             <span class="relative inline-flex items-center justify-center">
@@ -125,10 +125,10 @@
             </span>
           </button>
 
-          <!-- Booking CTA (Desktop/Tablet) -->
+          <!-- Booking CTA (Prominent on ALL screen sizes: compact on mobile, full on tablet/desktop) -->
           <a 
             href="#booking-deck" 
-            class="btn-magnetic hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[11px] font-black uppercase font-unbounded tracking-wider transition-all"
+            class="btn-magnetic inline-flex items-center gap-1 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[10px] sm:text-[11px] font-black uppercase font-unbounded tracking-wider transition-all shrink-0 shadow-[0_0_15px_rgba(255,30,39,0.35)]"
           >
             Бронь ↗
           </a>
@@ -136,7 +136,7 @@
           <!-- Sound Toggle (Desktop only: hidden on mobile) -->
           <button 
             id="btn-sound-toggle" 
-            class="hidden lg:flex w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 text-neutral-300 hover:text-white items-center justify-center text-xs transition-all"
+            class="hidden lg:flex w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 text-neutral-300 hover:text-white items-center justify-center text-xs transition-all shrink-0"
             title="Фоновая музыка: Gerry & The Pacemakers — You'll Never Walk Alone"
           >
             <span id="sound-icon">🎵</span>
@@ -145,7 +145,7 @@
           <!-- Hamburger Toggle (Mobile / Tablet < lg) -->
           <button 
             id="btn-mobile-menu-toggle" 
-            class="lg:hidden w-8 h-8 rounded-lg bg-white/8 hover:bg-white/15 border border-white/12 text-white flex flex-col items-center justify-center gap-1 p-1.5 transition-all shrink-0"
+            class="lg:hidden w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white flex flex-col items-center justify-center gap-1 p-1.5 transition-all shrink-0 cursor-pointer"
             aria-label="Навигация"
             title="Меню навигации"
           >
@@ -154,6 +154,7 @@
             <span class="burger-bar-3 w-4 h-[2px] bg-white rounded-full transition-all duration-300"></span>
           </button>
         </div>
+
       </div>
     </header>
 
@@ -485,19 +486,24 @@
               Свежий розлив с правильной карбонизацией, мягкий азотный стаут, баварская пшеничная классика и бельгийские кислые эли.
             </p>
 
-            <!-- Explicit Swipe Cue Pill: ONLY 'СВАЙПАЙТЕ ВЛЕВО ➔' as requested -->
-            <div id="menu-swipe-hint" class="mt-4 flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-red-500/10 via-amber-500/10 to-transparent border border-red-500/30 select-none cursor-pointer hover:border-red-500 transition-colors">
-              <div class="flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-                <span class="text-xs sm:text-sm font-black uppercase font-unbounded text-red-700">
-                  СВАЙПАЙТЕ ВЛЕВО ➔
+            <!-- Explicit Swipe Cue Pill: Bidirectional swipe cue (Left & Right) with arrows -->
+            <div id="menu-swipe-hint" class="mt-4 flex items-center justify-between p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-r from-red-500/15 via-red-500/5 to-red-500/15 border border-red-500/35 select-none cursor-pointer hover:border-red-500 transition-colors shadow-sm" title="Листайте разделы меню в любую сторону (13 разделов по кругу)">
+              <div class="flex items-center gap-1 sm:gap-1.5 text-red-600 text-xs sm:text-sm font-black animate-pulse select-none">
+                <span>◀</span>
+                <span class="hidden xs:inline">←</span>
+              </div>
+              <div class="flex items-center justify-center gap-2 text-center min-w-0">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-ping shrink-0"></span>
+                <span class="text-[11px] sm:text-xs md:text-sm font-black uppercase font-unbounded text-red-700 tracking-tight truncate">
+                  СВАЙПАЙТЕ ВЛЕВО И ВПРАВО
                 </span>
-                <span class="hidden sm:inline text-xs font-mono-tech text-neutral-500">
-                  (листайте пальцем или стрелками)
+                <span class="hidden sm:inline text-[11px] font-mono-tech text-neutral-500 shrink-0">
+                  • 13 разделов по кругу
                 </span>
               </div>
-              <div class="text-red-600 text-sm font-bold animate-swipe-bounce">
-                ➔
+              <div class="flex items-center gap-1 sm:gap-1.5 text-red-600 text-xs sm:text-sm font-black animate-pulse select-none">
+                <span class="hidden xs:inline">→</span>
+                <span>▶</span>
               </div>
             </div>
 
