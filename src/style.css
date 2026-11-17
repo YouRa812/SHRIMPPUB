@@ -1,0 +1,702 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-frame: #060103;
+    --red-brand: #ff1e27;
+    --red-dark: #6e0007;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  html, body {
+    background-color: #060103;
+    color: #f3f3f3;
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: clip;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, .font-unbounded, .hero-title {
+    font-family: 'Unbounded', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono-tech {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* ==================== VIVID ACTIVE ANIMATED BACKGROUND ==================== */
+.page-bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #070104;
+}
+
+/* Background Film Grain Overlay */
+.bg-grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ==================== CUSTOM SCROLLBAR ==================== */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #060103;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff1e27;
+  border-radius: 9999px;
+}
+
+/* ==================== HERO TITLE (MASSIVE 3D CRAFT BADGE) ==================== */
+.hero-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 8.5vw, 10.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(0.5rem, 2vw, 2.5rem);
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  user-select: none;
+}
+
+.hero-title-shrimp {
+  color: #ffffff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.8);
+  display: inline-block;
+  line-height: 1;
+}
+
+.hero-title-badge-pub {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.15rem, 1vw, 1.2rem) clamp(0.7rem, 2.2vw, 3rem);
+  border-radius: clamp(0.75rem, 2vw, 2.4rem);
+  background: linear-gradient(135deg, #ff1e27 0%, #e11d48 50%, #b91c1c 100%);
+  border: clamp(2px, 0.35vw, 4px) solid rgba(255, 130, 140, 0.55);
+  box-shadow: 0 0 clamp(20px, 4vw, 55px) rgba(255, 30, 39, 0.65), inset 0 2px 10px rgba(255, 255, 255, 0.35);
+  transform: rotate(-1deg);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.hero-title-badge-pub:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 0 0 clamp(30px, 5vw, 80px) rgba(255, 30, 39, 0.85), inset 0 2px 14px rgba(255, 255, 255, 0.5);
+}
+
+.hero-title-pub-text {
+  color: #ffffff;
+  font-size: 1em;
+  line-height: 0.9;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.65);
+  letter-spacing: -0.02em;
+  display: inline-block;
+}
+
+/* Ensure hero and mascot shrimp are strictly 100% opaque and never fade/turn transparent */
+#hero,
+#hero-shrimp-container,
+#hero-shrimp-img {
+  opacity: 1 !important;
+}
+
+/* ==================== CONTENT CARDS (NATURAL FLOW & CINEMATIC FADE-UP) ==================== */
+#smooth-content {
+  position: relative;
+  width: 100%;
+}
+
+.deck-card {
+  position: relative;
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  border-radius: 36px;
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  opacity: 1 !important;
+  background-clip: padding-box;
+  will-change: transform, opacity;
+}
+
+@media (min-width: 769px) and (max-width: 1360px) {
+  .deck-card {
+    width: calc(100% - 32px);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 28px;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .deck-card {
+    width: calc(100% - 16px);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    box-shadow:
+      0 15px 40px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+    margin-bottom: 2rem;
+  }
+}
+
+/* Vinyl Disc Hover Spin */
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.group\/vinyl:hover .vinyl-disc {
+  animation: vinyl-spin 3s linear infinite;
+}
+
+/* Card Container (Clean flat layout without 3D tilt/parallax) */
+.beer-tilt-card {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.beer-tilt-card:hover {
+  box-shadow: 0 15px 35px -10px rgba(255, 30, 39, 0.2), 0 0 15px rgba(255, 30, 39, 0.08);
+}
+
+/* White Canvas Section */
+.canvas-white {
+  background-color: #faf8f9;
+  color: #0b0709;
+}
+
+/* ==================== DESKTOP PEEKING SHRIMP ("vkusno.png") ==================== */
+/* On desktop (>= 1024px), it holds onto the right border of #menu-deck with its claws */
+.peeking-shrimp-container {
+  display: none;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes peeking-breathe {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0.8deg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .peeking-shrimp-container {
+    display: block;
+    position: absolute;
+    top: 55px;
+    left: calc(100% - 19px);
+    width: 250px;
+    z-index: 35;
+  }
+  .peeking-shrimp-img {
+    transform-origin: 7.6% 55%;
+    animation: peeking-breathe 4s ease-in-out infinite;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.75));
+  }
+}
+
+@media (min-width: 1400px) {
+  .peeking-shrimp-container {
+    top: 65px;
+    left: calc(100% - 22px);
+    width: 290px;
+  }
+}
+
+/* ==================== MOBILE TOP PEEKING SHRIMP ("vkusnomob.png") ==================== */
+/* Mounted on top of #menu-deck with claws gripping the top white border */
+.mobile-top-shrimp-container {
+  display: block;
+  position: absolute;
+  top: -122px;
+  right: 8px;
+  width: 170px;
+  z-index: 35;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 380px) {
+  .mobile-top-shrimp-container {
+    top: -108px;
+    right: 4px;
+    width: 150px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1023px) {
+  .mobile-top-shrimp-container {
+    top: -142px;
+    right: 16px;
+    width: 198px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-top-shrimp-container {
+    display: none !important;
+  }
+}
+
+.mobile-top-shrimp-img {
+  transform-origin: 50% 90%;
+  animation: top-shrimp-breathe 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.7));
+}
+
+@keyframes top-shrimp-breathe {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.8deg);
+  }
+}
+
+/* Dark Velvet Canvas Section */
+.canvas-dark {
+  background: radial-gradient(circle at 50% 30%, #360207 0%, #150003 50%, #060103 90%);
+  color: #f3f3f3;
+  border: 1px solid rgba(255, 30, 39, 0.35);
+}
+
+/* Graphic Capsule Badge inside Headlines */
+.headline-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.65rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ff1e27 0%, #9e0009 100%);
+  color: #ffffff;
+  font-size: 0.45em;
+  vertical-align: middle;
+  box-shadow: 0 0 16px rgba(255, 30, 39, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transform: translateY(-0.1em);
+}
+
+/* Red Star Asterisk Badge */
+.badge-asterisk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: #ff1e27;
+  color: white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  line-height: 1;
+  box-shadow: 0 0 20px rgba(255, 30, 39, 0.6);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .badge-asterisk {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.75rem;
+    box-shadow: 0 0 10px rgba(255, 30, 39, 0.4);
+  }
+}
+
+/* Mobile Menu Hamburger Active Transformation */
+#btn-mobile-menu-toggle.is-active .burger-bar-1 {
+  transform: translateY(5px) rotate(45deg);
+}
+#btn-mobile-menu-toggle.is-active .burger-bar-2 {
+  opacity: 0;
+}
+#btn-mobile-menu-toggle.is-active .burger-bar-3 {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* Mobile Drawer Open State */
+#mobile-nav-drawer.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Pill Tabs */
+.menu-pill {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu-pill.active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Magnetic Buttons */
+.btn-magnetic {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.btn-magnetic:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 30, 39, 0.4);
+}
+
+/* Header Glass */
+.header-glass {
+  background: rgba(6, 1, 3, 0.8);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Nav Link Hover */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #ff1e27;
+  border-radius: 1px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-50%);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.nav-link:hover {
+  color: #ff1e27;
+}
+
+/* No scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==================== BEER BARREL & TAP POUR ANIMATIONS ==================== */
+/* Engraved burnt wood text effect for barrel plate */
+.plate-engraved-text {
+  color: #2b1102;
+  text-shadow: 
+    0 1px 1px rgba(255, 230, 180, 0.45),
+    0 -1px 1px rgba(0, 0, 0, 0.9);
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* Fluid Stream Animation: subtle organic wave vibration without any blocky stripes */
+@keyframes fluid-stream-flow {
+  0%, 100% {
+    transform: translateX(-50%) scaleX(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateX(-50%) scaleX(1.08);
+    filter: brightness(1.06);
+  }
+}
+
+/* Air stream from tap nozzle to top of drink card */
+.barrel-tap-stream {
+  display: none !important;
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 36px;
+  border-radius: 4px;
+  z-index: 35;
+  pointer-events: none;
+}
+
+.barrel-tap-stream.stream-active {
+  display: block !important;
+  animation: fluid-stream-flow 0.16s ease-in-out infinite;
+}
+
+/* Stream continuation inside drink, extending all the way to the bottom.
+   z-index: 5 places it on a layer BELOW the rising beer (liquid layer is z-index: 10)! */
+.drink-flow-column {
+  display: none !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9px;
+  border-radius: 4px;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.drink-flow-column.flow-active {
+  display: block !important;
+  animation: fluid-stream-flow 0.16s ease-in-out infinite;
+}
+
+/* Natural craft beer cylindrical gradients — smooth 3D fluid column with NO horizontal stripes/rectangles! */
+.stream-light, .flow-light {
+  background: linear-gradient(
+    to right,
+    #b45309 0%,
+    #d97706 20%,
+    #f59e0b 50%,
+    #d97706 80%,
+    #b45309 100%
+  );
+  box-shadow: 0 0 3px rgba(180, 83, 9, 0.35);
+}
+
+.stream-dark, .flow-dark {
+  background: linear-gradient(
+    to right,
+    #100500 0%,
+    #1f0b02 20%,
+    #381504 50%,
+    #1f0b02 80%,
+    #100500 100%
+  );
+  box-shadow: 0 0 3px rgba(16, 5, 0, 0.45);
+}
+
+/* Full Card Authentic Dark Oak Tavern Wood */
+.beer-card-wood {
+  position: relative;
+  background-color: #2b180d;
+  background-image: url('./card_wood_dark.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 
+    0 12px 32px -6px rgba(0, 0, 0, 0.45), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.15), 
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.beer-card-wood::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 220, 160, 0.08) 0%, rgba(15, 7, 2, 0.45) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Effervescent Rising Bubbles */
+@keyframes rise-bubble {
+  0% { transform: translateY(100%) scale(0.3); opacity: 0; }
+  20% { opacity: 0.85; }
+  80% { opacity: 0.85; }
+  100% { transform: translateY(-20%) scale(1.1); opacity: 0; }
+}
+.beer-bubble {
+  position: absolute;
+  border-radius: 9999px;
+  animation: rise-bubble 2s ease-in infinite;
+  pointer-events: none;
+}
+
+/* ==================== SWIPER MENU & FOOD TILES ==================== */
+@keyframes swipe-bounce-x {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+.animate-swipe-bounce {
+  animation: swipe-bounce-x 1.2s ease-in-out infinite;
+}
+
+.menu-pill-chip {
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.menu-pill-chip.active {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
+}
+
+.menu-dish-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px -2px rgba(0,0,0,0.06);
+}
+.menu-dish-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -4px rgba(0,0,0,0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+@keyframes dish-card-highlight {
+  0%, 100% {
+    border-color: rgba(255, 30, 39, 0.95);
+    box-shadow: 0 0 0 2px rgba(255, 30, 39, 0.45), 0 0 28px rgba(255, 30, 39, 0.55);
+  }
+  50% {
+    border-color: rgba(245, 158, 11, 0.95);
+    box-shadow: 0 0 0 6px rgba(255, 30, 39, 0.22), 0 0 42px rgba(245, 158, 11, 0.65);
+  }
+}
+
+.dish-highlight-pulse {
+  border-color: #ff1e27 !important;
+  animation: dish-card-highlight 0.85s ease-in-out 3;
+}
+
+/* ==================== PUB HISTORY BOOK (ST-PAGE-FLIP 3D ENGINE) ==================== */
+.book-flip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  position: relative;
+  width: 100%;
+}
+
+.st-flip-book {
+  margin: 0 auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+}
+
+.pub-book-page {
+  background-color: #f7f2e7;
+  color: #140e0a;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.pub-book-page.cover-page {
+  background-color: #180507;
+}
+
+.pub-book-page.cover-page.cover-page-front {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.pub-book-page.paper-page,
+.pub-book-page.inside-cover-page {
+  background: #f7f2e7 url('./kraft_paper.webp') center/cover no-repeat;
+  color: #140e0a;
+}
+
+/* ==================== INFINITE MARQUEE SCROLLERS ==================== */
+@keyframes marquee-infinite-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.food-marquee-track {
+  animation: marquee-infinite-left 34s linear infinite;
+}
+
+.food-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.atmosphere-marquee-track {
+  animation: marquee-infinite-left 36s linear infinite;
+}
+
+.atmosphere-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ==================== UTILITY STYLES ==================== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Clamp and safe padding for Mobile First */
+@media (max-width: 640px) {
+  .food-ticker-card,
+  .atmosphere-preview-card {
+    min-width: 200px;
+  }
+}
+
+/* ==================== VINYL TURNTABLE ANIMATIONS ==================== */
+@keyframes spin-vinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vinyl-spinning {
+  animation: spin-vinyl 1.8s linear infinite !important;
+  will-change: transform;
+}
+
+.vinyl-card:hover .vinyl-peeking-disc {
+  transform: translateX(12px) rotate(45deg);
+}
+
