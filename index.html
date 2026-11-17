@@ -21,8 +21,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-D3p40MFx.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-k6KLSqiv.css">
+    <script type="module" crossorigin src="./index-BWUviChW.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-N_xXiN1j.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -491,22 +491,16 @@
             </p>
 
             <!-- Explicit Swipe Cue Pill: Bidirectional swipe cue (Left & Right) with pure SVG arrows (ZERO emojis) -->
-            <div id="menu-swipe-hint" class="mt-4 flex items-center justify-between p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-r from-red-500/15 via-red-500/5 to-red-500/15 border border-red-500/35 select-none cursor-pointer hover:border-red-500 transition-colors shadow-sm" title="Листайте разделы меню в любую сторону (13 разделов по кругу)">
-              <div class="flex items-center gap-1 text-red-600 animate-pulse select-none shrink-0">
+            <div id="menu-swipe-hint" class="relative mt-4 flex items-center justify-center p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-r from-red-500/15 via-red-500/5 to-red-500/15 border border-red-500/35 select-none cursor-pointer hover:border-red-500 transition-colors shadow-sm" title="Листайте разделы меню в любую сторону">
+              <div class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 flex items-center text-red-600 animate-pulse select-none shrink-0 pointer-events-none">
                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-none stroke-current stroke-2 shrink-0 hidden xs:inline" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m7 7l-7-7 7-7"/></svg>
               </div>
-              <div class="flex items-center justify-center gap-2 text-center min-w-0">
-                <span class="w-2 h-2 rounded-full bg-red-500 animate-ping shrink-0"></span>
-                <span class="text-[11px] sm:text-xs md:text-sm font-black uppercase font-unbounded text-red-700 tracking-tight truncate">
+              <div class="flex items-center justify-center text-center px-7 sm:px-10 min-w-0">
+                <span class="text-[11px] sm:text-xs md:text-sm font-black uppercase font-unbounded text-red-700 tracking-wider truncate">
                   СВАЙПАЙТЕ ВЛЕВО И ВПРАВО
                 </span>
-                <span class="hidden sm:inline text-[11px] font-mono-tech text-neutral-500 shrink-0">
-                  • 13 разделов по кругу
-                </span>
               </div>
-              <div class="flex items-center gap-1 text-red-600 animate-pulse select-none shrink-0">
-                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-none stroke-current stroke-2 shrink-0 hidden xs:inline" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7l7 7-7 7"/></svg>
+              <div class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 flex items-center text-red-600 animate-pulse select-none shrink-0 pointer-events-none">
                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
               </div>
             </div>
