@@ -12,7 +12,6 @@ export class VinylPlayer {
     this.tracks = playlistTracks;
     this.currentIndex = 0;
     this.isPlaying = true; // Auto-play / spinning by default as master music source
-    this.rpm = 33.3; // 33.3 or 45
     this.crackleEnabled = true;
     this.currentTime = 0;
     this.duration = this.tracks[0].durationSeconds;
@@ -233,7 +232,7 @@ export class VinylPlayer {
                   class="relative z-10 w-[84%] h-[84%] rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.9),inset_0_0_25px_rgba(0,0,0,0.95)] flex items-center justify-center cursor-pointer select-none vinyl-spinning"
                   style="
                     animation-play-state: ${this.isPlaying ? 'running' : 'paused'};
-                    animation-duration: ${this.rpm === 45 ? '1.33s' : '1.8s'};
+                    animation-duration: 1.8s;
                     background: radial-gradient(circle, #0a0a0c 0%, #151518 15%, #050507 40%, #17171b 60%, #060608 85%, #121215 100%);
                     box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 45px rgba(0,0,0,0.95), inset 0 0 40px rgba(0,0,0,0.9);
                   "
@@ -282,7 +281,7 @@ export class VinylPlayer {
                       </span>
 
                       <span class="absolute bottom-1 text-[5px] font-mono-tech text-amber-300/60 uppercase tracking-widest">
-                        33 RPM STEREO
+                        HI-FI STEREO
                       </span>
                     `}
 
@@ -357,28 +356,12 @@ export class VinylPlayer {
                   <span>${this.isPlaying ? 'STOP MOTOR' : 'START MOTOR'}</span>
                 </button>
 
-                <!-- Speed Switch 33 / 45 RPM -->
-                <div class="flex items-center gap-1.5 bg-black/60 p-1 rounded-xl border border-white/10">
-                  <button 
-                    id="btn-rpm-33" 
-                    type="button" 
-                    class="px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all ${this.rpm === 33.3 ? 'bg-red-600 text-white shadow-sm' : 'text-neutral-400 hover:text-white'}"
-                  >
-                    33
-                  </button>
-                  <button 
-                    id="btn-rpm-45" 
-                    type="button" 
-                    class="px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all ${this.rpm === 45 ? 'bg-red-600 text-white shadow-sm' : 'text-neutral-400 hover:text-white'}"
-                  >
-                    45
-                  </button>
-                </div>
-
-                <!-- Pitch / Power Indicator -->
-                <div class="hidden xs:flex flex-col items-end text-right">
-                  <span class="text-[9px] font-mono-tech uppercase text-neutral-500">PITCH LOCK</span>
-                  <span class="text-[11px] font-mono-tech font-bold text-emerald-400">±0.0% QUARTZ</span>
+                <!-- Status / Power Indicator -->
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/60 border border-white/10">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-[10px] sm:text-xs font-mono-tech font-bold text-emerald-400">QUARTZ DIRECT DRIVE</span>
+                  </div>
                 </div>
               </div>
 
@@ -594,9 +577,6 @@ export class VinylPlayer {
                           <div class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/80 text-white font-mono-tech text-[9px] font-bold border border-white/20">
                             #${String(t.id).padStart(2, '0')}
                           </div>
-                          <div class="absolute bottom-1.5 right-2 px-1.5 py-0.5 rounded bg-red-950/80 text-red-300 font-mono-tech text-[8px] font-bold border border-red-500/30 whitespace-nowrap">
-                            ${t.rpm || '33 RPM'}
-                          </div>
                         </div>
                       ` : `
                         <!-- Styled Album Jacket (Solid Opaque - Single Clean Logo) -->
@@ -605,7 +585,7 @@ export class VinylPlayer {
                         >
                           <div class="flex items-center justify-between text-[9px] font-mono-tech">
                             <span class="px-1.5 py-0.5 rounded bg-black/70 text-white font-bold">#${String(t.id).padStart(2, '0')}</span>
-                            <span class="text-neutral-400 font-mono-tech text-[8px] whitespace-nowrap">${t.rpm || '33 RPM'}</span>
+                            <span class="text-neutral-400 font-mono-tech text-[8px] whitespace-nowrap">${t.side}</span>
                           </div>
 
                           <!-- Single Clean Center Artwork / Logo -->
@@ -684,17 +664,7 @@ export class VinylPlayer {
       btnNext.addEventListener('click', () => this.nextTrack());
     }
 
-    // 5. RPM Buttons
-    const btn33 = document.getElementById('btn-rpm-33');
-    const btn45 = document.getElementById('btn-rpm-45');
-    if (btn33) {
-      btn33.addEventListener('click', () => this.setRpm(33.3));
-    }
-    if (btn45) {
-      btn45.addEventListener('click', () => this.setRpm(45));
-    }
-
-    // 6. Timeline Scrubber
+    // 5. Timeline Scrubber
     const progressContainer = document.getElementById('progress-container');
     if (progressContainer) {
       progressContainer.addEventListener('click', (e) => {
@@ -829,26 +799,6 @@ export class VinylPlayer {
     this.updateProgressUI();
   }
 
-  setRpm(rpm) {
-    this.rpm = rpm;
-    const btn33 = document.getElementById('btn-rpm-33');
-    const btn45 = document.getElementById('btn-rpm-45');
-    if (btn33 && btn45) {
-      if (rpm === 33.3) {
-        btn33.className = 'px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm';
-        btn45.className = 'px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white';
-      } else {
-        btn45.className = 'px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm';
-        btn33.className = 'px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white';
-      }
-    }
-    // Adjust vinyl rotation speed
-    const vinyl = document.getElementById('vinyl-record');
-    if (vinyl) {
-      vinyl.style.animationDuration = rpm === 45 ? '1.33s' : '1.8s';
-    }
-  }
-
   toggleCrackle() {
     this.crackleEnabled = !this.crackleEnabled;
     const btn = document.getElementById('btn-toggle-crackle');
@@ -933,7 +883,7 @@ export class VinylPlayer {
 
     if (vinyl) {
       vinyl.style.setProperty('animation-play-state', this.isPlaying ? 'running' : 'paused');
-      vinyl.style.setProperty('animation-duration', this.rpm === 45 ? '1.33s' : '1.8s');
+      vinyl.style.setProperty('animation-duration', '1.8s');
     }
 
     if (strobeRim) {
