@@ -1501,7 +1501,13 @@ function renderReviewsCarousel() {
               </div>
             </div>
             <div class="flex items-center gap-1 bg-black/40 px-2 py-0.5 rounded-lg border border-white/5">
-              <span class="text-amber-400 text-xs">★★★★★</span>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
               <span class="text-[9px] font-bold text-amber-300 font-mono-tech">5.0</span>
             </div>
           </div>
@@ -1524,7 +1530,7 @@ function renderReviewsCarousel() {
             class="text-amber-400 hover:underline flex items-center gap-1 font-bold"
           >
             <span>Яндекс Карты</span>
-            <span>✓</span>
+            <svg class="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </a>
         </div>
       </div>
@@ -1575,7 +1581,13 @@ function renderReviewsCarousel() {
                   <div class="text-[9px] text-neutral-400 font-mono-tech">${rev.level}</div>
                 </div>
               </div>
-              <div class="text-amber-400 text-xs">★★★★★</div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
             </div>
             <p class="text-[11px] sm:text-xs text-neutral-300 leading-relaxed mb-3 font-mono-tech">"${rev.text}"</p>
             <div class="flex flex-wrap gap-1 mb-3">
@@ -1584,7 +1596,10 @@ function renderReviewsCarousel() {
           </div>
           <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono-tech text-neutral-400">
             <span>${rev.date}</span>
-            <span class="text-amber-400 font-bold">Яндекс Карты ✓</span>
+            <span class="text-amber-400 font-bold inline-flex items-center gap-1">
+              <span>Яндекс Карты</span>
+              <svg class="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
           </div>
         `;
         expandedGrid.appendChild(card);

@@ -711,3 +711,17 @@
   transform: translateX(12px) rotate(45deg);
 }
 
+/* Vinyl Crate Scroll Track & Glow Padding Containment */
+#vinyl-crate-track {
+  scroll-padding-left: 20px;
+  scroll-padding-right: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  #vinyl-crate-track {
+    scroll-padding-left: 32px;
+    scroll-padding-right: 32px;
+  }
+}
+

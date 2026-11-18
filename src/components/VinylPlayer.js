@@ -161,7 +161,7 @@ export class VinylPlayer {
     const track = this.getCurrentTrack();
 
     this.container.innerHTML = `
-      <div class="relative w-full overflow-hidden select-none">
+      <div class="relative w-full select-none">
         
         <!-- Section Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6">
@@ -556,14 +556,14 @@ export class VinylPlayer {
           <!-- Horizontal Scrollable Vinyl Crate / Carousel -->
           <div 
             id="vinyl-crate-track" 
-            class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pt-5 pb-5 px-3 sm:px-4 no-scrollbar snap-x snap-mandatory select-none"
+            class="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto py-7 sm:py-8 px-5 sm:px-8 no-scrollbar snap-x snap-mandatory select-none"
           >
             ${this.tracks.map((t, idx) => {
               const isCurrent = idx === this.currentIndex;
               return `
                 <div 
                   data-track-index="${idx}"
-                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border ${isCurrent ? 'border-red-500 shadow-[0_0_25px_rgba(255,30,39,0.4)]' : 'border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
+                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border-2 ${isCurrent ? 'border-red-500 shadow-[0_0_15px_rgba(255,30,39,0.45),inset_0_0_15px_rgba(255,30,39,0.22)] ring-1 ring-red-500/30' : 'border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
                 >
                   <!-- Active Indicator Badge (Anchored cleanly inside card: zero clipping) -->
                   ${isCurrent ? `
@@ -804,6 +804,10 @@ export class VinylPlayer {
     this.attachEvents();
     if (this.isPlaying) {
       this.play();
+    }
+    const activeCard = this.container.querySelector(`.vinyl-card[data-track-index="${index}"]`);
+    if (activeCard) {
+      activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   }
 
