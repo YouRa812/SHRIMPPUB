@@ -485,27 +485,6 @@ export class VinylPlayer {
 
               </div>
 
-              <!-- Volume Control Slider & Mute -->
-              <div class="flex items-center gap-3 pt-2 border-t border-white/5 text-neutral-400">
-                <button id="btn-toggle-mute" class="hover:text-white transition-colors cursor-pointer" title="Включить/выключить звук">
-                  <svg id="icon-volume" class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    ${this.isMuted || this.volume === 0
-                      ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>'
-                      : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>'}
-                  </svg>
-                </button>
-                <input 
-                  id="volume-slider" 
-                  type="range" 
-                  min="0" 
-                  max="1" 
-                  step="0.05" 
-                  value="${this.isMuted ? 0 : this.volume}"
-                  class="w-full accent-red-500 h-1.5 rounded-full bg-white/20 cursor-pointer"
-                  title="Громкость"
-                />
-              </div>
-
             </div>
 
 
@@ -659,17 +638,18 @@ export class VinylPlayer {
               
               <!-- Google Play Store Button -->
               <a 
-                href="https://play.google.com/store/apps/details?id=com.guslimusic.gusli" 
+                href="https://play.google.com/store/apps/details?id=ru.mobileup.gusliapp&ysclid=mwmf6hcbv275493932" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 class="w-full xs:w-auto flex items-center justify-center gap-3 px-5 py-3 rounded-2xl bg-black/80 hover:bg-neutral-900 border border-white/15 hover:border-red-500/50 shadow-lg hover:shadow-[0_0_20px_rgba(255,30,39,0.25)] transition-all duration-300 active:scale-95 group"
                 title="Скачать Gusli в Google Play"
               >
-                <svg class="w-6 h-6 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 512 512">
-                  <path fill="#00C1FF" d="M38.8 8.1C35.1 12 33 17.7 33 24.8v462.4c0 7.1 2.1 12.8 5.8 16.7l2.2 2.2L262 285.2v-58.4L41 5.9l-2.2 2.2z"/>
-                  <path fill="#FFD400" d="M336.8 360l-74.8-74.8v-58.4l74.8-74.8 1.7 1 88.6 50.4c25.3 14.4 25.3 38 0 52.4l-88.6 50.4-1.7 1z"/>
-                  <path fill="#FF3333" d="M338.5 359l-76.5-76.5-223.2 223.2c8.4 8.9 22.2 10 37.6 1.3l262.1-148z"/>
-                  <path fill="#00E676" d="M338.5 153L76.4 4.9C61-3.8 47.2-2.7 38.8 6.2L262 228.4l76.5-75.4z"/>
+                <!-- Official Google Play 2022 Brand Vector Icon -->
+                <svg class="w-6 h-6 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 28 32" fill="none">
+                  <path d="M13.54 15.28.12 29.34a3.64 3.64 0 0 0 5.33 2.16l15.1-8.6z" fill="#EA4335"/>
+                  <path d="m27.11 12.89-6.53-3.74-7.35 6.45 7.38 7.28 6.48-3.7a3.55 3.55 0 0 0 0-6.29z" fill="#FBBC04"/>
+                  <path d="M.12 2.66a3.46 3.46 0 0 0-.12.92v24.84a3.66 3.66 0 0 0 .12.92L14 15.64Z" fill="#4285F4"/>
+                  <path d="m13.64 16 6.94-6.85L5.5.51A3.72 3.72 0 0 0 3.63 0 3.64 3.64 0 0 0 .12 2.65Z" fill="#34A853"/>
                 </svg>
                 <div class="text-left">
                   <div class="text-[9px] uppercase tracking-wider text-neutral-400 font-mono-tech">Доступно в</div>
@@ -679,14 +659,15 @@ export class VinylPlayer {
 
               <!-- Apple App Store Button -->
               <a 
-                href="https://apps.apple.com/ru/app/gusli/id1246377771" 
+                href="https://apps.apple.com/ru/app/gusli/id1090409008" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 class="w-full xs:w-auto flex items-center justify-center gap-3 px-5 py-3 rounded-2xl bg-black/80 hover:bg-neutral-900 border border-white/15 hover:border-red-500/50 shadow-lg hover:shadow-[0_0_20px_rgba(255,30,39,0.25)] transition-all duration-300 active:scale-95 group"
                 title="Скачать Gusli в App Store"
               >
-                <svg class="w-6 h-6 fill-current text-white shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 170 170">
-                  <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.07-7.6-7.85-11.7-14.35-5.99-9.48-10.72-20.15-14.19-32.02-3.48-11.87-5.22-23.41-5.22-34.62 0-14.36 3.69-26.4 11.07-36.13 7.38-9.74 16.78-14.67 28.21-14.81 4.58 0 9.85 1.25 15.82 3.76 5.96 2.5 9.77 3.82 11.44 3.94 1.54 0 5.48-1.39 11.83-4.17 6.34-2.78 11.88-4.04 16.6-3.77 12.39.99 22.49 5.86 30.3 14.63-10.88 6.59-16.2 15.7-15.96 27.33.24 9.17 3.82 16.89 10.74 23.16 6.91 6.27 15.11 9.78 24.59 10.53-2.12 6.55-4.8 13.3-8.03 20.24zM119.22 31.84c0-7.39 2.66-14.34 7.97-20.85 5.32-6.52 11.89-10.51 19.72-11.99.23 1.23.35 2.22.35 2.97 0 7.39-2.78 14.52-8.35 21.41-5.57 6.89-12.28 10.96-20.14 12.21-.23-1.23-.35-2.22-.35-3.75z"/>
+                <!-- Official Apple Vector Logo -->
+                <svg class="w-6 h-6 fill-current text-white shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 814 1000">
+                  <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/>
                 </svg>
                 <div class="text-left">
                   <div class="text-[9px] uppercase tracking-wider text-neutral-400 font-mono-tech">Загрузите в</div>
