@@ -623,6 +623,82 @@ export class VinylPlayer {
 
         </div>
 
+        <!-- GUSLI APP CALLOUT BANNER -->
+        <div class="mt-8 sm:mt-12 p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-red-950/40 via-[#121216] to-amber-950/30 border border-red-500/25 shadow-[0_15px_40px_rgba(0,0,0,0.7),0_0_30px_rgba(255,30,39,0.1)] relative overflow-hidden">
+          
+          <!-- Background Ambient Glow Accents -->
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-red-600/10 blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-10 -top-10 w-48 h-48 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
+          <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Left Info Block -->
+            <div class="flex items-center sm:items-start gap-4 text-center sm:text-left flex-col sm:flex-row">
+              <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600 to-rose-700 items-center justify-center text-white shrink-0 shadow-[0_0_20px_rgba(255,30,39,0.4)] border border-red-400/40">
+                <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              </div>
+
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/15 border border-red-500/30 text-red-400 text-[10px] font-mono-tech uppercase tracking-wider mb-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                  <span>МУЗЫКАЛЬНЫЙ АВТОМАТ ПАБА</span>
+                </div>
+                
+                <h3 class="text-xl sm:text-2xl lg:text-3xl font-black text-white uppercase font-unbounded tracking-tight leading-tight">
+                  Скачай приложение Gusli и кайфони от своей песни.
+                </h3>
+                
+                <p class="text-xs sm:text-sm text-neutral-400 font-mono-tech mt-2 max-w-xl">
+                  Включай любимые треки в Shrimp Pub прямо со своего смартфона через музыкальный автомат Gusli в реальном времени.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: App Store & Google Play Download Buttons -->
+            <div class="flex flex-col xs:flex-row items-center justify-center gap-3 shrink-0 w-full md:w-auto">
+              
+              <!-- Google Play Store Button -->
+              <a 
+                href="https://play.google.com/store/apps/details?id=com.guslimusic.gusli" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="w-full xs:w-auto flex items-center justify-center gap-3 px-5 py-3 rounded-2xl bg-black/80 hover:bg-neutral-900 border border-white/15 hover:border-red-500/50 shadow-lg hover:shadow-[0_0_20px_rgba(255,30,39,0.25)] transition-all duration-300 active:scale-95 group"
+                title="Скачать Gusli в Google Play"
+              >
+                <svg class="w-6 h-6 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 512 512">
+                  <path fill="#00C1FF" d="M38.8 8.1C35.1 12 33 17.7 33 24.8v462.4c0 7.1 2.1 12.8 5.8 16.7l2.2 2.2L262 285.2v-58.4L41 5.9l-2.2 2.2z"/>
+                  <path fill="#FFD400" d="M336.8 360l-74.8-74.8v-58.4l74.8-74.8 1.7 1 88.6 50.4c25.3 14.4 25.3 38 0 52.4l-88.6 50.4-1.7 1z"/>
+                  <path fill="#FF3333" d="M338.5 359l-76.5-76.5-223.2 223.2c8.4 8.9 22.2 10 37.6 1.3l262.1-148z"/>
+                  <path fill="#00E676" d="M338.5 153L76.4 4.9C61-3.8 47.2-2.7 38.8 6.2L262 228.4l76.5-75.4z"/>
+                </svg>
+                <div class="text-left">
+                  <div class="text-[9px] uppercase tracking-wider text-neutral-400 font-mono-tech">Доступно в</div>
+                  <div class="text-xs sm:text-sm font-bold text-white font-unbounded whitespace-nowrap">Google Play</div>
+                </div>
+              </a>
+
+              <!-- Apple App Store Button -->
+              <a 
+                href="https://apps.apple.com/ru/app/gusli/id1246377771" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="w-full xs:w-auto flex items-center justify-center gap-3 px-5 py-3 rounded-2xl bg-black/80 hover:bg-neutral-900 border border-white/15 hover:border-red-500/50 shadow-lg hover:shadow-[0_0_20px_rgba(255,30,39,0.25)] transition-all duration-300 active:scale-95 group"
+                title="Скачать Gusli в App Store"
+              >
+                <svg class="w-6 h-6 fill-current text-white shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 170 170">
+                  <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.07-7.6-7.85-11.7-14.35-5.99-9.48-10.72-20.15-14.19-32.02-3.48-11.87-5.22-23.41-5.22-34.62 0-14.36 3.69-26.4 11.07-36.13 7.38-9.74 16.78-14.67 28.21-14.81 4.58 0 9.85 1.25 15.82 3.76 5.96 2.5 9.77 3.82 11.44 3.94 1.54 0 5.48-1.39 11.83-4.17 6.34-2.78 11.88-4.04 16.6-3.77 12.39.99 22.49 5.86 30.3 14.63-10.88 6.59-16.2 15.7-15.96 27.33.24 9.17 3.82 16.89 10.74 23.16 6.91 6.27 15.11 9.78 24.59 10.53-2.12 6.55-4.8 13.3-8.03 20.24zM119.22 31.84c0-7.39 2.66-14.34 7.97-20.85 5.32-6.52 11.89-10.51 19.72-11.99.23 1.23.35 2.22.35 2.97 0 7.39-2.78 14.52-8.35 21.41-5.57 6.89-12.28 10.96-20.14 12.21-.23-1.23-.35-2.22-.35-3.75z"/>
+                </svg>
+                <div class="text-left">
+                  <div class="text-[9px] uppercase tracking-wider text-neutral-400 font-mono-tech">Загрузите в</div>
+                  <div class="text-xs sm:text-sm font-bold text-white font-unbounded whitespace-nowrap">App Store</div>
+                </div>
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+
       </div>
     `;
   }
