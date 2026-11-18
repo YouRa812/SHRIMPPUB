@@ -520,7 +520,10 @@ export class PubHistoryBook {
                         class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono-tech font-bold text-xs uppercase tracking-wider shadow-lg transition-transform active:scale-95"
                       >
                         <span>Забронировать столик</span>
-                        <span>↗</span>
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
                       </a>
                     </div>
                   </div>

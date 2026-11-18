@@ -90,7 +90,7 @@ export class TrailerModal {
           >
             <svg class="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             <span>ПОСМОТРЕТЬ ТРЕЙЛЕР ПАБА</span>
-            <span class="text-red-200">↗</span>
+            <svg class="w-3.5 h-3.5 text-red-200 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
           </button>
 
           <!-- Button 2: Enter Site Directly -->
@@ -225,7 +225,7 @@ export class TrailerModal {
               title="Открыть видео напрямую в VK Видео"
             >
               <span>VK Видео</span>
-              <span class="text-xs">↗</span>
+              <svg class="w-3 h-3 text-neutral-400 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
 
             <!-- Close / Skip Button -->
@@ -276,7 +276,7 @@ export class TrailerModal {
             class="ml-auto px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-unbounded font-black text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95"
           >
             <span>Перейти на сайт</span>
-            <span>→</span>
+            <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>

@@ -753,7 +753,10 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
                         class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono-tech font-bold text-xs uppercase tracking-wider shadow-lg transition-transform active:scale-95"
                       >
                         <span>Забронировать столик</span>
-                        <span>↗</span>
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
                       </a>
                     </div>
                   </div>
@@ -1356,7 +1359,10 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
             class="btn-magnetic inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-black font-unbounded text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(255,30,39,0.4)] transition-all active:scale-95 shrink-0 w-full md:w-auto text-center"
           >
             <span>Забронировать стол на матч</span>
-            <span>↗</span>
+            <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
           </a>
         </div>
       </div>
@@ -1425,7 +1431,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
           >
             <svg class="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             <span>ПОСМОТРЕТЬ ТРЕЙЛЕР ПАБА</span>
-            <span class="text-red-200">↗</span>
+            <svg class="w-3.5 h-3.5 text-red-200 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
           </button>
 
           <!-- Button 2: Enter Site Directly -->
@@ -1469,7 +1475,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
               title="Открыть видео напрямую в VK Видео"
             >
               <span>VK Видео</span>
-              <span class="text-xs">↗</span>
+              <svg class="w-3 h-3 text-neutral-400 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
 
             <!-- Close / Skip Button -->
@@ -1520,7 +1526,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
             class="ml-auto px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-unbounded font-black text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95"
           >
             <span>Перейти на сайт</span>
-            <span>→</span>
+            <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
@@ -1582,7 +1588,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
                 <div class="absolute inset-2 sm:inset-3 rounded-full bg-gradient-to-br from-[#2a2b30] via-[#1c1d22] to-[#121316] border-4 border-[#3a3b42] shadow-[inset_0_0_20px_rgba(0,0,0,0.8),0_10px_30px_rgba(0,0,0,0.7)] flex items-center justify-center overflow-hidden">
                   
                   <!-- Strobe Edge Markings -->
-                  <div id="turntable-strobe-rim" class="absolute inset-0 rounded-full border-[6px] border-dashed border-neutral-600/30 pointer-events-none ${this.isPlaying?`animate-[spin_4s_linear_infinite]`:``}"></div>
+                  <div id="turntable-strobe-rim" class="absolute inset-0 rounded-full border-[6px] border-dashed border-neutral-600/30 pointer-events-none spin-strobe" style="animation-play-state: ${this.isPlaying?`running`:`paused`};"></div>
                   <div class="absolute inset-3 rounded-full border border-white/5 pointer-events-none"></div>
                   
                   <!-- Felt Slipmat Background -->
@@ -1594,8 +1600,10 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
                 <!-- VINYL RECORD (12" LP) -->
                 <div 
                   id="vinyl-record" 
-                  class="relative z-10 w-[84%] h-[84%] rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.9),inset_0_0_25px_rgba(0,0,0,0.95)] flex items-center justify-center cursor-pointer transition-transform duration-700 select-none ${this.isPlaying?`vinyl-spinning`:``}"
+                  class="relative z-10 w-[84%] h-[84%] rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.9),inset_0_0_25px_rgba(0,0,0,0.95)] flex items-center justify-center cursor-pointer select-none vinyl-spinning"
                   style="
+                    animation-play-state: ${this.isPlaying?`running`:`paused`};
+                    animation-duration: ${this.rpm===45?`1.33s`:`1.8s`};
                     background: radial-gradient(circle, #0a0a0c 0%, #151518 15%, #050507 40%, #17171b 60%, #060608 85%, #121215 100%);
                     box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 45px rgba(0,0,0,0.95), inset 0 0 40px rgba(0,0,0,0.9);
                   "
@@ -1912,16 +1920,16 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
           <!-- Horizontal Scrollable Vinyl Crate / Carousel -->
           <div 
             id="vinyl-crate-track" 
-            class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pb-4 pt-2 no-scrollbar snap-x snap-mandatory select-none"
+            class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pt-5 pb-5 px-3 sm:px-4 no-scrollbar snap-x snap-mandatory select-none"
           >
             ${this.tracks.map((e,t)=>{let n=t===this.currentIndex;return`
                 <div 
                   data-track-index="${t}"
-                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border ${n?`border-red-500 shadow-[0_0_25px_rgba(255,30,39,0.35)] scale-[1.02]`:`border-white/10 hover:border-white/30`} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
+                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border ${n?`border-red-500 shadow-[0_0_25px_rgba(255,30,39,0.4)]`:`border-white/10 hover:border-white/30`} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
                 >
-                  <!-- Active Indicator Badge -->
+                  <!-- Active Indicator Badge (Anchored cleanly inside card: zero clipping) -->
                   ${n?`
-                    <div class="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-red-600 text-white text-[9px] font-bold font-mono-tech tracking-wider uppercase shadow-md flex items-center gap-1 z-20">
+                    <div class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-red-600 text-white text-[9px] font-bold font-mono-tech tracking-wider uppercase shadow-md flex items-center gap-1 z-20">
                       <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
                       <span>В ПРОИГРЫВАТЕЛЕ</span>
                     </div>
@@ -1931,14 +1939,14 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
                   <div class="relative w-full aspect-square mb-3 flex items-center justify-start overflow-visible">
                     
                     <!-- Peeking Vinyl Disc (Black grooved disc sliding out to the right) -->
-                    <div class="absolute left-[20%] top-1/2 -translate-y-1/2 w-[70%] aspect-square rounded-full bg-gradient-to-br from-[#1c1c22] via-[#121215] to-[#08080a] border border-neutral-700 shadow-md transition-transform duration-300 pointer-events-none z-0 ${n?`translate-x-2`:`group-hover:translate-x-1.5`} flex items-center justify-center">
+                    <div class="absolute left-[18%] top-1/2 -translate-y-1/2 w-[68%] aspect-square rounded-full bg-gradient-to-br from-[#1c1c22] via-[#121215] to-[#08080a] border border-neutral-700 shadow-md transition-transform duration-300 pointer-events-none z-0 ${n?`translate-x-2`:`group-hover:translate-x-1.5`} flex items-center justify-center">
                       <!-- Fine concentric groove rings on peeking vinyl -->
                       <div class="absolute inset-0 rounded-full bg-[repeating-radial-gradient(circle_at_center,transparent_0,transparent_2px,rgba(255,255,255,0.03)_3px,transparent_4px)]"></div>
                     </div>
 
                     <!-- Album Sleeve Jacket Front (100% Solid & Opaque - No shine-through) -->
                     <div 
-                      class="relative z-10 w-[74%] aspect-square rounded-lg shadow-[4px_0_14px_rgba(0,0,0,0.85)] border border-white/10 overflow-hidden bg-[#121215] flex flex-col justify-between"
+                      class="relative z-10 w-[72%] aspect-square rounded-lg shadow-[4px_0_14px_rgba(0,0,0,0.85)] border border-white/10 overflow-hidden bg-[#121215] flex flex-col justify-between"
                     >
                       ${e.coverImg?`
                         <!-- Real Album Cover Artwork -->
@@ -1997,7 +2005,7 @@ var e=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports);(function
         </div>
 
       </div>
-    `}getTonearmAngle(){return this.isPlaying?18+(this.duration>0?this.currentTime/this.duration:0)*14:-30}attachEvents(){let e=document.getElementById(`btn-turntable-motor`);e&&e.addEventListener(`click`,()=>this.togglePlay());let t=document.getElementById(`vinyl-record`);t&&t.addEventListener(`click`,()=>this.togglePlay());let n=document.getElementById(`btn-play-pause`);n&&n.addEventListener(`click`,()=>this.togglePlay());let r=document.getElementById(`btn-prev-track`);r&&r.addEventListener(`click`,()=>this.prevTrack());let i=document.getElementById(`btn-next-track`);i&&i.addEventListener(`click`,()=>this.nextTrack());let a=document.getElementById(`btn-rpm-33`),o=document.getElementById(`btn-rpm-45`);a&&a.addEventListener(`click`,()=>this.setRpm(33.3)),o&&o.addEventListener(`click`,()=>this.setRpm(45));let s=document.getElementById(`progress-container`);s&&s.addEventListener(`click`,e=>{let t=s.getBoundingClientRect(),n=Math.max(0,Math.min(1,(e.clientX-t.left)/t.width));this.seek(n*this.duration)});let c=document.getElementById(`volume-slider`);c&&c.addEventListener(`input`,e=>{let t=parseFloat(e.target.value);this.setVolume(t)});let l=document.getElementById(`btn-toggle-mute`);l&&l.addEventListener(`click`,()=>this.toggleMute());let u=document.getElementById(`vinyl-crate-track`),d=document.getElementById(`btn-scroll-crate-left`),f=document.getElementById(`btn-scroll-crate-right`);u&&d&&f&&(d.addEventListener(`click`,()=>{u.scrollBy({left:-240,behavior:`smooth`})}),f.addEventListener(`click`,()=>{u.scrollBy({left:240,behavior:`smooth`})})),u&&u.addEventListener(`click`,e=>{let t=e.target.closest(`.vinyl-card`);if(!t)return;let n=parseInt(t.getAttribute(`data-track-index`),10);!isNaN(n)&&n!==this.currentIndex?this.selectTrack(n):!isNaN(n)&&n===this.currentIndex&&this.togglePlay()})}togglePlay(){this.isPlaying?this.pause():this.play()}play(){this.isPlaying=!0,s.isMusicPlaying=!0,s.muted=!1,s.notifyListeners(),this.playNeedleDropSound(),this.audioElement&&this.audioElement.play().catch(()=>{console.log(`Audio autoplay blocked, running in visual vinyl mode`)}),this.crackleGain&&this.crackleEnabled&&this.crackleGain.gain.setValueAtTime(.12,this.audioContext?.currentTime||0),this.startProgressTimer(),this.updateTurntableStateUI()}pause(){this.isPlaying=!1,s.isMusicPlaying=!1,s.muted=!0,s.notifyListeners(),this.audioElement&&this.audioElement.pause(),this.crackleGain&&this.crackleGain.gain.setValueAtTime(0,this.audioContext?.currentTime||0),this.stopProgressTimer(),this.updateTurntableStateUI()}selectTrack(e){if(e<0||e>=this.tracks.length)return;this.currentIndex=e;let t=this.getCurrentTrack();s.trackTitle=`${t.artist} — ${t.title}`,s.notifyListeners(),this.loadCurrentAudio(),this.render(),this.attachEvents(),this.isPlaying&&this.play()}prevTrack(){let e=(this.currentIndex-1+this.tracks.length)%this.tracks.length;this.selectTrack(e)}nextTrack(){let e=(this.currentIndex+1)%this.tracks.length;this.selectTrack(e)}seek(e){this.currentTime=Math.max(0,Math.min(e,this.duration)),this.audioElement&&this.audioElement.duration&&(this.audioElement.currentTime=this.currentTime),this.updateProgressUI()}setRpm(e){this.rpm=e;let t=document.getElementById(`btn-rpm-33`),n=document.getElementById(`btn-rpm-45`);t&&n&&(e===33.3?(t.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm`,n.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white`):(n.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm`,t.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white`));let r=document.getElementById(`vinyl-record`);r&&(r.style.animationDuration=e===45?`1.33s`:`1.8s`)}toggleCrackle(){this.crackleEnabled=!this.crackleEnabled;let e=document.getElementById(`btn-toggle-crackle`);e&&(e.className=`px-3 py-1.5 rounded-xl ${this.crackleEnabled?`bg-amber-950/70 text-amber-300 border-amber-500/40`:`bg-black/40 text-neutral-500 border-white/5`} border text-[11px] font-mono-tech font-bold transition-all hover:border-amber-400 flex items-center gap-1.5`),this.crackleGain&&this.crackleGain.gain.setValueAtTime(this.crackleEnabled&&this.isPlaying?.12:0,this.audioContext?.currentTime||0)}setVolume(e){this.volume=e,this.isMuted=e===0,this.audioElement&&(this.audioElement.volume=this.isMuted?0:this.volume)}toggleMute(){this.isMuted=!this.isMuted,this.audioElement&&(this.audioElement.volume=this.isMuted?0:this.volume);let e=document.getElementById(`volume-slider`);e&&(e.value=this.isMuted?0:this.volume)}startProgressTimer(){this.stopProgressTimer(),this.progressInterval=setInterval(()=>{if(this.isPlaying&&(!this.audioElement||this.audioElement.paused)){if(this.currentTime+=1,this.currentTime>=this.duration){this.nextTrack();return}this.updateProgressUI()}},1e3)}stopProgressTimer(){this.progressInterval&&=(clearInterval(this.progressInterval),null)}updateProgressUI(){let e=document.getElementById(`time-current`),t=document.getElementById(`time-total`),n=document.getElementById(`progress-bar`),r=document.getElementById(`tonearm-assembly`);if(e&&(e.textContent=this.formatTime(this.currentTime)),t&&(t.textContent=this.formatTime(this.duration)),n&&this.duration>0){let e=this.currentTime/this.duration*100;n.style.width=`${e}%`}r&&(r.style.transform=`rotate(${this.getTonearmAngle()}deg)`)}updateTurntableStateUI(){let e=document.getElementById(`vinyl-record`),t=document.getElementById(`turntable-strobe-rim`),n=document.getElementById(`tonearm-assembly`),r=document.getElementById(`btn-turntable-motor`),i=document.getElementById(`btn-play-pause`),a=document.getElementById(`vinyl-status-led`),o=document.getElementById(`vinyl-status-text`);e&&(this.isPlaying?(e.classList.add(`vinyl-spinning`),e.style.animationDuration=this.rpm===45?`1.33s`:`1.8s`):e.classList.remove(`vinyl-spinning`)),t&&(this.isPlaying?t.classList.add(`animate-[spin_4s_linear_infinite]`):t.classList.remove(`animate-[spin_4s_linear_infinite]`)),n&&(n.style.transform=`rotate(${this.getTonearmAngle()}deg)`),a&&o&&(a.className=`w-2.5 h-2.5 rounded-full ${this.isPlaying?`bg-emerald-500 shadow-[0_0_10px_#10b981]`:`bg-red-500 shadow-[0_0_10px_#ef4444]`} transition-colors duration-300`,o.textContent=this.isPlaying?`MOTOR ON`:`STANDBY`),r&&(r.innerHTML=`
+    `}getTonearmAngle(){return this.isPlaying?18+(this.duration>0?this.currentTime/this.duration:0)*14:-30}attachEvents(){let e=document.getElementById(`btn-turntable-motor`);e&&e.addEventListener(`click`,()=>this.togglePlay());let t=document.getElementById(`vinyl-record`);t&&t.addEventListener(`click`,()=>this.togglePlay());let n=document.getElementById(`btn-play-pause`);n&&n.addEventListener(`click`,()=>this.togglePlay());let r=document.getElementById(`btn-prev-track`);r&&r.addEventListener(`click`,()=>this.prevTrack());let i=document.getElementById(`btn-next-track`);i&&i.addEventListener(`click`,()=>this.nextTrack());let a=document.getElementById(`btn-rpm-33`),o=document.getElementById(`btn-rpm-45`);a&&a.addEventListener(`click`,()=>this.setRpm(33.3)),o&&o.addEventListener(`click`,()=>this.setRpm(45));let s=document.getElementById(`progress-container`);s&&s.addEventListener(`click`,e=>{let t=s.getBoundingClientRect(),n=Math.max(0,Math.min(1,(e.clientX-t.left)/t.width));this.seek(n*this.duration)});let c=document.getElementById(`volume-slider`);c&&c.addEventListener(`input`,e=>{let t=parseFloat(e.target.value);this.setVolume(t)});let l=document.getElementById(`btn-toggle-mute`);l&&l.addEventListener(`click`,()=>this.toggleMute());let u=document.getElementById(`vinyl-crate-track`),d=document.getElementById(`btn-scroll-crate-left`),f=document.getElementById(`btn-scroll-crate-right`);u&&d&&f&&(d.addEventListener(`click`,()=>{u.scrollBy({left:-240,behavior:`smooth`})}),f.addEventListener(`click`,()=>{u.scrollBy({left:240,behavior:`smooth`})})),u&&u.addEventListener(`click`,e=>{let t=e.target.closest(`.vinyl-card`);if(!t)return;let n=parseInt(t.getAttribute(`data-track-index`),10);!isNaN(n)&&n!==this.currentIndex?this.selectTrack(n):!isNaN(n)&&n===this.currentIndex&&this.togglePlay()})}togglePlay(){this.isPlaying?this.pause():this.play()}play(){this.isPlaying=!0,s.isMusicPlaying=!0,s.muted=!1,s.notifyListeners(),this.playNeedleDropSound(),this.audioElement&&this.audioElement.play().catch(()=>{console.log(`Audio autoplay blocked, running in visual vinyl mode`)}),this.crackleGain&&this.crackleEnabled&&this.crackleGain.gain.setValueAtTime(.12,this.audioContext?.currentTime||0),this.startProgressTimer(),this.updateTurntableStateUI()}pause(){this.isPlaying=!1,s.isMusicPlaying=!1,s.muted=!0,s.notifyListeners(),this.audioElement&&this.audioElement.pause(),this.crackleGain&&this.crackleGain.gain.setValueAtTime(0,this.audioContext?.currentTime||0),this.stopProgressTimer(),this.updateTurntableStateUI()}selectTrack(e){if(e<0||e>=this.tracks.length)return;this.currentIndex=e;let t=this.getCurrentTrack();s.trackTitle=`${t.artist} — ${t.title}`,s.notifyListeners(),this.loadCurrentAudio(),this.render(),this.attachEvents(),this.isPlaying&&this.play()}prevTrack(){let e=(this.currentIndex-1+this.tracks.length)%this.tracks.length;this.selectTrack(e)}nextTrack(){let e=(this.currentIndex+1)%this.tracks.length;this.selectTrack(e)}seek(e){this.currentTime=Math.max(0,Math.min(e,this.duration)),this.audioElement&&this.audioElement.duration&&(this.audioElement.currentTime=this.currentTime),this.updateProgressUI()}setRpm(e){this.rpm=e;let t=document.getElementById(`btn-rpm-33`),n=document.getElementById(`btn-rpm-45`);t&&n&&(e===33.3?(t.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm`,n.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white`):(n.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all bg-red-600 text-white shadow-sm`,t.className=`px-2.5 py-1 rounded-lg text-[10px] font-mono-tech font-bold transition-all text-neutral-400 hover:text-white`));let r=document.getElementById(`vinyl-record`);r&&(r.style.animationDuration=e===45?`1.33s`:`1.8s`)}toggleCrackle(){this.crackleEnabled=!this.crackleEnabled;let e=document.getElementById(`btn-toggle-crackle`);e&&(e.className=`px-3 py-1.5 rounded-xl ${this.crackleEnabled?`bg-amber-950/70 text-amber-300 border-amber-500/40`:`bg-black/40 text-neutral-500 border-white/5`} border text-[11px] font-mono-tech font-bold transition-all hover:border-amber-400 flex items-center gap-1.5`),this.crackleGain&&this.crackleGain.gain.setValueAtTime(this.crackleEnabled&&this.isPlaying?.12:0,this.audioContext?.currentTime||0)}setVolume(e){this.volume=e,this.isMuted=e===0,this.audioElement&&(this.audioElement.volume=this.isMuted?0:this.volume)}toggleMute(){this.isMuted=!this.isMuted,this.audioElement&&(this.audioElement.volume=this.isMuted?0:this.volume);let e=document.getElementById(`volume-slider`);e&&(e.value=this.isMuted?0:this.volume)}startProgressTimer(){this.stopProgressTimer(),this.progressInterval=setInterval(()=>{if(this.isPlaying&&(!this.audioElement||this.audioElement.paused)){if(this.currentTime+=1,this.currentTime>=this.duration){this.nextTrack();return}this.updateProgressUI()}},1e3)}stopProgressTimer(){this.progressInterval&&=(clearInterval(this.progressInterval),null)}updateProgressUI(){let e=document.getElementById(`time-current`),t=document.getElementById(`time-total`),n=document.getElementById(`progress-bar`),r=document.getElementById(`tonearm-assembly`);if(e&&(e.textContent=this.formatTime(this.currentTime)),t&&(t.textContent=this.formatTime(this.duration)),n&&this.duration>0){let e=this.currentTime/this.duration*100;n.style.width=`${e}%`}r&&(r.style.transform=`rotate(${this.getTonearmAngle()}deg)`)}updateTurntableStateUI(){let e=document.getElementById(`vinyl-record`),t=document.getElementById(`turntable-strobe-rim`),n=document.getElementById(`tonearm-assembly`),r=document.getElementById(`btn-turntable-motor`),i=document.getElementById(`btn-play-pause`),a=document.getElementById(`vinyl-status-led`),o=document.getElementById(`vinyl-status-text`);e&&(e.style.setProperty(`animation-play-state`,this.isPlaying?`running`:`paused`),e.style.setProperty(`animation-duration`,this.rpm===45?`1.33s`:`1.8s`)),t&&t.style.setProperty(`animation-play-state`,this.isPlaying?`running`:`paused`),n&&(n.style.transform=`rotate(${this.getTonearmAngle()}deg)`),a&&o&&(a.className=`w-2.5 h-2.5 rounded-full ${this.isPlaying?`bg-emerald-500 shadow-[0_0_10px_#10b981]`:`bg-red-500 shadow-[0_0_10px_#ef4444]`} transition-colors duration-300`,o.textContent=this.isPlaying?`MOTOR ON`:`STANDBY`),r&&(r.innerHTML=`
         <svg class="w-4 h-4 fill-current ${this.isPlaying?`animate-pulse`:``}" viewBox="0 0 24 24">
           ${this.isPlaying?`<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`:`<path d="M8 5v14l11-7z"/>`}
         </svg>

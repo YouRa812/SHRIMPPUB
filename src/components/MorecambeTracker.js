@@ -641,7 +641,10 @@ export class MorecambeTracker {
             class="btn-magnetic inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-black font-unbounded text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(255,30,39,0.4)] transition-all active:scale-95 shrink-0 w-full md:w-auto text-center"
           >
             <span>Забронировать стол на матч</span>
-            <span>↗</span>
+            <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
           </a>
         </div>
       </div>

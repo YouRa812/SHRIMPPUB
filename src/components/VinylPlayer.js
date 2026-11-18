@@ -218,7 +218,7 @@ export class VinylPlayer {
                 <div class="absolute inset-2 sm:inset-3 rounded-full bg-gradient-to-br from-[#2a2b30] via-[#1c1d22] to-[#121316] border-4 border-[#3a3b42] shadow-[inset_0_0_20px_rgba(0,0,0,0.8),0_10px_30px_rgba(0,0,0,0.7)] flex items-center justify-center overflow-hidden">
                   
                   <!-- Strobe Edge Markings -->
-                  <div id="turntable-strobe-rim" class="absolute inset-0 rounded-full border-[6px] border-dashed border-neutral-600/30 pointer-events-none ${this.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}"></div>
+                  <div id="turntable-strobe-rim" class="absolute inset-0 rounded-full border-[6px] border-dashed border-neutral-600/30 pointer-events-none spin-strobe" style="animation-play-state: ${this.isPlaying ? 'running' : 'paused'};"></div>
                   <div class="absolute inset-3 rounded-full border border-white/5 pointer-events-none"></div>
                   
                   <!-- Felt Slipmat Background -->
@@ -230,8 +230,10 @@ export class VinylPlayer {
                 <!-- VINYL RECORD (12" LP) -->
                 <div 
                   id="vinyl-record" 
-                  class="relative z-10 w-[84%] h-[84%] rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.9),inset_0_0_25px_rgba(0,0,0,0.95)] flex items-center justify-center cursor-pointer transition-transform duration-700 select-none ${this.isPlaying ? 'vinyl-spinning' : ''}"
+                  class="relative z-10 w-[84%] h-[84%] rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.9),inset_0_0_25px_rgba(0,0,0,0.95)] flex items-center justify-center cursor-pointer select-none vinyl-spinning"
                   style="
+                    animation-play-state: ${this.isPlaying ? 'running' : 'paused'};
+                    animation-duration: ${this.rpm === 45 ? '1.33s' : '1.8s'};
                     background: radial-gradient(circle, #0a0a0c 0%, #151518 15%, #050507 40%, #17171b 60%, #060608 85%, #121215 100%);
                     box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 45px rgba(0,0,0,0.95), inset 0 0 40px rgba(0,0,0,0.9);
                   "
@@ -554,18 +556,18 @@ export class VinylPlayer {
           <!-- Horizontal Scrollable Vinyl Crate / Carousel -->
           <div 
             id="vinyl-crate-track" 
-            class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pb-4 pt-2 no-scrollbar snap-x snap-mandatory select-none"
+            class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pt-5 pb-5 px-3 sm:px-4 no-scrollbar snap-x snap-mandatory select-none"
           >
             ${this.tracks.map((t, idx) => {
               const isCurrent = idx === this.currentIndex;
               return `
                 <div 
                   data-track-index="${idx}"
-                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border ${isCurrent ? 'border-red-500 shadow-[0_0_25px_rgba(255,30,39,0.35)] scale-[1.02]' : 'border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
+                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border ${isCurrent ? 'border-red-500 shadow-[0_0_25px_rgba(255,30,39,0.4)]' : 'border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
                 >
-                  <!-- Active Indicator Badge -->
+                  <!-- Active Indicator Badge (Anchored cleanly inside card: zero clipping) -->
                   ${isCurrent ? `
-                    <div class="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-red-600 text-white text-[9px] font-bold font-mono-tech tracking-wider uppercase shadow-md flex items-center gap-1 z-20">
+                    <div class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-red-600 text-white text-[9px] font-bold font-mono-tech tracking-wider uppercase shadow-md flex items-center gap-1 z-20">
                       <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
                       <span>В ПРОИГРЫВАТЕЛЕ</span>
                     </div>
@@ -575,14 +577,14 @@ export class VinylPlayer {
                   <div class="relative w-full aspect-square mb-3 flex items-center justify-start overflow-visible">
                     
                     <!-- Peeking Vinyl Disc (Black grooved disc sliding out to the right) -->
-                    <div class="absolute left-[20%] top-1/2 -translate-y-1/2 w-[70%] aspect-square rounded-full bg-gradient-to-br from-[#1c1c22] via-[#121215] to-[#08080a] border border-neutral-700 shadow-md transition-transform duration-300 pointer-events-none z-0 ${isCurrent ? 'translate-x-2' : 'group-hover:translate-x-1.5'} flex items-center justify-center">
+                    <div class="absolute left-[18%] top-1/2 -translate-y-1/2 w-[68%] aspect-square rounded-full bg-gradient-to-br from-[#1c1c22] via-[#121215] to-[#08080a] border border-neutral-700 shadow-md transition-transform duration-300 pointer-events-none z-0 ${isCurrent ? 'translate-x-2' : 'group-hover:translate-x-1.5'} flex items-center justify-center">
                       <!-- Fine concentric groove rings on peeking vinyl -->
                       <div class="absolute inset-0 rounded-full bg-[repeating-radial-gradient(circle_at_center,transparent_0,transparent_2px,rgba(255,255,255,0.03)_3px,transparent_4px)]"></div>
                     </div>
 
                     <!-- Album Sleeve Jacket Front (100% Solid & Opaque - No shine-through) -->
                     <div 
-                      class="relative z-10 w-[74%] aspect-square rounded-lg shadow-[4px_0_14px_rgba(0,0,0,0.85)] border border-white/10 overflow-hidden bg-[#121215] flex flex-col justify-between"
+                      class="relative z-10 w-[72%] aspect-square rounded-lg shadow-[4px_0_14px_rgba(0,0,0,0.85)] border border-white/10 overflow-hidden bg-[#121215] flex flex-col justify-between"
                     >
                       ${t.coverImg ? `
                         <!-- Real Album Cover Artwork -->
@@ -926,20 +928,12 @@ export class VinylPlayer {
     const statusText = document.getElementById('vinyl-status-text');
 
     if (vinyl) {
-      if (this.isPlaying) {
-        vinyl.classList.add('vinyl-spinning');
-        vinyl.style.animationDuration = this.rpm === 45 ? '1.33s' : '1.8s';
-      } else {
-        vinyl.classList.remove('vinyl-spinning');
-      }
+      vinyl.style.setProperty('animation-play-state', this.isPlaying ? 'running' : 'paused');
+      vinyl.style.setProperty('animation-duration', this.rpm === 45 ? '1.33s' : '1.8s');
     }
 
     if (strobeRim) {
-      if (this.isPlaying) {
-        strobeRim.classList.add('animate-[spin_4s_linear_infinite]');
-      } else {
-        strobeRim.classList.remove('animate-[spin_4s_linear_infinite]');
-      }
+      strobeRim.style.setProperty('animation-play-state', this.isPlaying ? 'running' : 'paused');
     }
 
     if (tonearm) {

@@ -21,8 +21,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-DY-W2uOp.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-JfpQTTt6.css">
+    <script type="module" crossorigin src="./index-gq3ICmSc.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-CgBLnhsW.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -125,9 +125,13 @@
           <!-- Booking CTA (Prominent on ALL screen sizes: compact on mobile, full on tablet/desktop) -->
           <a 
             href="#booking-deck" 
-            class="btn-magnetic inline-flex items-center gap-1 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[10px] sm:text-[11px] font-black uppercase font-unbounded tracking-wider transition-all shrink-0 shadow-[0_0_15px_rgba(255,30,39,0.35)]"
+            class="btn-magnetic inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[10px] sm:text-[11px] font-black uppercase font-unbounded tracking-wider transition-all shrink-0 shadow-[0_0_15px_rgba(255,30,39,0.35)]"
           >
-            Бронь ↗
+            <span>Бронь</span>
+            <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
           </a>
 
           <!-- Sound Toggle (Desktop only: hidden on mobile) -->
@@ -294,7 +298,10 @@
             <svg class="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             <span>Забронировать стол</span>
           </span>
-          <span>↗</span>
+          <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
         </a>
       </nav>
 
@@ -414,7 +421,10 @@
                 class="px-8 py-3.5 sm:py-4 rounded-2xl bg-black/60 hover:bg-neutral-900 text-neutral-200 hover:text-white border border-red-500/40 text-xs sm:text-sm font-mono-tech tracking-wider uppercase transition-all duration-200 flex items-center gap-2 backdrop-blur-md"
               >
                 <span>ЗАБРОНИРОВАТЬ СТОЛ</span>
-                <span class="text-red-400">↗</span>
+                <svg class="w-3.5 h-3.5 text-red-400 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
               </a>
             </div>
 
@@ -431,7 +441,13 @@
                     4.9
                     <svg class="w-5 h-5 text-amber-400 fill-current inline-block" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                   </span>
-                  <span class="text-[10px] sm:text-xs text-neutral-400 uppercase font-mono-tech tracking-wider group-hover:text-neutral-300">184 ОТЗЫВА ЯНДЕКС ↗</span>
+                  <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs text-neutral-400 uppercase font-mono-tech tracking-wider group-hover:text-neutral-300">
+                    <span>184 ОТЗЫВА ЯНДЕКС</span>
+                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </div>
@@ -473,9 +489,13 @@
               </div>
               <!-- Category Counter & Quick Arrows -->
               <div class="flex items-center gap-2 font-mono-tech">
-                <button id="menu-btn-prev" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all text-sm font-bold shadow-sm" aria-label="Предыдущий раздел">←</button>
+                <button id="menu-btn-prev" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all shadow-sm" aria-label="Предыдущий раздел">
+                  <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
                 <span id="menu-counter-indicator" class="px-3 py-1 rounded-full bg-black text-white text-[11px] sm:text-xs font-bold tracking-wider">01 / 13</span>
-                <button id="menu-btn-next" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all text-sm font-bold shadow-sm" aria-label="Следующий раздел">→</button>
+                <button id="menu-btn-next" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-black hover:text-white border border-neutral-300 flex items-center justify-center transition-all shadow-sm" aria-label="Следующий раздел">
+                  <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
               </div>
             </div>
 
@@ -643,8 +663,12 @@
                 <div class="flex items-center gap-1 text-amber-400 text-[11px] leading-tight">
                   ★★★★★
                 </div>
-                <div class="text-[9px] sm:text-[10px] text-amber-300 font-mono-tech group-hover:underline">
-                  Яндекс Карты ↗
+                <div class="text-[9px] sm:text-[10px] text-amber-300 font-mono-tech group-hover:underline inline-flex items-center gap-1">
+                  <span>Яндекс Карты</span>
+                  <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
                 </div>
               </div>
             </a>
@@ -667,22 +691,22 @@
             <div class="flex items-center justify-center gap-3 mt-3">
               <button 
                 id="btn-reviews-prev" 
-                class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-neutral-800 flex items-center justify-center text-xs transition-colors shadow-sm cursor-pointer"
+                class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-neutral-800 flex items-center justify-center transition-colors shadow-sm cursor-pointer"
                 title="Предыдущий отзыв"
                 aria-label="Предыдущий отзыв"
               >
-                ←
+                <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
               <div id="reviews-carousel-dots" class="flex items-center gap-1.5">
                 <!-- Dots injected via JS -->
               </div>
               <button 
                 id="btn-reviews-next" 
-                class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-neutral-800 flex items-center justify-center text-xs transition-colors shadow-sm cursor-pointer"
+                class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-neutral-800 flex items-center justify-center transition-colors shadow-sm cursor-pointer"
                 title="Следующий отзыв"
                 aria-label="Следующий отзыв"
               >
-                →
+                <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
               </button>
             </div>
           </div>
@@ -694,7 +718,7 @@
               class="btn-magnetic group inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-black hover:bg-red-600 text-white font-mono-tech text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer"
             >
               <span id="btn-toggle-more-reviews-text">ПОКАЗАТЬ БОЛЬШЕ ОТЗЫВОВ</span>
-              <span id="btn-toggle-more-reviews-icon" class="text-[10px] transition-transform duration-300">↓</span>
+              <svg id="btn-toggle-more-reviews-icon" class="w-3 h-3 fill-none stroke-current transition-transform duration-300" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
             </button>
 
             <a 
@@ -704,7 +728,10 @@
               class="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 text-[10px] sm:text-xs font-bold font-mono-tech uppercase tracking-wider transition-colors flex items-center gap-1 shadow-sm"
             >
               <span>СМОТРЕТЬ В ЯНДЕКС КАРТАХ</span>
-              <span class="text-amber-500">↗</span>
+              <svg class="w-2.5 h-2.5 text-amber-500 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
             </a>
 
             <button 
@@ -872,7 +899,13 @@
                     type="submit" 
                     class="btn-magnetic w-full py-4 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-black font-unbounded text-xs uppercase tracking-widest shadow-[0_0_30px_rgba(255,30,39,0.4)] transition-all active:scale-95"
                   >
-                    ЗАБРОНИРОВАТЬ СТОЛИК ↗
+                    <span class="inline-flex items-center justify-center gap-2">
+                      <span>ЗАБРОНИРОВАТЬ СТОЛИК</span>
+                      <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </span>
                   </button>
 
                   <div class="text-[11px] text-center text-neutral-500 font-mono-tech">
