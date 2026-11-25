@@ -48,7 +48,6 @@ export function initScrollReveals(root) {
     entrance.unobserve(element);
     element.style.setProperty('--reveal-delay', timing.get(element).delay + 'ms');
     element.dataset.scrollRevealState = 'playing';
-    reset.observe(element);
   }
 
   // A small inset leaves the movement visible just inside the viewport.
@@ -59,9 +58,10 @@ export function initScrollReveals(root) {
     }
   }, { rootMargin: `0px 0px -${inset}px 0px`, threshold: [0, .01] });
 
-  // Replay on a later visit after leaving by a clear vertical margin.
+  // Replay on desktop after leaving by a clear vertical margin.
   // Horizontal carousel motion and small scroll reversals keep the current presentation.
-  const reset = new IntersectionObserver((entries) => {
+  const replay = !matchMedia('(pointer: coarse)').matches;
+  const reset = replay ? new IntersectionObserver((entries) => {
     for (const { target, isIntersecting, rootBounds, boundingClientRect: rect } of entries) {
       if (isIntersecting || !rootBounds || !rect.height || target.matches(':focus-within')) continue;
       if (rect.bottom > rootBounds.top && rect.top < rootBounds.bottom) continue;
@@ -69,7 +69,7 @@ export function initScrollReveals(root) {
       target.dataset.scrollRevealState = 'pending';
       entrance.observe(target);
     }
-  }, { rootMargin: '240px 0px' });
+  }, { rootMargin: '240px 0px' }) : null;
 
   function register(element) {
     if (element.dataset.scrollRevealState) return;
@@ -98,7 +98,7 @@ export function initScrollReveals(root) {
     entrance.unobserve(element);
     element.dataset.scrollRevealState = 'shown';
     element.style.removeProperty('--reveal-delay');
-    reset.observe(element);
+    reset?.observe(element);
   }
 
   root.addEventListener('animationend', ({ target, animationName }) => {
@@ -117,7 +117,7 @@ export function initScrollReveals(root) {
         if (root.contains(node)) continue;
         visit(node, '[data-scroll-reveal-state]', (element) => {
           entrance.unobserve(element);
-          reset.unobserve(element);
+          reset?.unobserve(element);
           delete element.dataset.scrollRevealState;
           delete element.dataset.scrollRevealVariant;
           element.style.removeProperty('--reveal-delay');

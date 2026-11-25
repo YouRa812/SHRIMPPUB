@@ -21,19 +21,11 @@ import confetti from 'canvas-confetti';
 
 initMetrika();
 
-// Immediate scroll restoration lock and top reset on every load / refresh
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-if (window.location.hash) {
-  history.replaceState(null, '', window.location.pathname + window.location.search);
-}
-window.addEventListener('beforeunload', () => {
-  window.scrollTo(0, 0);
-});
-
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+  autoRefreshEvents: 'visibilitychange,DOMContentLoaded,resize',
+});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Global state
@@ -63,7 +55,6 @@ function escapeHtml(value) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.scrollTo(0, 0);
   // 1. Initialize Lenis 60fps Smooth Scroll
   initSmoothScroll();
 
@@ -112,11 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-
-  // 6b. Keep GSAP ScrollTrigger layout calculations refreshed on window resize
-  window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
-  }, { passive: true });
 
   // 7. Sound & Background Music toggle (Desktop & Mobile Drawer)
   const soundBtn = document.getElementById('btn-sound-toggle');
@@ -656,11 +642,9 @@ function initSmoothScroll() {
     duration: 1.1,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
+    syncTouch: false,
   });
   window.__shrimpLenis = lenis;
-
-  // Force Lenis to immediately start at 0
-  lenis.scrollTo(0, { immediate: true });
 
   lenis.on('scroll', ScrollTrigger.update);
 
@@ -671,21 +655,13 @@ function initSmoothScroll() {
   gsap.ticker.lagSmoothing(0);
 }
 
-// Ensure scroll is at the absolute top on complete window load
-window.addEventListener('load', () => {
-  window.scrollTo(0, 0);
-  if (lenis) {
-    lenis.scrollTo(0, { immediate: true });
-  }
-  ScrollTrigger.refresh();
-});
-
 // 3D Mouse Parallax on Mascot Shrimp
 function initShrimpParallax() {
   const shrimp = document.getElementById('hero-shrimp-img');
   if (!shrimp || reducedMotion.matches) return;
 
   window.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || window.scrollY > window.innerHeight) return;
     const nx = (e.clientX / window.innerWidth) - 0.5;
     const ny = (e.clientY / window.innerHeight) - 0.5;
     gsap.to(shrimp, {
@@ -747,12 +723,6 @@ function initStatsOdometers() {
       }
     });
   }
-}
-
-// Dynamic Sticky Stacking:
-// Refresh layout helper
-export function updateDeckStickyPositions() {
-  ScrollTrigger.refresh();
 }
 
 function initHeroScrollParallax() {
@@ -838,34 +808,38 @@ function initMenuSwiper() {
     });
   }
 
-  // Touch swipe support (Bidirectional cyclical swipe: left -> next, right -> prev)
-  let touchStartX = 0;
-  let touchStartY = 0;
-  swiperViewport.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
+  let swipe = null;
+  swiperViewport.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'touch' || !e.isPrimary) return;
+    swipe = { id: e.pointerId, x: e.clientX, y: e.clientY, horizontal: null };
+  });
+
+  swiperViewport.addEventListener('pointermove', (e) => {
+    if (!swipe || e.pointerId !== swipe.id || swipe.horizontal !== null) return;
+    const x = Math.abs(e.clientX - swipe.x);
+    const y = Math.abs(e.clientY - swipe.y);
+    if (Math.hypot(x, y) > 12) swipe.horizontal = x > y * 1.35;
   }, { passive: true });
 
-  swiperViewport.addEventListener('touchend', (e) => {
-    const diffX = touchStartX - e.changedTouches[0].screenX;
-    const diffY = touchStartY - e.changedTouches[0].screenY;
-    if (Math.hypot(diffX, diffY) > 12) {
-      suppressMenuCardClickUntil = Date.now() + 300;
-    }
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
-      if (diffX > 0) {
-        // Swipe left -> Next category (cyclical wrap 13 -> 1)
-        sound.playClick();
-        const nextIdx = (currentCategoryIndex + 1) % menuCategories.length;
-        goToMenuCategory(nextIdx, 'next');
-      } else {
-        // Swipe right -> Prev category (cyclical wrap 1 -> 13)
-        sound.playClick();
-        const prevIdx = (currentCategoryIndex - 1 + menuCategories.length) % menuCategories.length;
-        goToMenuCategory(prevIdx, 'prev');
-      }
-    }
-  }, { passive: true });
+  swiperViewport.addEventListener('pointercancel', (e) => {
+    if (swipe?.id === e.pointerId) swipe = null;
+  });
+
+  swiperViewport.addEventListener('pointerup', (e) => {
+    if (!swipe || e.pointerId !== swipe.id) return;
+    const x = swipe.x - e.clientX;
+    const y = swipe.y - e.clientY;
+    const horizontal = swipe.horizontal;
+    swipe = null;
+    if (Math.hypot(x, y) > 12) suppressMenuCardClickUntil = Date.now() + 300;
+    if (!horizontal || Math.abs(x) < 45 || Math.abs(x) <= Math.abs(y) * 1.35) return;
+
+    sound.playClick();
+    const delta = Math.sign(x);
+    const length = menuCategories.length;
+    const nextIdx = (currentCategoryIndex + delta + length) % length;
+    goToMenuCategory(nextIdx, delta > 0 ? 'next' : 'prev');
+  });
 
   // Mouse drag support for desktop (Bidirectional cyclical wrap)
   let isMouseDown = false;
@@ -1102,10 +1076,8 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
     gsap.fromTo(
       container,
       { opacity: 0, x: direction === 'next' ? 45 : -45 },
-      { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out', onComplete: updateDeckStickyPositions }
+      { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out' }
     );
-  } else {
-    updateDeckStickyPositions();
   }
 }
 
@@ -1267,8 +1239,6 @@ function renderDraftBeerCards() {
   });
 
   attachCardTiltListeners();
-
-  updateDeckStickyPositions();
 }
 
 // Backward-compatible switchCategory helper
@@ -1503,7 +1473,6 @@ function renderReviewsCarousel() {
 
   updateCarouselView();
   attachCardTiltListeners();
-  ScrollTrigger.refresh();
 }
 
 // Modal helper

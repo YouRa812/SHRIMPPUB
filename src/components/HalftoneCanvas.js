@@ -4,22 +4,26 @@
  * Pure Red & Black palette (#ff1e27 & #070104) — ZERO blurry gradients!
  * 
  * Features:
- * - 60 FPS kinetic dot matrix with traveling harmonic ripples
+ * - Kinetic dot matrix with traveling harmonic ripples
  * - Subtle tactile expansion ripple following mouse movement
  * - Scroll-reactive phase momentum (matrix reacts as user scrolls)
  * - Brutalist graphic typography stamps & telemetry coordinates
- * - 100% vector-sharp on retina/HiDPI screens
+ * - HiDPI rendering on desktop, lighter canvas on touch screens
  */
 export class HalftoneCanvas {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     if (!this.canvas) return;
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d', { alpha: false });
+    if (!this.ctx) return;
 
     this.width = 0;
     this.height = 0;
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.isTouch = window.matchMedia('(pointer: coarse)').matches;
+    this.dpr = this.isTouch ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    this.frameInterval = this.isTouch ? 1000 / 30 : 0;
     this.animId = null;
+    this.events = new AbortController();
 
     // Wave and matrix state
     this.phase = 0;
@@ -46,14 +50,25 @@ export class HalftoneCanvas {
   }
 
   init() {
-    this.resize();
-    window.addEventListener('resize', () => this.resize(), { passive: true });
+    const options = { passive: true, signal: this.events.signal };
+    const measure = () => this.resize(this.canvas.clientWidth, this.canvas.clientHeight);
+    measure();
+    if ('ResizeObserver' in window) {
+      this.sizing = new ResizeObserver(([{ contentRect }]) => {
+        this.resize(Math.round(contentRect.width), Math.round(contentRect.height));
+      });
+      this.sizing.observe(this.canvas);
+    } else {
+      window.addEventListener('resize', measure, options);
+    }
 
     // Track mouse coordinates smoothly
-    window.addEventListener('mousemove', (e) => {
-      this.targetMouseX = e.clientX;
-      this.targetMouseY = e.clientY;
-    }, { passive: true });
+    if (!this.isTouch) {
+      window.addEventListener('mousemove', (e) => {
+        this.targetMouseX = e.clientX;
+        this.targetMouseY = e.clientY;
+      }, options);
+    }
 
     // Track scroll velocity for matrix kinetic ripple
     window.addEventListener('scroll', () => {
@@ -61,46 +76,53 @@ export class HalftoneCanvas {
       const delta = Math.abs(currentScrollY - this.lastScrollY);
       this.scrollVelocity = Math.min(this.scrollVelocity + delta * 0.0015, 0.08);
       this.lastScrollY = currentScrollY;
-    }, { passive: true });
+    }, options);
 
     // Page visibility check to save CPU when tab is hidden
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        if (this.animId) cancelAnimationFrame(this.animId);
+        this.stop();
       } else {
         this.start();
       }
-    });
+    }, options);
 
     this.start();
   }
 
-  resize() {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
-    this.canvas.width = this.width * this.dpr;
-    this.canvas.height = this.height * this.dpr;
-    this.ctx.scale(this.dpr, this.dpr);
+  resize(width, height) {
+    if (!width || !height || (width === this.width && height === this.height)) return;
+    this.width = width;
+    this.height = height;
+    this.canvas.width = Math.round(width * this.dpr);
+    this.canvas.height = Math.round(height * this.dpr);
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    this.render();
   }
 
   start() {
-    let lastTime = performance.now();
+    if (this.animId !== null || document.hidden) return;
+    let lastRender = performance.now();
 
     const loop = (currentTime) => {
-      const dt = Math.min((currentTime - lastTime) / 1000, 0.1);
-      lastTime = currentTime;
+      this.animId = requestAnimationFrame(loop);
+      const elapsed = currentTime - lastRender;
+      if (elapsed + 0.5 < this.frameInterval) return;
+      lastRender = currentTime;
+      const steps = Math.min(elapsed, 100) / (1000 / 60);
 
       // Smooth mouse interpolation
-      this.mouseX += (this.targetMouseX - this.mouseX) * 0.1;
-      this.mouseY += (this.targetMouseY - this.mouseY) * 0.1;
+      if (!this.isTouch) {
+        const smoothing = 1 - Math.pow(0.9, steps);
+        this.mouseX += (this.targetMouseX - this.mouseX) * smoothing;
+        this.mouseY += (this.targetMouseY - this.mouseY) * smoothing;
+      }
 
       // Dampen scroll velocity
-      this.scrollVelocity *= 0.94;
-      this.phase += (this.baseSpeed + this.scrollVelocity);
+      this.scrollVelocity *= Math.pow(0.94, steps);
+      this.phase += (this.baseSpeed + this.scrollVelocity) * steps;
 
       this.render();
-
-      this.animId = requestAnimationFrame(loop);
     };
 
     this.animId = requestAnimationFrame(loop);
@@ -118,6 +140,7 @@ export class HalftoneCanvas {
     const rows = Math.ceil(this.height / spacing) + 1;
     const centerX = this.width * 0.5;
     const centerY = this.height * 0.45;
+    this.ctx.fillStyle = '#ff1e27';
 
     for (let r = 0; r < rows; r++) {
       const y = r * spacing;
@@ -129,18 +152,15 @@ export class HalftoneCanvas {
         const dyCenter = y - centerY;
         const distCenter = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter);
 
-        // Distance from mouse cursor for interactive hover effect
-        const dxMouse = x - this.mouseX;
-        const dyMouse = y - this.mouseY;
-        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
         // Primary wave harmonic
         const wave = Math.sin(distCenter * 0.016 - this.phase);
 
-        // Mouse proximity boost
         let mouseBoost = 0;
-        if (distMouse < 220) {
-          mouseBoost = (1 - distMouse / 220) * 2.8;
+        if (!this.isTouch) {
+          const dxMouse = x - this.mouseX;
+          const dyMouse = y - this.mouseY;
+          const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+          if (distMouse < 220) mouseBoost = (1 - distMouse / 220) * 2.8;
         }
 
         // Calculate dynamic dot radius and opacity
@@ -151,10 +171,11 @@ export class HalftoneCanvas {
         // Render dot
         this.ctx.beginPath();
         this.ctx.arc(x, y, radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = `rgba(255, 30, 39, ${alpha})`;
+        this.ctx.globalAlpha = alpha;
         this.ctx.fill();
       }
     }
+    this.ctx.globalAlpha = 1;
 
     // 3. Render Brutalist Typography Stamps & Tech Telemetry
     if (!isMobile) {
@@ -183,7 +204,14 @@ export class HalftoneCanvas {
     }
   }
 
+  stop() {
+    if (this.animId !== null) cancelAnimationFrame(this.animId);
+    this.animId = null;
+  }
+
   destroy() {
-    if (this.animId) cancelAnimationFrame(this.animId);
+    this.stop();
+    this.sizing?.disconnect();
+    this.events?.abort();
   }
 }
