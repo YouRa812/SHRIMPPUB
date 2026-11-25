@@ -103,12 +103,15 @@ export class HalftoneCanvas {
   start() {
     if (this.animId !== null || document.hidden) return;
     let lastRender = performance.now();
+    let nextRender = lastRender + this.frameInterval;
 
     const loop = (currentTime) => {
       this.animId = requestAnimationFrame(loop);
       const elapsed = currentTime - lastRender;
-      if (elapsed + 0.5 < this.frameInterval) return;
+      if (elapsed <= 0 || currentTime + 0.5 < nextRender) return;
       lastRender = currentTime;
+      const nextFrame = nextRender + this.frameInterval;
+      nextRender = nextFrame > currentTime ? nextFrame : currentTime + this.frameInterval;
       const steps = Math.min(elapsed, 100) / (1000 / 60);
 
       // Smooth mouse interpolation
