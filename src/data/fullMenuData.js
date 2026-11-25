@@ -9,7 +9,7 @@ export const menuCategories = [
     id: "beer",
     num: "01",
     title: "Пивная линейка",
-    subtitle: "20 кранов в ротации",
+    subtitle: "Разливное пиво",
     badge: "Краны",
     description: "Свежий розлив с правильной карбонизацией, мягкий азотный стаут, баварская классика и бельгийские эли.",
     isBeerCategory: true
@@ -17,7 +17,7 @@ export const menuCategories = [
   {
     id: "classic_shrimps",
     num: "02",
-    title: "Фирменные Шримпы",
+    title: "Шримпы",
     subtitle: "Классические рецепты",
     badge: "21 сорт",
     description: "Отборные креветки в 21 авторской вариации подачи от шефа.",
@@ -58,7 +58,7 @@ export const menuCategories = [
       {
         id: "cs-3",
         image: "dish_13.webp",
-        imageAlt: "Фирменные креветки в сливочном соусе с цукини, черри и хрустящими тостами",
+        imageAlt: "Креветки в сливочном соусе с цукини, черри и хрустящими тостами",
         name: "3. «Сливочные»",
         weight: "150/40 г",
         price: "650 ₽",
@@ -726,8 +726,7 @@ export const menuCategories = [
         name: "3. Гренки «Shrimp»",
         weight: "160 г",
         price: "290 ₽",
-        desc: "Хлеб, креветки, расплавленный сыр, майонез, специи.",
-        badges: ["Фирменные"]
+        desc: "Хлеб, креветки, расплавленный сыр, майонез, специи."
       },
       {
         id: "hs-4",

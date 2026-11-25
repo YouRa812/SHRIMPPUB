@@ -481,7 +481,7 @@ export class MorecambeTracker {
         <div class="absolute inset-0 bg-gradient-to-b ${theme.glow} pointer-events-none"></div>
 
         <!-- Top Meta: Tournament & Outcome -->
-        <div class="relative z-10 flex items-center justify-between gap-2 pb-3 border-b border-white/10">
+        <div data-reveal="badge" class="relative z-10 flex items-center justify-between gap-2 pb-3 border-b border-white/10">
           <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono-tech uppercase tracking-wider text-neutral-300 truncate max-w-[62%]" title="${competition}">
             
             <span class="truncate">${competition}</span>
@@ -493,7 +493,7 @@ export class MorecambeTracker {
         </div>
 
         <!-- Center Scoreboard -->
-        <div class="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3 my-4">
+        <div data-reveal="counter" class="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3 my-4">
           ${this.renderTeamBlock(match.homeTeam, match.homeBadge, 'Дома', homeIsMorecambe)}
 
           <div class="flex flex-col items-center justify-center shrink-0">
@@ -509,7 +509,7 @@ export class MorecambeTracker {
         </div>
 
         <!-- Bottom Meta: Date & Home/Away Venue -->
-        <div class="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono-tech text-neutral-400">
+        <div data-reveal="detail" class="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono-tech text-neutral-400">
           <span>${formattedDate}</span>
           <span class="truncate text-neutral-300">${escapeHtml(venueLabel)}</span>
         </div>
@@ -571,7 +571,7 @@ export class MorecambeTracker {
 
     const nextMatchHtml = this.state.nextMatch
       ? `
-        <div class="mt-4 px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono-tech text-neutral-300">
+        <div data-reveal="detail" class="mt-4 px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono-tech text-neutral-300">
           <div class="flex items-center gap-2">
             <span class="px-2 py-0.5 rounded bg-red-600/25 border border-red-500/40 text-red-300 font-bold uppercase text-[9px] tracking-wider">СЛЕДУЮЩИЙ МАТЧ</span>
             <span class="text-white font-bold">${escapeHtml(this.state.nextMatch.homeTeam)} — ${escapeHtml(this.state.nextMatch.awayTeam)}</span>
@@ -752,8 +752,6 @@ export class MorecambeTracker {
         }
 
         // Make sure card is visible and scroll to booking form
-        bookingDeck.style.opacity = '1';
-        bookingDeck.style.transform = 'none';
 
         const lenis = window.__shrimpLenis;
         if (lenis) {

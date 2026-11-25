@@ -12,10 +12,14 @@ import { MorecambeTracker } from './components/MorecambeTracker.js';
 import { TrailerModal } from './components/TrailerModal.js';
 import { VinylPlayer } from './components/VinylPlayer.js';
 import { sound } from './utils/audio.js';
+import { initMetrika } from './utils/metrika.js';
+import { initScrollReveals } from './utils/scrollReveals.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import confetti from 'canvas-confetti';
+
+initMetrika();
 
 // Immediate scroll restoration lock and top reset on every load / refresh
 if ('scrollRestoration' in history) {
@@ -30,6 +34,7 @@ window.addEventListener('beforeunload', () => {
 });
 
 gsap.registerPlugin(ScrollTrigger);
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Global state
 let currentCategory = 'draft';
@@ -76,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     vkVideoUrl: 'https://vkvideo.ru/video_ext.php?oid=200001415193&id=456239017&hash=f5a29f9fda8282d1&hd=3&autoplay=1',
     localFallbackVideo: './atmos_video_05.mp4',
     onEnterSite: () => {
+      initScrollReveals(document.getElementById('smooth-content'));
       ScrollTrigger.refresh();
     }
   });
@@ -400,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('bg-black', 'text-white');
       btn.classList.remove('bg-neutral-200/80', 'text-neutral-800');
       currentSubfilter = btn.dataset.filterStyle;
-      renderMenuItems();
+      renderDraftBeerCards();
     });
   });
 
@@ -434,12 +440,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      if (!isMenuExpanded) {
-        isMenuExpanded = true;
-        renderMenuItems(true);
-      } else {
-        renderMenuItems();
-      }
+      isMenuExpanded = true;
+      renderDraftBeerCards();
 
       setTimeout(() => {
         const cards = document.querySelectorAll('.beer-tilt-card');
@@ -459,10 +461,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // Initial Menu render handled by initMenuSwiper
-
-  // Initial Menu render
-  renderMenuItems();
 
   // 14. Vinyl Card sound feedback
   const vinylCard = document.getElementById('card-vinyl');
@@ -634,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 19. Smooth scroll for all hash links with Lenis & immediate card reveal
+  // 19. Smooth scroll for all hash links with Lenis
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
@@ -644,26 +642,12 @@ document.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           try { sound.playClick(); } catch (err) {}
           lenis.scrollTo(target, { offset: -70, duration: 0.9 });
-          if (target.classList.contains('deck-card')) {
-            target.style.opacity = '1';
-            target.style.transform = 'none';
-          }
         }
       }
     });
   });
 
-  // 20. Guarantee all cards (including booking-deck) are 100% revealed when scrolled near page bottom
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 160) {
-      document.querySelectorAll('.deck-card').forEach(card => {
-        card.style.opacity = '1';
-        card.style.transform = 'none';
-      });
-    }
-  }, { passive: true });
-
-  initSlideScrollTriggers();
+  initHeroScrollParallax();
 });
 
 // Initialize Lenis Smooth Scroll (60fps synced with GSAP)
@@ -699,7 +683,7 @@ window.addEventListener('load', () => {
 // 3D Mouse Parallax on Mascot Shrimp
 function initShrimpParallax() {
   const shrimp = document.getElementById('hero-shrimp-img');
-  if (!shrimp) return;
+  if (!shrimp || reducedMotion.matches) return;
 
   window.addEventListener('pointermove', (e) => {
     const nx = (e.clientX / window.innerWidth) - 0.5;
@@ -720,11 +704,20 @@ function initShrimpParallax() {
 function initStatsOdometers() {
   const cranesEl = document.getElementById('odometer-cranes');
   const ratingEl = document.getElementById('odometer-rating');
+  const rating = Number(yandexPubInfo.rating);
+  const ratingFormat = new Intl.NumberFormat('ru-RU', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
+
+  document.querySelectorAll('[data-yandex-rating]').forEach((element) => {
+    element.textContent = ratingFormat.format(rating);
+  });
 
   if (cranesEl) {
     const obj = { count: 0 };
     gsap.to(obj, {
-      count: 20,
+      count: draftBeerData.length,
       duration: 2.2,
       ease: 'power2.out',
       scrollTrigger: {
@@ -733,7 +726,7 @@ function initStatsOdometers() {
         once: true,
       },
       onUpdate: () => {
-        cranesEl.textContent = `${Math.round(obj.count)}+`;
+        cranesEl.textContent = Math.round(obj.count);
       }
     });
   }
@@ -741,7 +734,7 @@ function initStatsOdometers() {
   if (ratingEl) {
     const obj = { val: 0.0 };
     gsap.to(obj, {
-      val: 4.9,
+      val: rating,
       duration: 2.5,
       ease: 'power2.out',
       scrollTrigger: {
@@ -750,7 +743,7 @@ function initStatsOdometers() {
         once: true,
       },
       onUpdate: () => {
-        ratingEl.textContent = `${obj.val.toFixed(1)}`;
+        ratingEl.textContent = ratingFormat.format(obj.val);
       }
     });
   }
@@ -762,18 +755,9 @@ export function updateDeckStickyPositions() {
   ScrollTrigger.refresh();
 }
 
-// 3D Coaster Slam Entrance Animation («Бросок бирдекеля»)
-let isSlideTriggersInitialized = false;
-function initSlideScrollTriggers() {
-  if (isSlideTriggersInitialized) {
-    ScrollTrigger.refresh();
-    return;
-  }
-  isSlideTriggersInitialized = true;
-
-  // Hero subtle parallax (strictly 100% opaque — mascot shrimp never turns transparent)
+function initHeroScrollParallax() {
   const hero = document.getElementById('hero');
-  if (hero) {
+  if (hero && !reducedMotion.matches) {
     gsap.to(hero, {
       y: -30,
       ease: 'none',
@@ -785,77 +769,6 @@ function initSlideScrollTriggers() {
       }
     });
   }
-
-  // Cinematic Claude-Motion entrance for all content cards (Clean 60fps, zero 3D text distortion)
-  const deckCards = document.querySelectorAll('.deck-card');
-  deckCards.forEach((card, idx) => {
-    const isFirstCard = idx === 0 || card.id === 'menu-deck';
-    const isLastCard = card.id === 'booking-deck';
-
-    gsap.fromTo(
-      card,
-      {
-        y: 28,
-        opacity: 0,
-        scale: 0.985,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: card,
-          start: isFirstCard ? 'top 99%' : (isLastCard ? 'top bottom' : 'top 92%'),
-          toggleActions: 'play none none none',
-          once: true,
-        }
-      }
-    );
-  });
-
-  // Playful entrance for peeking mascot shrimp on the right of menu card (Desktop)
-  const peekingShrimp = document.getElementById('menu-peeking-shrimp');
-  if (peekingShrimp) {
-    gsap.fromTo(
-      peekingShrimp,
-      { x: 30, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 0.7,
-        ease: 'back.out(1.5)',
-        scrollTrigger: {
-          trigger: '#menu-deck',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        }
-      }
-    );
-  }
-
-  // Playful entrance for top-mounted mascot shrimp (Mobile)
-  const topShrimp = document.getElementById('menu-top-shrimp');
-  if (topShrimp) {
-    gsap.fromTo(
-      topShrimp,
-      { y: 25, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: 'back.out(1.4)',
-        scrollTrigger: {
-          trigger: '#menu-deck',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        }
-      }
-    );
-  }
-
-  ScrollTrigger.refresh();
 }
 
 // ==================== UNIFIED HORIZONTAL MENU SWIPER (13 CATEGORIES) ====================
@@ -893,7 +806,7 @@ function initMenuSwiper() {
     expandBtn.addEventListener('click', () => {
       sound.playClick();
       isMenuExpanded = !isMenuExpanded;
-      renderActiveCategoryContent(true);
+      renderDraftBeerCards();
       if (!isMenuExpanded && lenis) {
         lenis.scrollTo('#menu-deck', { offset: -50, duration: 0.8 });
       }
@@ -1021,9 +934,11 @@ function goToMenuCategory(index, direction = 'next', animate = true) {
   chips.forEach((chip, idx) => {
     if (idx === currentCategoryIndex) {
       chip.className = 'menu-pill-chip flex active bg-black text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-black items-center gap-1.5 shrink-0 select-none shadow-md';
-      try {
-        chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      } catch (err) {}
+      const strip = chip.parentElement;
+      if (strip.scrollWidth > strip.clientWidth) {
+        const offset = chip.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+        strip.scrollTo({ left: strip.scrollLeft + offset - (strip.clientWidth - chip.offsetWidth) / 2, behavior: 'smooth' });
+      }
     } else {
       chip.className = 'menu-pill-chip hidden sm:flex bg-white text-neutral-800 hover:bg-neutral-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono-tech tracking-wider uppercase whitespace-nowrap border border-black/10 items-center gap-1.5 shrink-0 select-none';
     }
@@ -1044,8 +959,10 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
     // Show Beer Controls (subfilters + expand button)
     if (beerControls) beerControls.classList.remove('hidden');
 
-    container.innerHTML = `<div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6"></div>`;
-    renderDraftBeerCards(isToggleAction);
+    if (!container.querySelector('#menu-items-grid')) {
+      container.innerHTML = `<div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6"></div>`;
+    }
+    renderDraftBeerCards();
   } else {
     // Hide Beer Controls for food / spirits categories
     if (beerControls) beerControls.classList.add('hidden');
@@ -1054,7 +971,9 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
     const isCatExpanded = !!categoryExpandedState[currentCategoryIndex];
     const displayItems = (!isCatExpanded && items.length > 3) ? items.slice(0, 3) : items;
 
-    let itemsHtml = displayItems.map(item => {
+    const existingGrid = isToggleAction && container.querySelector('#cat-dish-grid');
+    const retainedCount = existingGrid ? Math.min(existingGrid.childElementCount, displayItems.length) : 0;
+    const itemsHtml = displayItems.slice(retainedCount).map(item => {
       const badgesHtml = (item.badges || []).map(b => {
         let badgeStyle = 'bg-neutral-100 text-neutral-800';
         if (b.includes('Хит') || b.includes('Премиум') || b.includes('Шедевр') || b.includes('XXL')) {
@@ -1074,30 +993,30 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
           <div>
             <!-- Top Badges & Price -->
             <div class="flex items-center justify-between gap-2 mb-2">
-              <div class="flex items-center gap-1.5 flex-wrap">
+              <div data-reveal="badge" class="flex items-center gap-1.5 flex-wrap">
                 ${badgesHtml}
                 ${item.weight ? `<span class="px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 text-[9px] sm:text-[10px] font-mono-tech font-bold">${escapeHtml(item.weight)}</span>` : ''}
               </div>
-              <div class="text-sm sm:text-base font-black font-unbounded text-red-600 shrink-0">
+              <div data-reveal="counter" class="menu-price text-sm sm:text-base font-extrabold text-red-600 shrink-0">
                 ${escapeHtml(item.price)}
               </div>
             </div>
 
             <!-- Title -->
-            <h4 class="text-sm sm:text-base font-black text-black uppercase font-unbounded tracking-tight leading-snug mb-1.5">
+            <h4 data-reveal="title" class="text-sm sm:text-base font-black text-black uppercase font-unbounded tracking-tight leading-snug mb-1.5">
               ${escapeHtml(item.name)}
             </h4>
 
             <!-- Description / Ingredients -->
             ${item.desc ? `
-              <p class="text-[11px] sm:text-xs text-neutral-700 font-mono-tech leading-relaxed">
+              <p data-reveal="detail" class="text-[11px] sm:text-xs text-neutral-700 font-mono-tech leading-relaxed">
                 ${escapeHtml(item.desc)}
               </p>
             ` : ''}
           </div>
 
           <!-- Bottom: Order & Freshness Bar -->
-          <div class="mt-3.5 pt-2.5 border-t border-neutral-100 flex items-center justify-between text-[10px] font-mono-tech">
+          <div data-reveal="detail" class="mt-3.5 pt-2.5 border-t border-neutral-100 flex items-center justify-between text-[10px] font-mono-tech">
             <span class="text-neutral-400">
               Shrimp Pub • Свежая подача
             </span>
@@ -1110,6 +1029,8 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
       `;
     }).join('');
 
+    const toggleText = isCatExpanded ? 'СВЕРНУТЬ ДО 3 ПОЗИЦИЙ' : `ПОКАЗАТЬ ВСЕ ${items.length} ПОЗИЦИЙ`;
+    const toggleCount = isCatExpanded ? 3 : items.length;
     const toggleBtnHtml = items.length > 3 ? `
       <div class="my-5 flex justify-center">
         <button 
@@ -1117,21 +1038,30 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
           class="btn-magnetic group relative inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-black hover:bg-red-600 text-white font-black font-unbounded text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_30px_rgba(255,30,39,0.4)] cursor-pointer"
         >
           <svg class="w-4 h-4 fill-none stroke-current stroke-2 transition-transform duration-300 ${isCatExpanded ? 'rotate-180' : ''}" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-          <span>${isCatExpanded ? 'СВЕРНУТЬ ДО 3 ПОЗИЦИЙ' : `ПОКАЗАТЬ ВСЕ ${items.length} ПОЗИЦИЙ`}</span>
-          <span class="px-2 py-0.5 rounded-full bg-red-600 group-hover:bg-white text-white group-hover:text-black text-[10px] font-mono-tech font-bold transition-colors">${isCatExpanded ? '3' : items.length}</span>
+          <span data-toggle-label>${toggleText}</span>
+          <span data-toggle-count class="px-2 py-0.5 rounded-full bg-red-600 group-hover:bg-white text-white group-hover:text-black text-[10px] font-mono-tech font-bold transition-colors">${toggleCount}</span>
         </button>
       </div>
     ` : '';
 
-    container.innerHTML = `
-      <div id="cat-dish-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        ${itemsHtml}
-      </div>
-      ${toggleBtnHtml}
-    `;
+    if (existingGrid) {
+      while (existingGrid.childElementCount > retainedCount) existingGrid.lastElementChild.remove();
+      existingGrid.insertAdjacentHTML('beforeend', itemsHtml);
+      const toggle = container.querySelector('#btn-toggle-cat-items');
+      toggle.querySelector('[data-toggle-label]').textContent = toggleText;
+      toggle.querySelector('[data-toggle-count]').textContent = toggleCount;
+      toggle.querySelector('svg').classList.toggle('rotate-180', isCatExpanded);
+    } else {
+      container.innerHTML = `
+        <div id="cat-dish-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          ${itemsHtml}
+        </div>
+        ${toggleBtnHtml}
+      `;
+    }
 
     // Wire click & keyboard open on photographed dish cards (ignoring swipe/drag)
-    container.querySelectorAll('.menu-dish-card[data-has-photo="1"]').forEach((card) => {
+    container.querySelectorAll(`.menu-dish-card[data-has-photo="1"]:nth-child(n+${retainedCount + 1})`).forEach((card) => {
       const handleCardOpen = () => {
         const categoryId = card.dataset.categoryId;
         const itemId = card.dataset.itemId;
@@ -1155,7 +1085,7 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
     });
 
     const catToggleBtn = document.getElementById('btn-toggle-cat-items');
-    if (catToggleBtn) {
+    if (catToggleBtn && !existingGrid) {
       catToggleBtn.addEventListener('click', () => {
         sound.playClick();
         categoryExpandedState[currentCategoryIndex] = !categoryExpandedState[currentCategoryIndex];
@@ -1165,37 +1095,22 @@ function renderActiveCategoryContent(isToggleAction = false, animate = true, dir
         }
       });
     }
-
-    if (isToggleAction && isCatExpanded) {
-      gsap.fromTo(
-        '#cat-dish-grid > div:nth-child(n+4)',
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.35, stagger: 0.03, ease: 'power2.out', onComplete: () => {
-          updateDeckStickyPositions();
-          ScrollTrigger.refresh();
-        }}
-      );
-    }
   }
 
   // Entrance animation
-  if (animate) {
+  if (animate && !reducedMotion.matches) {
     gsap.fromTo(
       container,
       { opacity: 0, x: direction === 'next' ? 45 : -45 },
-      { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out', onComplete: () => {
-        updateDeckStickyPositions();
-        ScrollTrigger.refresh();
-      }}
+      { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out', onComplete: updateDeckStickyPositions }
     );
   } else {
     updateDeckStickyPositions();
-    ScrollTrigger.refresh();
   }
 }
 
 // Draft Beers Renderer (Preserves real-bar glasses and bochka nameplates)
-function renderDraftBeerCards(isToggleAction = false) {
+function renderDraftBeerCards() {
   const grid = document.getElementById('menu-items-grid');
   const expandContainer = document.getElementById('menu-expand-container');
   const toggleBtnText = document.getElementById('btn-toggle-text');
@@ -1212,9 +1127,7 @@ function renderDraftBeerCards(isToggleAction = false) {
   }
 
   if (!grid) return;
-  grid.innerHTML = '';
-
-  let items = draftBeerData.filter(item => {
+  const items = draftBeerData.filter(item => {
     let matchStyle = true;
     if (currentSubfilter === 'lager') matchStyle = item.category === 'lager';
     else if (currentSubfilter === 'wheat') matchStyle = item.category === 'wheat';
@@ -1238,12 +1151,16 @@ function renderDraftBeerCards(isToggleAction = false) {
 
   const shouldLimit = !isMenuExpanded && items.length > 3;
   const displayItems = shouldLimit ? items.slice(0, 3) : items;
+  const missingIds = new Set(displayItems.map(beer => String(beer.id)));
+  for (const card of Array.from(grid.children)) {
+    if (!missingIds.delete(card.dataset.beerId)) card.remove();
+  }
 
   if (expandContainer) {
     if (items.length > 3) {
       expandContainer.classList.remove('hidden');
       if (toggleBtnText) {
-        toggleBtnText.textContent = isMenuExpanded ? 'СВЕРНУТЬ ДО 3 СОРТОВ' : `ПОКАЗАТЬ ВСЕ ${items.length} СОРТОВ КРАНА`;
+        toggleBtnText.textContent = isMenuExpanded ? 'СВЕРНУТЬ' : 'ПОКАЗАТЬ ВСЕ';
       }
       if (toggleBtnBadge) {
         toggleBtnBadge.textContent = isMenuExpanded ? '3' : `${items.length}`;
@@ -1257,6 +1174,7 @@ function renderDraftBeerCards(isToggleAction = false) {
   }
 
   displayItems.forEach((beer, idx) => {
+    if (!missingIds.has(String(beer.id))) return;
     const isDark = beer.beerColor === 'dark';
     const isPriorityBeer = idx < 3;
     const imgLoadAttrs = isPriorityBeer
@@ -1268,7 +1186,7 @@ function renderDraftBeerCards(isToggleAction = false) {
 
     const topMediaHtml = beer.glassImage ? `
       <!-- Top: Authentic Draft Beer Photo from Pub (Square 1:1) -->
-      <div class="relative w-full aspect-square bg-neutral-900 select-none overflow-hidden rounded-2xl flex items-center justify-center z-10 shadow-lg border border-amber-500/20 group/glass">
+      <div data-reveal="photo" class="relative w-full aspect-square bg-neutral-900 select-none overflow-hidden rounded-2xl flex items-center justify-center z-10 shadow-lg border border-amber-500/20 group/glass">
         <img src="${beer.glassImage}" alt="${beer.nameRu}" ${imgLoadAttrs} class="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 group-hover:scale-105" />
         
         <!-- Tap Badge Overlay -->
@@ -1279,7 +1197,7 @@ function renderDraftBeerCards(isToggleAction = false) {
       </div>
     ` : `
       <!-- Top: Realistic Wooden Barrel with Engraved Nameplate -->
-      <div class="relative w-full aspect-[1536/1024] select-none overflow-visible flex items-center justify-center z-10">
+      <div data-reveal="photo" class="relative w-full aspect-[1536/1024] select-none overflow-visible flex items-center justify-center z-10">
         <img src="./bochka.png" alt="Пивная бочка ${beer.nameRu}" loading="lazy" decoding="async" class="w-full h-full object-contain select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.03] drop-shadow-[0_12px_22px_rgba(0,0,0,0.65)]" />
         
         <div class="absolute top-[27%] left-[29%] w-[42%] h-[28%] flex flex-col items-center justify-center text-center px-1 pointer-events-none">
@@ -1298,10 +1216,9 @@ function renderDraftBeerCards(isToggleAction = false) {
         class="relative mt-3 p-3.5 sm:p-4 rounded-2xl bg-white/95 border border-white/60 shadow-lg overflow-hidden flex flex-col justify-between min-h-[160px] z-10 transition-colors"
       >
         <div class="relative z-20">
-          <div class="flex items-center justify-between gap-2 mb-2">
+          <div data-reveal="badge" class="flex items-center justify-between gap-2 mb-2">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase" title="${beer.country}">${beer.flag}</span>
-              ${beer.rotation ? `<span class="px-2 py-0.5 rounded-full bg-red-100 border border-red-500/40 text-[9px] sm:text-[10px] font-mono-tech font-bold text-red-700 uppercase">Ротация</span>` : ''}
               ${beer.popular ? `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-[9px] sm:text-[10px] font-mono-tech font-bold text-amber-800 uppercase">Хит</span>` : ''}
               <span class="px-2 py-0.5 rounded-full ${isDark ? 'bg-neutral-900 text-amber-300' : 'bg-amber-100 text-amber-900'} text-[9px] sm:text-[10px] font-mono-tech font-bold uppercase">${isDark ? 'Темное' : 'Светлое'}</span>
             </div>
@@ -1311,68 +1228,47 @@ function renderDraftBeerCards(isToggleAction = false) {
           </div>
 
           <!-- Pure Black Title -->
-          <h3 class="text-sm sm:text-base font-black text-black uppercase font-unbounded tracking-tight leading-snug mb-1">
+          <h3 data-reveal="title" class="text-sm sm:text-base font-black text-black uppercase font-unbounded tracking-tight leading-snug mb-1">
             ${beer.nameRu}
           </h3>
 
-          <div class="text-[10px] sm:text-xs text-neutral-500 font-mono-tech mb-1">
+          <div data-reveal="detail" class="text-[10px] sm:text-xs text-neutral-500 font-mono-tech mb-1">
             ${beer.nameEn} ${beer.og ? `• OG ${beer.og}` : ''} ${beer.ibu ? `• IBU ${beer.ibu}` : ''}
           </div>
 
-          <p class="text-[11px] sm:text-xs text-neutral-800 font-normal leading-relaxed line-clamp-2">
+          <p data-reveal="detail" class="text-[11px] sm:text-xs text-neutral-800 font-normal leading-relaxed line-clamp-2">
             ${beer.desc}
           </p>
         </div>
 
         <div class="relative z-20 pt-2.5 sm:pt-3 mt-2 border-t border-neutral-200/80 flex items-center justify-between">
-          <div class="flex items-center gap-2.5 sm:gap-3 font-mono-tech">
+          <div data-reveal="counter" class="flex items-center gap-2.5 sm:gap-3 font-mono-tech">
             <div>
               <span class="text-neutral-400 block text-[8px] sm:text-[9px] font-bold">0,33 Л</span>
-              <span class="text-black font-black text-xs sm:text-sm">${beer.price33}</span>
+              <span class="menu-price text-black font-extrabold text-sm sm:text-base">${beer.price33}</span>
             </div>
             <div class="h-4 sm:h-5 w-px bg-neutral-200"></div>
             <div>
               <span class="text-neutral-400 block text-[8px] sm:text-[9px] font-bold">0,5 Л</span>
-              <span class="text-red-600 font-black text-xs sm:text-sm">${beer.price50}</span>
+              <span class="menu-price text-red-600 font-extrabold text-sm sm:text-base">${beer.price50}</span>
             </div>
           </div>
 
-          <div class="text-[10px] font-mono-tech font-bold text-neutral-500 flex items-center gap-1.5 bg-neutral-100 px-2.5 py-1 rounded-lg">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span>НА КРАНЕ</span>
+          <div data-reveal="badge" class="text-[10px] font-mono-tech font-bold flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${beer.rotation ? 'bg-red-100 text-red-700' : 'bg-neutral-100 text-neutral-600'}">
+            <span class="w-1.5 h-1.5 rounded-full ${beer.rotation ? 'bg-red-600' : 'bg-emerald-500'}"></span>
+            <span>${beer.rotation ? 'РОТАЦИЯ' : 'НА КРАНЕ'}</span>
           </div>
         </div>
 
       </div>
     `;
 
-    grid.appendChild(card);
+    grid.insertBefore(card, grid.children[idx] || null);
   });
 
   attachCardTiltListeners();
 
-  if (isToggleAction && isMenuExpanded) {
-    gsap.fromTo(
-      '#menu-items-grid > div:nth-child(n+4)',
-      { opacity: 0, y: 35, rotateX: 18, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        scale: 1,
-        duration: 0.45,
-        stagger: 0.04,
-        ease: 'power2.out',
-        onComplete: () => {
-          updateDeckStickyPositions();
-          ScrollTrigger.refresh();
-        }
-      }
-    );
-  } else {
-    updateDeckStickyPositions();
-    ScrollTrigger.refresh();
-  }
+  updateDeckStickyPositions();
 }
 
 // Backward-compatible switchCategory helper
@@ -1387,11 +1283,6 @@ function switchCategory(cat) {
   }
 }
 window.switchCategory = switchCategory;
-
-// Global renderMenuItems alias
-function renderMenuItems(isToggleAction = false) {
-  renderDraftBeerCards(isToggleAction);
-}
 
 // Card Interaction: Flat static cards (3D tilt/parallax disabled as requested)
 function attachCardTiltListeners() {
@@ -1487,7 +1378,7 @@ function renderReviewsCarousel() {
     slide.innerHTML = `
       <div class="beer-tilt-card p-4 sm:p-5 rounded-2xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-xl border border-white/10 max-w-2xl mx-auto">
         <div>
-          <div class="flex items-center justify-between mb-2.5 sm:mb-3">
+          <div data-reveal="badge" class="flex items-center justify-between mb-2.5 sm:mb-3">
             <div class="flex items-center gap-2.5 sm:gap-3">
               <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full ${rev.avatarBg} text-white font-bold flex items-center justify-center text-xs sm:text-sm font-unbounded shadow">
                 ${rev.author[0]}
@@ -1512,16 +1403,16 @@ function renderReviewsCarousel() {
             </div>
           </div>
 
-          <p class="text-xs sm:text-sm text-neutral-200 leading-relaxed mb-2.5 sm:mb-3 font-mono-tech">
+          <p data-reveal="detail" class="text-xs sm:text-sm text-neutral-200 leading-relaxed mb-2.5 sm:mb-3 font-mono-tech">
             "${rev.text}"
           </p>
 
-          <div class="flex flex-wrap gap-1 sm:gap-1.5 mb-2 sm:mb-2.5">
+          <div data-reveal="badge" class="flex flex-wrap gap-1 sm:gap-1.5 mb-2 sm:mb-2.5">
             ${rev.tags.map(t => `<span class="px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-[9px] font-mono-tech text-neutral-300">#${t}</span>`).join('')}
           </div>
         </div>
 
-        <div class="pt-2 sm:pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono-tech text-neutral-400">
+        <div data-reveal="detail" class="pt-2 sm:pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono-tech text-neutral-400">
           <span>${rev.date}</span>
           <a 
             href="${yandexPubInfo.yandexUrl}" 
@@ -1568,7 +1459,7 @@ function renderReviewsCarousel() {
         card.className = `beer-tilt-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-900 text-white flex flex-col justify-between hover:bg-black transition-all shadow-lg border border-white/5`;
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between mb-3">
+            <div data-reveal="badge" class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-full ${rev.avatarBg} text-white font-bold flex items-center justify-center text-xs font-unbounded">
                   ${rev.author[0]}
@@ -1589,12 +1480,12 @@ function renderReviewsCarousel() {
                 <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
               </div>
             </div>
-            <p class="text-[11px] sm:text-xs text-neutral-300 leading-relaxed mb-3 font-mono-tech">"${rev.text}"</p>
-            <div class="flex flex-wrap gap-1 mb-3">
+            <p data-reveal="detail" class="text-[11px] sm:text-xs text-neutral-300 leading-relaxed mb-3 font-mono-tech">"${rev.text}"</p>
+            <div data-reveal="badge" class="flex flex-wrap gap-1 mb-3">
               ${rev.tags.map(t => `<span class="px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-[9px] font-mono-tech text-neutral-400">#${t}</span>`).join('')}
             </div>
           </div>
-          <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono-tech text-neutral-400">
+          <div data-reveal="detail" class="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono-tech text-neutral-400">
             <span>${rev.date}</span>
             <span class="text-amber-400 font-bold inline-flex items-center gap-1">
               <span>Яндекс Карты</span>
@@ -1720,7 +1611,7 @@ function openDishModal(categoryIdOrDish, itemId) {
           <span class="pointer-events-auto px-3 py-1 rounded-full bg-black/85 backdrop-blur-md border border-white/15 text-[10px] sm:text-xs font-mono-tech font-bold uppercase tracking-wider text-red-400 shadow-md">
             ${escapeHtml(categoryLabel)}
           </span>
-          <span class="pointer-events-auto px-3.5 py-1 rounded-xl bg-black/90 backdrop-blur-md border border-amber-500/45 text-amber-300 font-black font-unbounded text-sm sm:text-lg shadow-xl">
+          <span class="menu-price pointer-events-auto px-3.5 py-1 rounded-xl bg-black/90 backdrop-blur-md border border-amber-500/45 text-amber-300 font-extrabold text-sm sm:text-lg shadow-xl">
             ${escapeHtml(item.price)}
           </span>
         </div>
@@ -1734,7 +1625,7 @@ function openDishModal(categoryIdOrDish, itemId) {
             ${escapeHtml(categoryLabel)}
           </span>
         </div>
-        <span class="px-3.5 py-1 rounded-xl bg-black/85 border border-amber-500/45 text-amber-300 font-black font-unbounded text-sm sm:text-lg shrink-0">
+        <span class="menu-price px-3.5 py-1 rounded-xl bg-black/85 border border-amber-500/45 text-amber-300 font-extrabold text-sm sm:text-lg shrink-0">
           ${escapeHtml(item.price)}
         </span>
       </div>
@@ -1818,8 +1709,6 @@ function openDishModal(categoryIdOrDish, itemId) {
       closeDishModal();
       const bookingDeck = document.getElementById('booking-deck');
       if (bookingDeck) {
-        bookingDeck.style.opacity = '1';
-        bookingDeck.style.transform = 'none';
         if (lenis) {
           lenis.scrollTo(bookingDeck, { offset: -70, duration: 0.9 });
         } else {
@@ -1862,8 +1751,6 @@ function revealAndHighlightDishInMenu(categoryId, itemId) {
 
   const menuDeck = document.getElementById('menu-deck');
   if (menuDeck) {
-    menuDeck.style.opacity = '1';
-    menuDeck.style.transform = 'none';
   }
 
   requestAnimationFrame(() => {

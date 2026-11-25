@@ -51,9 +51,9 @@ export class CaptchaGame {
             <span>SYSTEM // PUB-CONTROL VERIFICATION</span>
           </div>
 
-          <h1 class="text-2xl xs:text-3xl sm:text-5xl font-black text-white uppercase tracking-tight font-unbounded">
+          <h2 class="text-2xl xs:text-3xl sm:text-5xl font-black text-white uppercase tracking-tight font-unbounded">
             СОБЕРИ <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-amber-300 text-glow-red">КРЕВЕТКУ</span>
-          </h1>
+          </h2>
           <p class="text-[11px] sm:text-xs text-neutral-400 mt-1 sm:mt-2 font-mono-tech max-w-md mx-auto">
             Перетащи фрагменты креветки в центральный неоновый контур, чтобы разблокировать доступ к кранам.
           </p>

@@ -478,7 +478,7 @@ export class AtmosphereGallery {
           </div>
         </div>
 
-        <div class="mt-3 text-center text-xs font-mono-tech text-neutral-500">
+        <div data-reveal="detail" class="mt-3 text-center text-xs font-mono-tech text-neutral-500">
           Нажмите на любой кадр для просмотра или откройте полную галерею
         </div>
       </div>

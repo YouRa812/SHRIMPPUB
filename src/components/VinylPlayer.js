@@ -165,7 +165,7 @@ export class VinylPlayer {
         <!-- Section Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6">
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/70 border border-red-500/40 text-red-300 text-[11px] font-mono-tech tracking-widest uppercase mb-2 sm:mb-3 shadow-[0_0_20px_rgba(255,30,39,0.25)]">
+            <div data-reveal="badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/70 border border-red-500/40 text-red-300 text-[11px] font-mono-tech tracking-widest uppercase mb-2 sm:mb-3 shadow-[0_0_20px_rgba(255,30,39,0.25)]">
               <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
               <span>ВИНИЛОВЫЙ ЛАУНДЖ // HI-FI AUDIO</span>
             </div>
@@ -178,7 +178,7 @@ export class VinylPlayer {
           </div>
 
           <!-- Turntable Status Badges -->
-          <div class="flex items-center gap-2 self-start md:self-auto shrink-0">
+          <div data-reveal="badge" class="flex items-center gap-2 self-start md:self-auto shrink-0">
             <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/60 border border-white/10 text-xs font-mono-tech">
               <span class="w-2.5 h-2.5 rounded-full ${this.isPlaying ? 'bg-emerald-500 shadow-[0_0_10px_#10b981]' : 'bg-red-500 shadow-[0_0_10px_#ef4444]'} transition-colors duration-300" id="vinyl-status-led"></span>
               <span class="text-neutral-300 font-bold" id="vinyl-status-text">${this.isPlaying ? 'MOTOR ON' : 'STANDBY'}</span>
@@ -375,7 +375,7 @@ export class VinylPlayer {
             <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-black/60 border border-white/10 backdrop-blur-md shadow-xl flex flex-col gap-4">
               
               <!-- Console Top Header -->
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+              <div data-reveal="counter" class="flex items-center justify-between border-b border-white/10 pb-3">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-red-500 ${this.isPlaying ? 'animate-ping' : ''}"></span>
                   <span class="text-[10px] sm:text-xs font-mono-tech text-neutral-400 uppercase tracking-widest">
@@ -398,7 +398,7 @@ export class VinylPlayer {
               </div>
 
               <!-- Dual Stereo Analog VU Meters (Illuminated Gauges) -->
-              <div class="grid grid-cols-2 gap-3 p-2.5 sm:p-3 rounded-xl bg-[#090a0d] border border-white/10 shadow-inner">
+              <div data-reveal="media" class="grid grid-cols-2 gap-3 p-2.5 sm:p-3 rounded-xl bg-[#090a0d] border border-white/10 shadow-inner">
                 
                 <!-- Channel L Meter -->
                 <div class="flex flex-col items-center">
@@ -434,7 +434,7 @@ export class VinylPlayer {
               </div>
 
               <!-- Interactive Timeline Scrubber -->
-              <div class="space-y-1.5">
+              <div data-reveal="control" class="space-y-1.5">
                 <div class="relative w-full h-2 rounded-full bg-white/10 overflow-hidden cursor-pointer group" id="progress-container">
                   <div id="progress-bar" class="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-red-600 to-amber-400 rounded-full transition-all duration-100" style="width: 0%;"></div>
                 </div>
@@ -496,10 +496,10 @@ export class VinylPlayer {
           
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-              <span class="text-xs sm:text-sm font-black text-white uppercase font-unbounded tracking-wider">
+              <span data-reveal="title" class="text-xs sm:text-sm font-black text-white uppercase font-unbounded tracking-wider">
                 КОЛЛЕКЦИЯ ПЛАСТИНОК ПАБА
               </span>
-              <span class="px-2 py-0.5 rounded bg-red-600/30 text-red-400 text-[10px] font-bold font-mono-tech border border-red-500/40">
+              <span data-reveal="badge" class="px-2 py-0.5 rounded bg-red-600/30 text-red-400 text-[10px] font-bold font-mono-tech border border-red-500/40">
                 15 ТРЕКОВ
               </span>
             </div>
@@ -518,14 +518,14 @@ export class VinylPlayer {
           <!-- Horizontal Scrollable Vinyl Crate / Carousel -->
           <div 
             id="vinyl-crate-track" 
-            class="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto py-7 sm:py-8 px-5 sm:px-8 no-scrollbar snap-x snap-mandatory select-none"
+            class="relative flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto py-7 sm:py-8 px-5 sm:px-8 no-scrollbar snap-x snap-mandatory select-none"
           >
             ${this.tracks.map((t, idx) => {
               const isCurrent = idx === this.currentIndex;
               return `
                 <div 
                   data-track-index="${idx}"
-                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border-2 ${isCurrent ? 'border-red-500 shadow-[0_0_15px_rgba(255,30,39,0.45),inset_0_0_15px_rgba(255,30,39,0.22)] ring-1 ring-red-500/30' : 'border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 snap-start flex flex-col justify-between group"
+                  class="vinyl-card relative shrink-0 w-[180px] xs:w-[200px] sm:w-[230px] md:w-[245px] lg:w-[250px] p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#18181c] to-[#0c0c0e] border-2 ${isCurrent ? 'snap-center border-red-500 shadow-[0_0_15px_rgba(255,30,39,0.45),inset_0_0_15px_rgba(255,30,39,0.22)] ring-1 ring-red-500/30' : 'snap-start border-white/10 hover:border-white/30'} cursor-pointer transition-all duration-300 flex flex-col justify-between group"
                 >
                   <!-- Active Indicator Badge (Anchored cleanly inside card: zero clipping) -->
                   ${isCurrent ? `
@@ -581,7 +581,7 @@ export class VinylPlayer {
                   </div>
 
                   <!-- Track Info Below Sleeve -->
-                  <div class="min-w-0">
+                  <div data-reveal="detail" class="min-w-0">
                     <h4 class="text-xs sm:text-sm font-bold text-white font-unbounded line-clamp-2 h-9 sm:h-10 leading-snug group-hover:text-red-400 transition-colors">
                       ${t.title}
                     </h4>
@@ -832,9 +832,11 @@ export class VinylPlayer {
     if (this.isPlaying) {
       this.play();
     }
-    const activeCard = this.container.querySelector(`.vinyl-card[data-track-index="${index}"]`);
+    const crateTrack = this.container.querySelector('#vinyl-crate-track');
+    const activeCard = crateTrack?.querySelector(`.vinyl-card[data-track-index="${index}"]`);
     if (activeCard) {
-      activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      const left = activeCard.offsetLeft + (activeCard.offsetWidth - crateTrack.clientWidth) / 2;
+      crateTrack.scrollTo({ left, behavior: 'smooth' });
     }
   }
 

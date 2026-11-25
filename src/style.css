@@ -40,6 +40,11 @@
   .font-mono-tech {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  .menu-price {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
 }
 
 /* ==================== VIVID ACTIVE ANIMATED BACKGROUND ==================== */
@@ -127,9 +132,8 @@
   display: inline-block;
 }
 
-/* Ensure hero and mascot shrimp are strictly 100% opaque and never fade/turn transparent */
+/* Keep the hero and the mascot artwork opaque during parallax. */
 #hero,
-#hero-shrimp-container,
 #hero-shrimp-img {
   opacity: 1 !important;
 }
@@ -151,9 +155,7 @@
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.75),
     0 0 0 1px rgba(255, 255, 255, 0.08);
-  opacity: 1 !important;
   background-clip: padding-box;
-  will-change: transform, opacity;
 }
 
 @media (min-width: 769px) and (max-width: 1360px) {
@@ -176,6 +178,184 @@
       0 15px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(255, 255, 255, 0.06);
     margin-bottom: 2rem;
+  }
+}
+
+/* Entrance motion adds to the transform already used by hover, dragging or parallax. */
+[data-scroll-reveal-variant] {
+  --reveal-animation: shrimp-reveal-glide;
+  --reveal-duration: 590ms;
+  --reveal-ease: cubic-bezier(.23, .46, .3, 1);
+  --reveal-travel: 1;
+  --reveal-tempo: 1;
+  --reveal-x: 32px;
+  --reveal-y: 12px;
+  --reveal-angle: 0deg;
+  --reveal-start-ink: 0;
+  --reveal-dx: calc(var(--reveal-x) * var(--reveal-travel) * var(--reveal-direction, 1));
+  --reveal-dy: calc(var(--reveal-y) * var(--reveal-travel));
+  --reveal-turn: calc(var(--reveal-angle) * var(--reveal-travel) * var(--reveal-direction, 1));
+}
+
+[data-scroll-reveal-variant="panel"] {
+  --reveal-x: 0px;
+  --reveal-y: 20px;
+  --reveal-start-ink: .9;
+}
+
+[data-scroll-reveal-variant="title"],
+[data-scroll-reveal-variant="hero-word"] {
+  --reveal-animation: shrimp-reveal-headline;
+  --reveal-duration: 710ms;
+  --reveal-x: .32em;
+  --reveal-y: .85em;
+  --reveal-angle: 2.5deg;
+}
+
+[data-scroll-reveal-variant="hero-word"] {
+  --reveal-duration: 820ms;
+  --reveal-x: .66em;
+  --reveal-y: .58em;
+  --reveal-angle: 4deg;
+}
+
+[data-scroll-reveal-variant="card"],
+[data-scroll-reveal-variant="poster"],
+[data-scroll-reveal-variant="sleeve"],
+[data-scroll-reveal-variant="mascot"],
+[data-scroll-reveal-variant="book"],
+[data-scroll-reveal-variant="badge"],
+[data-scroll-reveal-variant="counter"] {
+  --reveal-animation: shrimp-reveal-land;
+  --reveal-duration: 730ms;
+  --reveal-x: 26px;
+  --reveal-y: 58px;
+  --reveal-angle: 3.5deg;
+  --reveal-scale: .94;
+}
+
+[data-scroll-reveal-variant="poster"] {
+  --reveal-angle: 6deg;
+  --reveal-y: 74px;
+}
+
+[data-scroll-reveal-variant="sleeve"] {
+  --reveal-x: 42px;
+  --reveal-y: 26px;
+  --reveal-angle: 7deg;
+}
+
+[data-scroll-reveal-variant="mascot"] {
+  --reveal-duration: 860ms;
+  --reveal-x: 54px;
+  --reveal-y: 40px;
+  --reveal-angle: 7deg;
+  --reveal-scale: .87;
+}
+
+[data-scroll-reveal-variant="book"] {
+  --reveal-x: 0px;
+  --reveal-y: 44px;
+  --reveal-angle: 1.8deg;
+  --reveal-scale: .98;
+}
+
+[data-scroll-reveal-variant="badge"],
+[data-scroll-reveal-variant="counter"] {
+  --reveal-duration: 535ms;
+  --reveal-x: 10px;
+  --reveal-y: 18px;
+  --reveal-angle: 6deg;
+  --reveal-scale: .83;
+}
+
+[data-scroll-reveal-variant="control"] {
+  --reveal-x: 0px;
+  --reveal-y: 24px;
+  --reveal-duration: 490ms;
+}
+
+[data-scroll-reveal-variant="media"],
+[data-scroll-reveal-variant="photo"] {
+  --reveal-animation: shrimp-reveal-print;
+  --reveal-duration: 850ms;
+  --reveal-x: 0px;
+  --reveal-y: 22px;
+  --reveal-print-edge: 8%;
+}
+
+/* The observer measures the element at its final position before the animation starts. */
+[data-scroll-reveal-state="pending"]:not(:focus-within) {
+  opacity: var(--reveal-start-ink);
+}
+
+[data-scroll-reveal-state="playing"]:not(:focus-within) {
+  animation:
+    var(--reveal-animation) calc(var(--reveal-duration) * var(--reveal-tempo))
+      var(--reveal-ease) var(--reveal-delay, 0ms) both,
+    shrimp-entrance-ink 110ms ease-out var(--reveal-delay, 0ms) both;
+  animation-composition: add, replace;
+}
+
+/* A short ink-in softens the leading edge. Underlying text and disabled-button opacity
+   are restored by the implicit ending keyframe. */
+@keyframes shrimp-entrance-ink {
+  from { opacity: var(--reveal-start-ink); }
+}
+
+@keyframes shrimp-reveal-glide {
+  from { transform: translate(var(--reveal-dx), var(--reveal-dy)); }
+  to { transform: translate(0, 0); }
+}
+
+@keyframes shrimp-reveal-headline {
+  from {
+    transform: translate(var(--reveal-dx), var(--reveal-dy)) skewY(var(--reveal-turn));
+    clip-path: inset(-.65em -.65em 100%);
+  }
+  to {
+    transform: translate(0, 0) skewY(0deg);
+    clip-path: inset(-.65em);
+  }
+}
+
+@keyframes shrimp-reveal-land {
+  from {
+    transform: translate(var(--reveal-dx), var(--reveal-dy))
+      rotate(var(--reveal-turn)) scale(var(--reveal-scale));
+  }
+  72% {
+    transform: translate(calc(var(--reveal-dx) * -.055), calc(var(--reveal-dy) * -.065))
+      rotate(calc(var(--reveal-turn) * -.11)) scale(1.007);
+  }
+  to { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+@keyframes shrimp-reveal-print {
+  from {
+    transform: translateY(var(--reveal-dy)) scale(1.035);
+    clip-path: polygon(-6% -6%, var(--reveal-print-edge) -6%,
+      calc(var(--reveal-print-edge) - 12%) 106%, -6% 106%);
+  }
+  to {
+    transform: translateY(0) scale(1);
+    clip-path: polygon(-6% -6%, 106% -6%, 106% 106%, -6% 106%);
+  }
+}
+
+@media (max-width: 639px) {
+  [data-scroll-reveal-variant] {
+    --reveal-travel: .72;
+    --reveal-tempo: .89;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal-variant] {
+    --reveal-travel: .48;
+    --reveal-tempo: .8;
+    --reveal-scale: .985;
+    --reveal-print-edge: 40%;
   }
 }
 

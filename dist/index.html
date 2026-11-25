@@ -1,10 +1,36 @@
 <!doctype html>
 <html lang="ru" class="bg-[#070104]">
   <head>
+    <link rel="canonical" href="https://shrimppub.vercel.app/">
+    <meta property="og:url" content="https://shrimppub.vercel.app/">
+    <meta property="og:image" content="https://shrimppub.vercel.app/atmos_photo_01.webp">
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./logo-Ce5GVdeg.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SHRIMP PUB // 20 КРАНОВ & КРЕВЕТОЧНЫЙ ШТАБ</title>
+    <title>Shrimp Pub — крафтовый паб в Санкт-Петербурге</title>
+    <meta name="description" content="Shrimp Pub на проспекте Энгельса, 58А в Санкт-Петербурге. 20 пивных кранов, креветки и закуски, меню, афиша мероприятий и контакты для бронирования." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Shrimp Pub" />
+    <meta property="og:title" content="Shrimp Pub — крафтовый паб в Санкт-Петербурге" />
+    <meta property="og:description" content="20 пивных кранов, креветки и закуски. Меню, афиша и контакты Shrimp Pub на проспекте Энгельса, 58А." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BarOrPub",
+        "name": "Shrimp Pub",
+        "telephone": "+7-812-923-01-99",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "проспект Энгельса, 58А",
+          "addressLocality": "Санкт-Петербург",
+          "addressCountry": "RU"
+        },
+        "openingHours": ["Mo-Th,Su 15:00-01:00", "Fr-Sa 15:00-03:00"],
+        "hasMap": "https://yandex.ru/maps/org/shrimp_pub/225095015509/"
+      }
+    </script>
 
     <script>
       // Force page to always launch and reload from the absolute top
@@ -21,8 +47,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-CPMKTW1Q.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-COHrDO2N.css">
+    <script type="module" crossorigin src="./index-CrFAeO0o.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-Cdh8nSPk.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -46,7 +72,7 @@
         <a href="#hero" class="flex items-center gap-1.5 sm:gap-2.5 group shrink-0" aria-label="Shrimp Pub - Главная">
           <img 
             src="./logo-Ce5GVdeg.png" 
-            alt="ShrimpPub Saint-P" 
+            alt="Логотип Shrimp Pub"
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -69,7 +95,7 @@
           <a href="#events-deck" class="nav-link whitespace-nowrap">Мероприятия</a>
           <a href="#reviews-deck" class="nav-link whitespace-nowrap flex items-center gap-1.5">
             <span>Отзывы</span>
-            <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[9px] font-bold leading-none">4.9</span>
+            <span data-yandex-rating class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[9px] font-bold leading-none">4,9</span>
           </a>
           <a href="#morecambe-deck" class="nav-link whitespace-nowrap">Болеем за наших</a>
           <a href="#atmosphere-deck" class="nav-link whitespace-nowrap">Атмосфера</a>
@@ -238,7 +264,7 @@
             <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             <span class="font-bold">Отзывы Яндекс</span>
           </span>
-          <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[10px] font-bold">4.9</span>
+          <span data-yandex-rating class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[10px] font-bold">4,9</span>
         </a>
 
         <a 
@@ -399,7 +425,7 @@
               <img 
                 id="hero-shrimp-img"
                 src="./krevetka-Bg1OkWaT.png" 
-                alt="Shrimp Mascot" 
+                alt="Креветка — талисман Shrimp Pub"
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
@@ -428,21 +454,21 @@
               </a>
             </div>
 
-            <!-- Two Stats Below (20+ Cranes & 4.9 Yandex with Odometer Roll-up) -->
+            <!-- Tap count and Yandex rating -->
             <div class="relative z-30 flex items-center justify-center gap-8 sm:gap-14 mt-6 pt-5 border-t border-red-500/20 w-full max-w-sm sm:max-w-md">
-              <div class="text-center">
-                <span id="odometer-cranes" class="block text-2xl sm:text-3xl font-black text-white font-unbounded">20+</span>
-                <span class="text-[10px] sm:text-xs text-neutral-400 uppercase font-mono-tech tracking-wider">КРАНОВ В РОТАЦИИ</span>
+              <div data-scroll-stat class="text-center">
+                <span id="odometer-cranes" class="block text-2xl sm:text-3xl font-black text-white font-unbounded">20</span>
+                <span class="text-[10px] sm:text-xs text-neutral-400 uppercase font-mono-tech tracking-wider">ПИВНЫХ КРАНОВ</span>
               </div>
               <div class="h-8 sm:h-10 w-px bg-red-500/20"></div>
               <div class="text-center">
-                <a href="#reviews-deck" class="group block">
-                  <span id="odometer-rating" class="text-2xl sm:text-3xl font-black text-amber-400 font-unbounded flex items-center justify-center gap-1 group-hover:text-amber-300 transition-colors">
-                    4.9
+                <a data-reveal="counter" href="#reviews-deck" class="group block">
+                  <span class="text-2xl sm:text-3xl font-black text-amber-400 font-unbounded flex items-center justify-center gap-1 group-hover:text-amber-300 transition-colors">
+                    <span id="odometer-rating">4,9</span>
                     <svg class="w-5 h-5 text-amber-400 fill-current inline-block" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                   </span>
                   <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs text-neutral-400 uppercase font-mono-tech tracking-wider group-hover:text-neutral-300">
-                    <span>184 ОТЗЫВА ЯНДЕКС</span>
+                    <span>671 оценка на Яндексе</span>
                     <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                       <line x1="7" y1="17" x2="17" y2="7"></line>
                       <polyline points="7 7 17 7 17 17"></polyline>
@@ -556,7 +582,7 @@
           <div id="draft-beer-controls" class="mt-6 pt-4 border-t border-black/10">
             <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-4">
               <div class="flex flex-wrap items-center gap-1.5 font-mono-tech">
-                <button data-filter-style="all" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black text-white text-[10px] sm:text-xs font-bold">Все сорта (20)</button>
+                <button data-filter-style="all" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-black text-white text-[10px] sm:text-xs font-bold">Все краны</button>
                 <button data-filter-style="lager" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Лагеры</button>
                 <button data-filter-style="wheat" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Пшеничное</button>
                 <button data-filter-style="ipa" class="subfilter-btn px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-neutral-200/80 hover:bg-neutral-300 text-neutral-800 text-[10px] sm:text-xs">Эли & ИПА</button>
@@ -582,24 +608,24 @@
                 <span id="btn-toggle-icon" class="text-sm sm:text-base transition-transform duration-300 group-hover:translate-y-0.5 flex items-center justify-center">
                   <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </span>
-                <span id="btn-toggle-text">ПОКАЗАТЬ ВСЕ 20 СОРТОВ КРАНА</span>
+                <span id="btn-toggle-text">ПОКАЗАТЬ ВСЕ КРАНЫ</span>
                 <span id="btn-toggle-badge" class="px-2 py-0.5 rounded-full bg-red-600 group-hover:bg-white text-white group-hover:text-black text-[10px] font-mono-tech font-bold transition-colors">20</span>
               </button>
             </div>
           </div>
 
           <!-- Guest Tap Banner -->
-          <div class="mt-6 sm:mt-12 p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-900 text-white flex flex-col sm:flex-row items-center justify-between gap-3.5 sm:gap-6 shadow-xl">
+          <div data-reveal="panel" class="mt-6 sm:mt-12 p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-900 text-white flex flex-col sm:flex-row items-center justify-between gap-3.5 sm:gap-6 shadow-xl">
             <div class="flex items-center gap-3.5 sm:gap-4">
               <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-red-600/30 border border-red-500/50 flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6 text-red-400 fill-current" viewBox="0 0 24 24"><path d="M19 6h-4V4c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v2H5c-1.1 0-2 .9-2 2v2h2v7c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3v-7h2V8c0-1.1-.9-2-2-2zm-8-2h2v2h-2V4zm6 13c0 .55-.45 1-1 1H8c-.55 0-1-.45-1-1v-7h10v7z"/></svg>
               </div>
               <div>
-                <div class="text-xs sm:text-sm font-black uppercase text-white font-unbounded">ГОСТЕВОЙ КРАН ВСЕГДА В РОТАЦИИ</div>
-                <div class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech">Уточни наличие у бармена • Свежая бочка подключается каждую неделю</div>
+                <div data-reveal="title" class="text-xs sm:text-sm font-black uppercase text-white font-unbounded">ГОСТЕВОЙ КРАН ВСЕГДА В РОТАЦИИ</div>
+                <div data-reveal="detail" class="text-[11px] sm:text-xs text-neutral-400 font-mono-tech">Уточни наличие у бармена • Свежая бочка подключается каждую неделю</div>
               </div>
             </div>
-            <div class="text-left sm:text-right text-[10px] sm:text-xs text-neutral-400 font-mono-tech italic max-w-sm">
+            <div data-reveal="detail" class="text-left sm:text-right text-[10px] sm:text-xs text-neutral-400 font-mono-tech italic max-w-sm">
               Чрезмерное употребление алкоголя вредит вашему здоровью, но делает дегустацию креветок интереснее.
             </div>
           </div>
@@ -657,7 +683,7 @@
               class="group inline-flex items-center gap-2.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-neutral-900 text-white border border-amber-500/30 hover:border-amber-400 transition-all shadow shrink-0"
             >
               <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500 text-black flex flex-col items-center justify-center font-black leading-none group-hover:scale-105 transition-transform font-unbounded shrink-0">
-                <span class="text-xs sm:text-sm">4.9</span>
+                <span data-yandex-rating class="text-xs sm:text-sm">4,9</span>
               </div>
               <div>
                 <div class="flex items-center gap-0.5 text-amber-400">
@@ -668,7 +694,7 @@
                   <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                 </div>
                 <div class="text-[9px] sm:text-[10px] text-amber-300 font-mono-tech group-hover:underline inline-flex items-center gap-1">
-                  <span>Яндекс Карты</span>
+                  <span>359 текстовых отзывов</span>
                   <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
@@ -787,12 +813,12 @@
                 По вечерам и выходным у нас аншлаг, поэтому советуем бронировать столик заранее. Мы охладим бокалы и закрепим за вами лучшее место у кранов.
               </p>
 
-              <div class="space-y-2.5 sm:space-y-3 text-xs font-mono-tech">
+              <div data-scroll-reveal-list class="space-y-2.5 sm:space-y-3 text-xs font-mono-tech">
                 <div class="flex items-center gap-2.5 text-neutral-300">
                   <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center shrink-0 text-red-500">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                   </span>
-                  <span class="text-[11px] sm:text-xs">просп. Энгельса, 58А 1 этаж</span>
+                  <span class="text-[11px] sm:text-xs">Санкт-Петербург, просп. Энгельса, 58А, 1 этаж</span>
                 </div>
                 <div class="flex items-center gap-2.5 text-neutral-300">
                   <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center shrink-0 text-amber-500">
@@ -924,7 +950,7 @@
           </div>
 
           <!-- Footer Bottom -->
-          <div class="mt-20 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-tech text-neutral-500">
+          <div data-scroll-reveal-list class="mt-20 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-tech text-neutral-500">
             <div>
               © 2026 SHRIMP PUB. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ЧРЕЗМЕРНОЕ УПОТРЕБЛЕНИЕ ПИВА ВЕДЕТ К ХОРОШИМ ИСТОРИЯМ.
             </div>

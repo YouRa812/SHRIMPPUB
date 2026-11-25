@@ -154,7 +154,7 @@ export class FoodTicker {
         <!-- Header Row -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4 sm:mb-5 pb-3 sm:pb-4 border-b border-white/10">
           <div>
-            <div class="flex items-center gap-2 mb-1">
+            <div data-reveal="badge" class="flex items-center gap-2 mb-1">
               <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
               <span class="text-[10px] sm:text-xs font-mono-tech uppercase font-bold tracking-widest text-red-500">
                 КУХНЯ &amp; ЗАКУСКИ ОТ ШЕФА
