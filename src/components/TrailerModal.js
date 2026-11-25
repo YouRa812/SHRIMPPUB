@@ -26,6 +26,7 @@ export class TrailerModal {
     this.playerEl = null;
     this.keyHandler = null;
     this.isSiteEntered = false;
+    this.pausedMusicForTrailer = false;
   }
 
   /**
@@ -141,22 +142,16 @@ export class TrailerModal {
     }
 
     const btnSite = choiceOverlay.querySelector('#btn-choice-enter-site');
-    if (btnSite) {
-      btnSite.addEventListener('click', (e) => {
-        e.preventDefault();
-        try { sound.playClick(); } catch (_) {}
-        this.closeChoice(() => {
-          this.completeEntrance();
-        });
-      });
-    }
-
-    // Keyboard navigation (Escape -> Enter Site)
-    this.setupKeyHandler(() => {
+    const enterSite = () => {
+      // Start playback during the click or keypress, before the GSAP callback.
+      sound.playMusic();
+      sound.playClick();
       this.closeChoice(() => {
         this.completeEntrance();
       });
-    });
+    };
+    btnSite?.addEventListener('click', enterSite);
+    this.setupKeyHandler(enterSite);
   }
 
   closeChoice(callback) {
@@ -184,7 +179,7 @@ export class TrailerModal {
   openPlayer(customVideoUrl) {
     this.closePlayer();
 
-    if (sound.isMusicPlaying && !sound.muted) {
+    if (sound.isMusicRequested) {
       sound.pauseMusic();
       this.pausedMusicForTrailer = true;
     }
@@ -306,10 +301,14 @@ export class TrailerModal {
     const enterSiteBtn = playerOverlay.querySelector('#btn-trailer-enter-site');
 
     const handleClose = () => {
-      try { sound.playClick(); } catch (_) {}
+      if (!this.playerEl) return;
+      const playMusic = !this.isSiteEntered || this.pausedMusicForTrailer;
+      this.pausedMusicForTrailer = false;
+      sound.playClick();
       this.closePlayer(() => {
         this.completeEntrance();
       });
+      if (playMusic) sound.playMusic();
     };
 
     if (closeBtn) closeBtn.addEventListener('click', handleClose);
@@ -338,19 +337,13 @@ export class TrailerModal {
         try { videoEl.pause(); } catch (_) {}
       }
 
-      if (this.pausedMusicForTrailer) {
-        this.pausedMusicForTrailer = false;
-        if (!sound.muted) {
-          sound.playMusic();
-        }
-      }
+      el.querySelector('iframe')?.remove();
 
       gsap.to(el, {
         opacity: 0,
         duration: 0.25,
         ease: 'power2.in',
         onComplete: () => {
-          // Removing iframe from DOM completely halts audio & network
           el.remove();
           if (typeof callback === 'function') callback();
         }

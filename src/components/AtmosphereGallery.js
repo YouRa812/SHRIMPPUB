@@ -885,9 +885,7 @@ export class AtmosphereGallery {
     }
     if (resumeMusic && this.pausedBgMusicForVideo) {
       this.pausedBgMusicForVideo = false;
-      if (!sound.muted) {
-        sound.playMusic();
-      }
+      sound.playMusic();
     }
   }
 
@@ -909,7 +907,7 @@ export class AtmosphereGallery {
     const foundIdx = this.lightboxItems.findIndex((x) => x.id === item.id);
     this.lightboxIndex = foundIdx !== -1 ? foundIdx : 0;
 
-    if (isVideo && !this.pausedBgMusicForVideo && sound.isMusicPlaying && !sound.muted) {
+    if (isVideo && !this.pausedBgMusicForVideo && sound.isMusicRequested) {
       sound.pauseMusic();
       this.pausedBgMusicForVideo = true;
     }

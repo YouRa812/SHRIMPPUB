@@ -11,13 +11,13 @@ export class VinylPlayer {
     this.container = null;
     this.tracks = playlistTracks;
     this.currentIndex = 0;
-    this.isPlaying = true; // Auto-play / spinning by default as master music source
+    this.isPlaying = false;
+    this.playbackRequest = null;
     this.crackleEnabled = true;
     this.currentTime = 0;
     this.duration = this.tracks[0].durationSeconds;
     this.volume = 0.8;
     this.isMuted = false;
-    this.progressInterval = null;
     this.vuAnimationId = null;
     
     // Audio elements
@@ -40,9 +40,10 @@ export class VinylPlayer {
     this.attachEvents();
     this.startVuMeters();
     sound.setMusicPlayer(this);
-    if (this.isPlaying) {
-      this.startProgressTimer();
-    }
+  }
+
+  get isPlaybackRequested() {
+    return this.isPlaying || this.playbackRequest !== null;
   }
 
   getCurrentTrack() {
@@ -50,26 +51,35 @@ export class VinylPlayer {
   }
 
   initAudio() {
-    this.audioElement = new Audio();
-    this.audioElement.preload = 'metadata';
-    this.audioElement.volume = this.volume;
+    const audio = new Audio();
+    this.audioElement = audio;
+    audio.preload = 'metadata';
+    audio.volume = this.volume;
     this.loadCurrentAudio();
 
-    this.audioElement.addEventListener('ended', () => {
-      this.nextTrack();
+    audio.addEventListener('ended', () => {
+      if (audio === this.audioElement && this.isPlaying && audio.ended) this.nextTrack();
     });
 
-    this.audioElement.addEventListener('timeupdate', () => {
-      if (this.audioElement.duration && !isNaN(this.audioElement.duration)) {
-        this.currentTime = this.audioElement.currentTime;
-        this.duration = this.audioElement.duration;
+    const syncProgress = () => {
+      if (audio === this.audioElement && Number.isFinite(audio.duration) && audio.duration > 0) {
+        this.currentTime = audio.currentTime;
+        this.duration = audio.duration;
         this.updateProgressUI();
       }
-    });
+    };
+    audio.addEventListener('timeupdate', syncProgress);
+    audio.addEventListener('loadedmetadata', syncProgress);
 
-    this.audioElement.addEventListener('error', () => {
-      // Graceful fallback to timer-based simulation if audio file fails
-      console.log('Audio file fallback to simulation mode');
+    audio.addEventListener('pause', () => {
+      if (audio === this.audioElement && audio.paused && !audio.ended && !this.playbackRequest && this.isPlaying) {
+        this.updatePlaybackState(false);
+      }
+    });
+    audio.addEventListener('error', () => {
+      if (audio === this.audioElement && audio.error && this.isPlaying) {
+        this.updatePlaybackState(false);
+      }
     });
   }
 
@@ -107,7 +117,7 @@ export class VinylPlayer {
       filter.Q.value = 1.2;
 
       this.crackleGain = this.audioContext.createGain();
-      this.crackleGain.gain.value = this.crackleEnabled ? 0.12 : 0;
+      this.crackleGain.gain.value = this.isPlaying && this.crackleEnabled ? 0.12 : 0;
 
       whiteNoise.connect(filter);
       filter.connect(this.crackleGain);
@@ -124,7 +134,7 @@ export class VinylPlayer {
       if (!this.audioContext) this.initWebAudioCrackle();
       if (!this.audioContext) return;
       if (this.audioContext.state === 'suspended') {
-        this.audioContext.resume();
+        this.audioContext.resume().catch(() => {});
       }
 
       // Needle drop thump & click
@@ -773,63 +783,74 @@ export class VinylPlayer {
     }
   }
 
-  togglePlay() {
-    if (this.isPlaying) {
+  async togglePlay() {
+    if (this.isPlaybackRequested) {
       this.pause();
-    } else {
-      this.play();
+      return false;
     }
+    return this.play();
   }
 
-  play() {
-    this.isPlaying = true;
-    sound.isMusicPlaying = true;
+  async play() {
+    const audio = this.audioElement;
+    if (!audio) return false;
+    if (this.isPlaying && !audio.paused) return true;
+
+    const request = {};
+    this.playbackRequest = request;
+    try {
+      // Call play() during the gesture, before waiting for any asynchronous work.
+      await audio.play();
+    } catch {
+      if (this.playbackRequest === request) {
+        this.playbackRequest = null;
+        this.updatePlaybackState(false);
+      }
+      return false;
+    }
+
+    if (this.playbackRequest !== request) return false;
+    this.playbackRequest = null;
+    if (audio.paused) {
+      this.updatePlaybackState(false);
+      return false;
+    }
+
     sound.muted = false;
-    sound.notifyListeners();
-
+    this.updatePlaybackState(true);
     this.playNeedleDropSound();
-
-    if (this.audioElement) {
-      this.audioElement.play().catch(() => {
-        console.log('Audio autoplay blocked, running in visual vinyl mode');
-      });
-    }
-
-    if (this.crackleGain && this.crackleEnabled) {
-      this.crackleGain.gain.setValueAtTime(0.12, this.audioContext?.currentTime || 0);
-    }
-
-    // Start progress simulation ticker if audio element is not advancing
-    this.startProgressTimer();
-    this.updateTurntableStateUI();
+    return true;
   }
 
-  pause() {
-    this.isPlaying = false;
-    sound.isMusicPlaying = false;
-    sound.muted = true;
-    sound.notifyListeners();
+  pause({ muteEffects = true } = {}) {
+    this.playbackRequest = null;
+    this.audioElement?.pause();
+    if (muteEffects) sound.muted = true;
+    this.updatePlaybackState(false);
+  }
 
-    if (this.audioElement) {
-      this.audioElement.pause();
-    }
+  updatePlaybackState(isPlaying) {
+    this.isPlaying = isPlaying;
+    sound.isMusicPlaying = isPlaying;
     if (this.crackleGain) {
-      this.crackleGain.gain.setValueAtTime(0, this.audioContext?.currentTime || 0);
+      const level = isPlaying && this.crackleEnabled ? 0.12 : 0;
+      this.crackleGain.gain.setValueAtTime(level, this.audioContext.currentTime);
     }
-    this.stopProgressTimer();
+    sound.notifyListeners();
     this.updateTurntableStateUI();
   }
 
   selectTrack(index) {
     if (index < 0 || index >= this.tracks.length) return;
+    const shouldKeepPlaying = this.isPlaybackRequested;
     this.currentIndex = index;
     const track = this.getCurrentTrack();
     sound.trackTitle = `${track.artist} — ${track.title}`;
-    sound.notifyListeners();
+    this.pause({ muteEffects: false });
     this.loadCurrentAudio();
     this.render();
     this.attachEvents();
-    if (this.isPlaying) {
+    if (shouldKeepPlaying) {
       this.play();
     }
     const crateTrack = this.container.querySelector('#vinyl-crate-track');
@@ -885,28 +906,6 @@ export class VinylPlayer {
     const volSlider = document.getElementById('volume-slider');
     if (volSlider) {
       volSlider.value = this.isMuted ? 0 : this.volume;
-    }
-  }
-
-  startProgressTimer() {
-    this.stopProgressTimer();
-    this.progressInterval = setInterval(() => {
-      if (!this.isPlaying) return;
-      if (!this.audioElement || this.audioElement.paused) {
-        this.currentTime += 1;
-        if (this.currentTime >= this.duration) {
-          this.nextTrack();
-          return;
-        }
-        this.updateProgressUI();
-      }
-    }, 1000);
-  }
-
-  stopProgressTimer() {
-    if (this.progressInterval) {
-      clearInterval(this.progressInterval);
-      this.progressInterval = null;
     }
   }
 
@@ -971,6 +970,7 @@ export class VinylPlayer {
     }
 
     if (btnPlayPause) {
+      btnPlayPause.title = this.isPlaying ? 'Пауза' : 'Воспроизведение';
       btnPlayPause.innerHTML = `
         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
           ${this.isPlaying 
@@ -1019,12 +1019,11 @@ export class VinylPlayer {
   }
 
   destroy() {
-    this.stopProgressTimer();
+    this.pause({ muteEffects: false });
     if (this.vuAnimationId) {
       cancelAnimationFrame(this.vuAnimationId);
     }
     if (this.audioElement) {
-      this.audioElement.pause();
       this.audioElement = null;
     }
     if (this.crackleNode) {

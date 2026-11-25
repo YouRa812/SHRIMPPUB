@@ -6,13 +6,12 @@ class SoundManager {
   constructor() {
     this.ctx = null;
     this.muted = false;
-    this.isMusicPlaying = true; // Playing by default as requested
-    this.hasUserInteracted = false;
+    this.isMusicPlaying = false;
     this.wasPlayingBeforeHide = false;
     this.trackTitle = "Gerry & The Pacemakers — You'll Never Walk Alone";
     this.listeners = [];
     this.musicPlayer = null;
-    this.initUserInteractionUnlock();
+    this.initVisibilityHandling();
   }
 
   setMusicPlayer(player) {
@@ -24,41 +23,21 @@ class SoundManager {
     }
   }
 
-  initUserInteractionUnlock() {
-    if (typeof window === 'undefined') return;
+  get isMusicRequested() {
+    return this.musicPlayer?.isPlaybackRequested ?? false;
+  }
 
-    // User interaction unlocker (fires on first touch, click, or keypress anywhere)
-    const unlockAudio = () => {
-      this.hasUserInteracted = true;
-      this.init(); // wake Web Audio Context for SFX
-      if (this.musicPlayer && this.musicPlayer.isPlaying && this.musicPlayer.audioElement) {
-        if (this.musicPlayer.audioElement.paused) {
-          this.musicPlayer.audioElement.play().catch(() => {});
-        }
-      }
-      window.removeEventListener('pointerdown', unlockAudio);
-      window.removeEventListener('keydown', unlockAudio);
-      window.removeEventListener('touchstart', unlockAudio);
-      window.removeEventListener('click', unlockAudio);
-    };
-
-    window.addEventListener('pointerdown', unlockAudio, { passive: true });
-    window.addEventListener('keydown', unlockAudio, { passive: true });
-    window.addEventListener('touchstart', unlockAudio, { passive: true });
-    window.addEventListener('click', unlockAudio, { passive: true });
-
-    // Browser tab visibility handling
+  initVisibilityHandling() {
+    if (typeof document === 'undefined') return;
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        if (this.musicPlayer && this.musicPlayer.isPlaying) {
+        if (this.isMusicRequested) {
           this.wasPlayingBeforeHide = true;
-          this.musicPlayer.pause();
+          this.pauseMusic();
         }
-      } else {
-        if (this.wasPlayingBeforeHide && this.musicPlayer) {
-          this.wasPlayingBeforeHide = false;
-          this.musicPlayer.play();
-        }
+      } else if (this.wasPlayingBeforeHide) {
+        this.wasPlayingBeforeHide = false;
+        this.playMusic();
       }
     });
   }
@@ -103,26 +82,21 @@ class SoundManager {
   }
 
   playMusic() {
-    if (this.musicPlayer) {
-      this.musicPlayer.play();
-    }
+    return this.musicPlayer?.play();
   }
 
   pauseMusic() {
-    if (this.musicPlayer) {
-      this.musicPlayer.pause();
-    }
+    this.musicPlayer?.pause({ muteEffects: false });
   }
 
-  toggleMute() {
+  toggleMusic() {
     if (this.musicPlayer) {
-      this.musicPlayer.togglePlay();
-      return !this.musicPlayer.isPlaying;
+      return this.musicPlayer.togglePlay();
     }
     this.muted = !this.muted;
     this.isMusicPlaying = !this.muted;
     this.notifyListeners();
-    return this.muted;
+    return this.isMusicPlaying;
   }
 
   setVolume(vol) {
@@ -132,7 +106,7 @@ class SoundManager {
   }
 
   playPick() {
-    if (!this.isMusicPlaying) return;
+    if (this.muted) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -153,7 +127,7 @@ class SoundManager {
   }
 
   playSnap() {
-    if (!this.isMusicPlaying) return;
+    if (this.muted) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -175,7 +149,7 @@ class SoundManager {
   }
 
   playBeerVictory() {
-    if (!this.isMusicPlaying) return;
+    if (this.muted) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -222,7 +196,7 @@ class SoundManager {
   }
 
   playClick() {
-    if (!this.isMusicPlaying) return;
+    if (this.muted) return;
     try {
       this.init();
       if (!this.ctx) return;
@@ -244,7 +218,7 @@ class SoundManager {
   }
 
   playPourSound(durationSec = 7) {
-    if (!this.isMusicPlaying) return;
+    if (this.muted) return;
     try {
       this.init();
       if (!this.ctx) return;
