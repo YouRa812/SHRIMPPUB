@@ -621,18 +621,6 @@ export class MorecambeTracker {
         </div>
 
         ${nextMatchHtml}
-
-        <!-- Pub Promo Strip -->
-        <div class="mt-5 sm:mt-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-red-950/60 via-neutral-900/90 to-black/85 border border-red-500/35 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
-          <div class="flex items-start sm:items-center gap-3.5">
-            <div class="w-11 h-11 rounded-xl bg-red-600/25 border border-red-500/45 flex items-center justify-center font-unbounded font-black text-xs text-red-300 shrink-0">
-              MFC
-            </div>
-            <p class="text-xs sm:text-sm text-neutral-100 font-mono-tech leading-relaxed">
-              Каждый матч "Креветок" (Morecambe F.C.) смотрим вместе! В дни побед — праздничное настроение и холодный крафт у кранов
-            </p>
-          </div>
-        </div>
       </div>
     `;
   }
