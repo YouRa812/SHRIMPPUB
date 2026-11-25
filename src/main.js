@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const vinylPlayer = new VinylPlayer('playlist-deck-mount');
   vinylPlayer.mount();
 
-  // 10f. Morecambe F.C. ("Болеем за наших") Match Tracker
+  // 10f. Morecambe F.C. Match Tracker
   const morecambeTracker = new MorecambeTracker('morecambe-mount');
   morecambeTracker.mount();
 
@@ -395,58 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
       renderDraftBeerCards();
     });
   });
-
-  // 11b. Humorous Beer Roulette (Пивная рулетка)
-  const rouletteBtn = document.getElementById('btn-beer-roulette');
-  if (rouletteBtn) {
-    rouletteBtn.addEventListener('click', () => {
-      sound.playPick();
-      const randomBeer = draftBeerData[Math.floor(Math.random() * draftBeerData.length)];
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.7 },
-          colors: ['#ff1e27', '#f59e0b', '#ffffff']
-        });
-      } catch (e) {}
-
-      sound.playBeerVictory();
-      showToast(`БАРМЕН ВЫБРАЛ: «${randomBeer.nameRu.toUpperCase()}» (${randomBeer.price50})! Не спорь с судьбой — подставляй бокал!`, 5000);
-
-      // Reset style subfilters to 'all' so the chosen beer is definitely visible
-      currentSubfilter = 'all';
-      document.querySelectorAll('[data-filter-style]').forEach(b => {
-        if (b.dataset.filterStyle === 'all') {
-          b.classList.add('bg-black', 'text-white');
-          b.classList.remove('bg-neutral-200/80', 'text-neutral-800');
-        } else {
-          b.classList.remove('bg-black', 'text-white');
-          b.classList.add('bg-neutral-200/80', 'text-neutral-800');
-        }
-      });
-
-      isMenuExpanded = true;
-      renderDraftBeerCards();
-
-      setTimeout(() => {
-        const cards = document.querySelectorAll('.beer-tilt-card');
-        cards.forEach(card => {
-          if (card.textContent.includes(randomBeer.nameRu)) {
-            if (lenis) lenis.scrollTo(card, { offset: -90, duration: 0.8 });
-            gsap.timeline()
-              .to(card, { scale: 1.05, borderColor: '#ff1e27', boxShadow: '0 0 35px rgba(255,30,39,0.7)', duration: 0.3 })
-              .to(card, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
-            sound.playBeerVictory();
-            showToast(`БАРМЕН РЕКОМЕНДУЕТ: ${randomBeer.nameRu}!`);
-          }
-        });
-      }, 250);
-    });
-  }
-
-
-
 
   // 14. Vinyl Card sound feedback
   const vinylCard = document.getElementById('card-vinyl');

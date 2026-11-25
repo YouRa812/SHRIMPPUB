@@ -1,5 +1,3 @@
-import { sound } from '../utils/audio.js';
-
 const PHP_ENDPOINT = './get_matches.php';
 const PHP_CACHE_KEY = 'morecambe_php_cache_v1';
 const PHP_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
@@ -608,7 +606,7 @@ export class MorecambeTracker {
             </div>
 
             <h2 class="text-base sm:text-2xl lg:text-4xl font-black text-white uppercase tracking-tight font-unbounded leading-tight">
-              БОЛЕЕМ ЗА НАШИХ // <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-amber-300">MORECAMBE F.C.</span>
+              С детства за <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-400 to-amber-300">Morecambe</span>
             </h2>
 
             <p class="text-[11px] sm:text-xs text-neutral-300 font-mono-tech mt-2 max-w-2xl leading-relaxed">
@@ -634,18 +632,6 @@ export class MorecambeTracker {
               Каждый матч "Креветок" (Morecambe F.C.) смотрим вместе! В дни побед — праздничное настроение и холодный крафт у кранов
             </p>
           </div>
-
-          <a
-            href="#booking-deck"
-            id="morecambe-book-cta"
-            class="btn-magnetic inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 text-white font-black font-unbounded text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(255,30,39,0.4)] transition-all active:scale-95 shrink-0 w-full md:w-auto text-center"
-          >
-            <span>Забронировать стол на матч</span>
-            <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line>
-              <polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
-          </a>
         </div>
       </div>
     `;
@@ -669,98 +655,5 @@ export class MorecambeTracker {
         { once: true }
       );
     });
-
-    // Smooth scroll CTA to #booking-deck with auto-fill of the nearest match date
-    const ctaBtn = this.container.querySelector('#morecambe-book-cta');
-    if (ctaBtn) {
-      ctaBtn.addEventListener('click', (e) => {
-        const bookingDeck = document.getElementById('booking-deck');
-        if (!bookingDeck) return;
-        e.preventDefault();
-        try {
-          sound.playClick();
-        } catch {
-          // Audio optional
-        }
-
-        // Determine the next match date (YYYY-MM-DD format for date input)
-        const nextMatch = this.state.nextMatch || VERIFIED_NEXT_MATCH;
-        let matchDateIso = '';
-        if (nextMatch) {
-          if (nextMatch.dateIso) {
-            matchDateIso = nextMatch.dateIso;
-          } else if (nextMatch.date) {
-            matchDateIso = String(nextMatch.date).split('T')[0];
-          }
-        }
-        if (!matchDateIso) matchDateIso = '2026-11-21';
-
-        // Auto-fill the date input field in the booking form
-        const dateInput = document.getElementById('booking-date');
-        if (dateInput) {
-          dateInput.value = matchDateIso;
-          dateInput.dispatchEvent(new Event('input', { bubbles: true }));
-          dateInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-          // Visual highlight on the date field
-          const dateFrame = dateInput.parentElement;
-          dateFrame.classList.remove('border-red-500/20', 'bg-neutral-950');
-          dateFrame.classList.add('border-red-500', 'ring-2', 'ring-red-500/50', 'bg-red-950/40');
-          setTimeout(() => {
-            dateFrame.classList.remove('border-red-500', 'ring-2', 'ring-red-500/50', 'bg-red-950/40');
-            dateFrame.classList.add('border-red-500/20', 'bg-neutral-950');
-          }, 3500);
-        }
-
-        // Auto-select match evening time (18:00)
-        const timeSelect = document.getElementById('booking-time');
-        if (timeSelect) {
-          for (const opt of timeSelect.options) {
-            if (opt.value === '18:00' || opt.text.startsWith('18:00')) {
-              opt.selected = true;
-              break;
-            }
-          }
-        }
-
-        // Add prominent match badge notice directly inside the booking form
-        const bookingForm = document.getElementById('booking-form');
-        if (bookingForm) {
-          let noticeEl = document.getElementById('booking-match-notice');
-          if (!noticeEl) {
-            noticeEl = document.createElement('div');
-            noticeEl.id = 'booking-match-notice';
-            noticeEl.className = 'mb-4 p-3.5 rounded-xl bg-red-950/70 border border-red-500/50 text-[11px] font-mono-tech text-red-200 flex items-center justify-between gap-2 shadow-[0_0_20px_rgba(255,30,39,0.3)] transition-all';
-            bookingForm.prepend(noticeEl);
-          }
-          const matchTitle = nextMatch ? `${nextMatch.homeTeam} — ${nextMatch.awayTeam}` : 'Morecambe F.C.';
-          const matchDateText = nextMatch ? formatRussianMatchDate(nextMatch.date || nextMatch.dateIso) : '21 ноя';
-          noticeEl.innerHTML = `
-            <div class="flex items-center gap-2.5">
-              
-              <div>
-                <div class="font-bold text-white uppercase text-xs">Матч Morecambe FC // Дата подставлена</div>
-                <div class="text-neutral-300">${escapeHtml(matchTitle)} • ${escapeHtml(matchDateText)}</div>
-              </div>
-            </div>
-            <button 
-              type="button" 
-              class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer"
-              onclick="this.parentElement.remove()"
-              title="Закрыть уведомление"
-            >✕</button>
-          `;
-        }
-
-        // Make sure card is visible and scroll to booking form
-
-        const lenis = window.__shrimpLenis;
-        if (lenis) {
-          lenis.scrollTo(bookingDeck, { offset: -70, duration: 0.9 });
-        } else {
-          bookingDeck.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    }
   }
 }
