@@ -47,8 +47,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./index-D2Lw0Vya.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-BE1ez9gu.css">
+    <script type="module" crossorigin src="./index-DXowJ0aM.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-XM1sbkxP.css">
   </head>
   <body class="bg-[#070104] text-neutral-100 antialiased selection:bg-[#ff1e27] selection:text-white bg-grain relative min-h-screen">
 
@@ -867,16 +867,19 @@
                   </div>
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label for="booking-date" class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Дата</label>
-                      <input 
-                        id="booking-date"
-                        name="booking_date"
-                        type="date" 
-                        required 
-                        class="w-full px-4 py-3.5 rounded-xl bg-neutral-950 border border-red-500/20 text-xs text-white font-mono-tech focus:outline-none focus:border-red-500 transition-colors"
-                      />
-                    </div>
+                    <label for="booking-date" class="block min-w-0">
+                      <span class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Дата</span>
+                      <span class="relative flex items-center px-4 rounded-xl bg-neutral-950 border border-red-500/20 focus-within:border-red-500 transition-colors">
+                        <input
+                          id="booking-date"
+                          name="booking_date"
+                          type="date"
+                          required
+                          class="block w-full min-w-0 max-w-full min-h-11 appearance-none p-0 border-0 bg-transparent text-xs text-white font-mono-tech focus:outline-none"
+                        />
+                        <span aria-hidden="true" class="booking-date-hint pointer-events-none absolute inset-y-0 left-4 flex items-center text-xs text-neutral-400 font-mono-tech">Выберите дату</span>
+                      </span>
+                    </label>
                     <div>
                       <label for="booking-time" class="block text-xs font-mono-tech text-neutral-400 mb-1.5 uppercase">Время</label>
                       <select 

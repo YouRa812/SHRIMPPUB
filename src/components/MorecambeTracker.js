@@ -703,11 +703,12 @@ export class MorecambeTracker {
           dateInput.dispatchEvent(new Event('change', { bubbles: true }));
 
           // Visual highlight on the date field
-          dateInput.classList.remove('border-red-500/20');
-          dateInput.classList.add('border-red-500', 'ring-2', 'ring-red-500/50', 'bg-red-950/40');
+          const dateFrame = dateInput.parentElement;
+          dateFrame.classList.remove('border-red-500/20', 'bg-neutral-950');
+          dateFrame.classList.add('border-red-500', 'ring-2', 'ring-red-500/50', 'bg-red-950/40');
           setTimeout(() => {
-            dateInput.classList.remove('ring-2', 'ring-red-500/50', 'bg-red-950/40');
-            dateInput.classList.add('border-red-500/20');
+            dateFrame.classList.remove('border-red-500', 'ring-2', 'ring-red-500/50', 'bg-red-950/40');
+            dateFrame.classList.add('border-red-500/20', 'bg-neutral-950');
           }, 3500);
         }
 

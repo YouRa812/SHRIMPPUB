@@ -592,6 +592,23 @@
   touch-action: pan-y pinch-zoom;
 }
 
+/* Keep spacing on the wrapper so iOS date inputs stay within the grid. */
+#booking-date {
+  color-scheme: dark;
+}
+
+#booking-date::-webkit-date-and-time-value {
+  text-align: start;
+}
+
+#booking-date:invalid:not(:focus) {
+  color: transparent;
+}
+
+#booking-date:is(:valid, :focus) + .booking-date-hint {
+  visibility: hidden;
+}
+
 /* Nav Link Hover */
 .nav-link {
   position: relative;
